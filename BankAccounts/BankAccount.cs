@@ -10,7 +10,7 @@
         internal BankAccount(string name)
         {
             Name = name;
-            ID = GenerateID();
+            ID = Data.GetUniqueID();
         }
         
         internal void AddBalance(decimal balance)
