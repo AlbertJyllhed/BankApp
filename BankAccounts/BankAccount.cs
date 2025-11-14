@@ -17,7 +17,6 @@
         {
             Transactions.Add(balance);
             Balance += balance;
-
         }
 
         //Not done yet, need rest value 
