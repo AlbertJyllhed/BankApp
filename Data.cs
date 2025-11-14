@@ -5,6 +5,15 @@ namespace BankApp
     internal static class Data
     {
         internal static List<BankAccount> bankAccounts = [];
+        internal static Dictionary<string, decimal> currency = new Dictionary<string, decimal>()
+        {
+            ["SEK"] = 1.0m,
+            ["DKK"] = 0.68m,
+            ["NOK"] = 1.07m,
+            ["EUR"] = 0.09m,
+            ["GBP"] = 0.08m,
+            ["USD"] = 0.11m
+        };
 
         // Checks every bank account and generates a unique ID
         internal static int GetUniqueID()
@@ -26,6 +35,20 @@ namespace BankApp
             // Method never gets here if the ID is not unique
             // because return ends the method
             return id;
+        }
+
+        // Method to get a valid currency from user input
+        internal static string GetCurrency(string input)
+        {
+            var currencyCode = Input.GetString();
+
+            // Checks if the currency exists in the dictionary
+            while (!currency.ContainsKey(currencyCode))
+            {
+                currencyCode = Input.GetString();
+            }
+
+            return currencyCode;
         }
     }
 }
