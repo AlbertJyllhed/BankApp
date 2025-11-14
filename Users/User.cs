@@ -6,7 +6,7 @@ namespace BankApp.Users
     {
         internal string Name { get; set; }
         internal string Password { get; set; }
-        internal List<BankAccount> BankAccounts { get; set; }
+        internal static List<BankAccount> BankAccounts { get; set; }
         internal List<Loan> Loans { get; set; }
 
         internal User(string name, string password)
@@ -62,7 +62,10 @@ namespace BankApp.Users
         internal void CreateLoan(int id)
         {
             PrintBankAccounts();
-            var newLoan = new Loan();
+            Console.WriteLine("How much would you like to borrow?");
+            var borrowedAmount = Input.GetInt();
+
+            var newLoan = new Loan(borrowedAmount);
             Loans.Add(newLoan);
         }
 
