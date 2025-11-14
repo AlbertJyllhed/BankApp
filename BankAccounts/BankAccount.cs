@@ -3,8 +3,8 @@
     internal class BankAccount
     {
         internal int ID { get; set; }
-        internal string Name { get; set; } 
-        internal string Currency { get; set; }
+        internal string Name { get; set; }
+        internal string Currency { get; set; } = "SEK";
         private decimal Balance { get; set; } = 0;
         internal List<decimal> Transactions { get; set; } = [];
 
@@ -14,23 +14,31 @@
             Currency = currency;
             ID = Data.GetUniqueID();
         }
-        
-        internal void AddBalance(decimal balance)
+
+        internal void AddBalance(decimal value)
         {
-            Transactions.Add(balance);
-            Balance += balance;
+            value = ConvertCurrency(value);
+            Transactions.Add(value);
+            Balance += value;
+            Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
         }
 
         //Not done yet, need rest value 
         internal decimal RemoveBalance(decimal value)
         {
+            value = ConvertCurrency(value);
+
             if (Balance > value)
             {
+                Console.WriteLine($"{value} {Currency} was transferred from account {ID}.");
                 Balance -= value;
+                Transactions.Add(-value);
                 return value;
             }
             else
             {
+                Console.WriteLine("Invalid request, not enough money in account.\n" +
+                    "You are poor.");
                 return 0;
             }
         }
@@ -45,7 +53,7 @@
             Console.WriteLine("--- Transactions ---");
             foreach (var transaction in Transactions)
             {
-                Console.WriteLine($"* {transaction} kr");
+                Console.WriteLine($"* {transaction} {Currency}, Account: {ID}");
             }
         }
 
@@ -56,6 +64,10 @@
                 $"Balance: {Balance}");
         }
 
-        
+        // Convert current balance to SEK and then to account currency
+        private decimal ConvertCurrency(decimal value)
+        {
+            return value /= Data.currency["SEK"] * Data.currency[Currency];
+        }
     }
 }
