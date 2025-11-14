@@ -44,6 +44,7 @@
             int index = GetInt();
             while (index < 0 || index > maxIndex)
             {
+                Console.WriteLine("Invald index try again!");
                 index = GetInt();
             }
 
