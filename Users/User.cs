@@ -17,14 +17,35 @@ namespace BankApp.Users
             Loans = new List<Loan>();
         }
 
-        internal void CreateBankAccount()
-        {
-             
+        internal void CreateBankAccount(string countyCode)
+        {   
+            //Ask user to choose the name of the created account.
+            Console.WriteLine("Account name:");
+            var accountName = Input.GetString();
+            //Console.WriteLine("Choose currency");
+            //foreach (var currencyKey in Data.currency)
+            //{
+            //    Console.WriteLine($"Currency code: {currencyKey.Key}");
+            //}
+            //var chosenCurrency =  Console.ReadLine();
+            //Data.GetCurrency(chosenCurrency);
+
+            //Add the new bank account into the list.
+            var bankAccount = new BankAccount(accountName);
+            BankAccounts.Add(bankAccount);
         }
 
-        internal int GetAccount(int id)
+        internal BankAccount? GetAccount(int id)
         {
-            return 0;
+            //Check every ID in each BankAccounts
+            foreach (var account in BankAccounts)
+            {
+                if (id == account.ID)
+                {
+                    return account;
+                }
+            }
+            return null;
         }
 
         internal void PrintBankAccounts()
@@ -39,13 +60,15 @@ namespace BankApp.Users
             }
             else
             {
-                Console.WriteLine("You don't have any account.");
+                Console.WriteLine("You don't have any accounts.");
             }
         }
 
         internal void CreateLoan(int id)
         {
-
+            PrintBankAccounts();
+            var newLoan = new Loan();
+            Loans.Add(newLoan);
         }
 
         internal void PrintLoans()
