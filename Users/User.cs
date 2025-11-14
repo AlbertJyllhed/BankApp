@@ -28,7 +28,7 @@ namespace BankApp.Users
             //    Console.WriteLine($"Currency code: {currencyKey.Key}");
             //}
             //var chosenCurrency =  Console.ReadLine();
-            //Data.GetCurrency(chosenCurrency);
+            Data.GetCurrency();
 
             //Add the new bank account into the list.
             var bankAccount = new BankAccount(accountName);

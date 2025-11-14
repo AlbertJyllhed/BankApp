@@ -38,8 +38,16 @@ namespace BankApp
         }
 
         // Method to get a valid currency from user input
-        internal static string GetCurrency(string input)
+        internal static string GetCurrency()
         {
+            //Ask user to choose currency code by typing in number. 
+            Console.WriteLine("Choose currency: ");
+            int count = 1;
+            foreach (var currencyKey in currency.Keys)
+            {
+                Console.WriteLine($"{count}. {currencyKey}");
+                count++;
+            }
             var currencyCode = Input.GetString();
 
             // Checks if the currency exists in the dictionary
