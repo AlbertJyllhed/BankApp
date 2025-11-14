@@ -40,6 +40,7 @@
             return Balance;
         }
 
+        //Method to print all transactions
         internal void PrintTransactions()
         {
             Console.WriteLine("--- Transactions ---");
