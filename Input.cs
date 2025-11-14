@@ -1,11 +1,11 @@
 ﻿namespace BankApp
 {
-    internal class Input
+    internal static class Input
     {
         //Method to get string input from user
-        internal string GetString()
+        internal static string GetString()
         {
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
             while (string.IsNullOrWhiteSpace(input))
             {
                 Console.WriteLine("Invalid input try again!");
@@ -16,7 +16,7 @@
         }
 
         //Method to get decimal input from the user
-        internal decimal GetDecimal()
+        internal static decimal GetDecimal()
         {
             decimal input;
             while(decimal.TryParse(Console.ReadLine(), out input))
