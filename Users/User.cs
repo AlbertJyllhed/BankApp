@@ -66,7 +66,9 @@ namespace BankApp.Users
 
         internal void CreateLoan(int id)
         {
-
+            PrintBankAccounts();
+            var newLoan = new Loan();
+            Loans.Add(newLoan);
         }
 
         internal void PrintLoans()
