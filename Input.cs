@@ -25,6 +25,29 @@
             }
             return input;
         }
-        
+
+        //Method to get int input from the user
+        internal static int GetInt()
+        {
+            int input;
+            while (!int.TryParse(Console.ReadLine(), out input))
+            {
+                Console.WriteLine("Invald input try again!");
+            }
+            return input;
+
+        }
+
+        //Method to get int input within a specific range
+        internal static int GetIndex(int maxIndex)
+        {
+            int index = GetInt();
+            while (index < 0 || index > maxIndex)
+            {
+                index = GetInt();
+            }
+
+            return index;
+        }
     }
 }

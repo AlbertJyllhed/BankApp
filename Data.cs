@@ -4,6 +4,8 @@ namespace BankApp
 {
     internal static class Data
     {
+
+        
         internal static List<BankAccount> bankAccounts = [];
         internal static Dictionary<string, decimal> currency = new Dictionary<string, decimal>()
         {
