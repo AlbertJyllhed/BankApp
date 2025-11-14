@@ -50,9 +50,9 @@ namespace BankApp
                 Console.WriteLine($"{count}. {currencyKey}");
                 count++;
             }
-            var index = Input.GetIndex();
+            var index = Input.GetIndex(currency.Count);
 
-            var currencyCode = currency.Keys[index];
+            var currencyCode = currency.ElementAt(index).Key;
 
             return currencyCode;
         }
