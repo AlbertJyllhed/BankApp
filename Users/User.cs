@@ -60,13 +60,26 @@ namespace BankApp.Users
         }
 
         internal void CreateLoan(int id)
-        {
-            PrintBankAccounts();
+        {   
+            //PrintBankAccount to show all user's accounts and amount of money. 
+            Console.WriteLine("The maximum amount of money you can borrow:");
+            var maxLoan = Loan.GetMaxLoan();
             Console.WriteLine("How much would you like to borrow?");
             var borrowedAmount = Input.GetInt();
+            while(borrowedAmount > maxLoan || borrowedAmount <= 0)
+            {
+                Console.WriteLine("Input exceeded maximum allowed loan");
+                borrowedAmount = Input.GetInt();
+            }
+
+            Console.WriteLine("Which bank account would put your borrowed money in?");
+            PrintBankAccounts();
+            var chosenAccount = Input.GetIndex(BankAccounts.Count);
 
             var newLoan = new Loan(borrowedAmount);
             Loans.Add(newLoan);
+
+            BankAccounts[chosenAccount].AddBalance(borrowedAmount);
         }
 
         internal void PrintLoans()
