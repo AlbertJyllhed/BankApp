@@ -22,16 +22,11 @@ namespace BankApp.Users
             //Ask user to choose the name of the created account.
             Console.WriteLine("Account name:");
             var accountName = Input.GetString();
-            //Console.WriteLine("Choose currency");
-            //foreach (var currencyKey in Data.currency)
-            //{
-            //    Console.WriteLine($"Currency code: {currencyKey.Key}");
-            //}
-            //var chosenCurrency =  Console.ReadLine();
-            Data.GetCurrency();
-
+           
+            var currency = Data.GetCurrency();
+            
             //Add the new bank account into the list.
-            var bankAccount = new BankAccount(accountName);
+            var bankAccount = new BankAccount(accountName, currency);
             BankAccounts.Add(bankAccount);
         }
 

@@ -48,13 +48,9 @@ namespace BankApp
                 Console.WriteLine($"{count}. {currencyKey}");
                 count++;
             }
-            var currencyCode = Input.GetString();
+            var index = Input.GetIndex();
 
-            // Checks if the currency exists in the dictionary
-            while (!currency.ContainsKey(currencyCode))
-            {
-                currencyCode = Input.GetString();
-            }
+            var currencyCode = currency.Keys[index];
 
             return currencyCode;
         }

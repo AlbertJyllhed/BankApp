@@ -3,13 +3,15 @@
     internal class BankAccount
     {
         internal int ID { get; set; }
-        internal string Name { get; set; }
+        internal string Name { get; set; } 
+        internal string Currency { get; set; }
         private decimal Balance { get; set; } = 0;
         internal List<decimal> Transactions { get; set; } = [];
 
-        internal BankAccount(string name)
+        internal BankAccount(string name, string currency)
         {
             Name = name;
+            Currency = currency;
             ID = Data.GetUniqueID();
         }
         
