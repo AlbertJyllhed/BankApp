@@ -6,8 +6,8 @@ namespace BankApp.Users
     {
         internal string Name { get; set; }
         internal string Password { get; set; }
-        internal static List<BankAccount> BankAccounts { get; set; } = [];
-        internal static List<Loan> Loans { get; set; }
+        internal List<BankAccount> BankAccounts { get; set; } = [];
+        internal List<Loan> Loans { get; set; }
 
 
         internal User(string name, string password)
