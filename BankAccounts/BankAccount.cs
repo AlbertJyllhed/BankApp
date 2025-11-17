@@ -70,5 +70,7 @@
         {
             return value /= Data.currency["SEK"] * Data.currency[Currency];
         }
+
+
     }
 }

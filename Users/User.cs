@@ -9,6 +9,7 @@ namespace BankApp.Users
         internal static List<BankAccount> BankAccounts { get; set; } = [];
         internal static List<Loan> Loans { get; set; }
 
+
         internal User(string name, string password)
         {
             Name = name;
@@ -17,8 +18,8 @@ namespace BankApp.Users
             Loans = new List<Loan>();
         }
 
-        internal void CreateBankAccount(string countyCode)
-        {
+        internal virtual void CreateBankAccount(string countyCode)
+        {   
             //Ask user to choose the name of the created account.
             Console.WriteLine("Account name:");
             var accountName = Input.GetString();
@@ -111,5 +112,7 @@ namespace BankApp.Users
                 Console.WriteLine("You have no loans.");
             }
         }
+
+
     }
 }

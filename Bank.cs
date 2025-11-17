@@ -1,4 +1,5 @@
 ﻿using BankApp.Users;
+using BankApp.BankAccounts;
 
 namespace BankApp
 {
@@ -23,13 +24,13 @@ namespace BankApp
             // Loop until the user is logged in or max attempts reached
             while (attempts < maxAttempts)
             {
-                Console.WriteLine("Please enter username.")
+                Console.WriteLine("Please enter username.");
                 var username = Input.GetString();
                 Console.WriteLine("Please enter password");
                 var password = Input.GetString();
 
                 // Check if the username and password are correct
-                var user = Data.GetUser(username)
+                var user = Data.GetUser(username);
                 if (user != null && user.Password == password)
                 {
                     loggedInUser = user;
@@ -44,7 +45,6 @@ namespace BankApp
             }
         }
 
-
         // Log out method
         internal void LogOut()
         {
@@ -52,5 +52,6 @@ namespace BankApp
             loggedInUser = null;
         }
         
+    
     }
 }
