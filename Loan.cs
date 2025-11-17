@@ -17,14 +17,10 @@ namespace BankApp
                 $"Loan interest: {Amount * Interest - Amount}\n" +
                 $"Total amount payback {Amount * Interest}");
         }
-        internal static decimal GetMaxLoan()
+
+        internal decimal GetTotalLoan()
         {
-            decimal maxLoan = 0;
-            foreach (var account in User.BankAccounts)
-            {
-                maxLoan += account.GetBalance();
-            }
-            return maxLoan * 5;
+            return Amount * Interest;
         }
     }
 }
