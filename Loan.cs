@@ -6,7 +6,7 @@ namespace BankApp
         internal decimal Amount { get; set; }
         internal decimal Interest { get; set; }
 
-        internal Loan(decimal amount, decimal interest = 0.0284m)
+        internal Loan(decimal amount, decimal interest = 1.0284m)
         {
             Amount = amount;
             Interest = interest;
