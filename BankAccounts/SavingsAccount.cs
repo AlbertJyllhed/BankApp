@@ -2,7 +2,7 @@
 {
     internal class SavingsAccount : BankAccount
     {
-        internal decimal Intrest { get; set; } = 0.0186m;
+        internal decimal Intrest { get; set; } = 1.0186m;
 
         internal SavingsAccount(string name, string currency, decimal intrest) : base(name, currency)
         {
