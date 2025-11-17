@@ -7,7 +7,7 @@ namespace BankApp.Users
         internal string Name { get; set; }
         internal string Password { get; set; }
         internal static List<BankAccount> BankAccounts { get; set; } = [];
-        internal List<Loan> Loans { get; set; }
+        internal static List<Loan> Loans { get; set; }
 
 
         internal User(string name, string password)
@@ -23,9 +23,9 @@ namespace BankApp.Users
             //Ask user to choose the name of the created account.
             Console.WriteLine("Account name:");
             var accountName = Input.GetString();
-           
+
             var currency = Data.GetCurrency();
-            
+
             //Add the new bank account into the list.
             var bankAccount = new BankAccount(accountName, currency);
             BankAccounts.Add(bankAccount);
@@ -46,12 +46,15 @@ namespace BankApp.Users
 
         internal void PrintBankAccounts()
         {
+            int index = 1;
             if (BankAccounts.Count > 0)
             {
                 Console.WriteLine("Your bank accounts:");
                 foreach (var account in BankAccounts)
                 {
+                    Console.Write(index);
                     account.PrintInfo();
+                    index++;
                 }
             }
             else
@@ -61,13 +64,19 @@ namespace BankApp.Users
         }
 
         internal void CreateLoan(int id)
-        {   
+        {
             //PrintBankAccount to show all user's accounts and amount of money. 
             Console.WriteLine("The maximum amount of money you can borrow:");
-            var maxLoan = Loan.GetMaxLoan();
+            decimal maxLoan = 0;
+            foreach (var account in BankAccounts)
+            {
+                maxLoan += account.GetBalance();
+            }
+            maxLoan *= 5;
+
             Console.WriteLine("How much would you like to borrow?");
             var borrowedAmount = Input.GetInt();
-            while(borrowedAmount > maxLoan || borrowedAmount <= 0)
+            while (borrowedAmount > maxLoan || borrowedAmount <= 0)
             {
                 Console.WriteLine("Input exceeded maximum allowed loan");
                 borrowedAmount = Input.GetInt();
@@ -85,13 +94,18 @@ namespace BankApp.Users
 
         internal void PrintLoans()
         {
+            
             if (Loans.Count > 0)
             {
-                Console.WriteLine("Your loans:");
+                decimal totalLoan = 0;
+
+                //Shows current debt
                 foreach (var loan in Loans)
                 {
-                    Console.WriteLine(loan);
+                    totalLoan += loan.GetTotalLoan();
                 }
+
+                Console.Write($"Your current debt: {totalLoan}");
             }
             else
             {
