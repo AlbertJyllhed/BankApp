@@ -1,12 +1,17 @@
 ﻿using BankApp.BankAccounts;
+using BankApp.Users;
 
 namespace BankApp
 {
     internal static class Data
     {
-
-        
         internal static List<BankAccount> bankAccounts = [];
+        internal static List<User> users = new List<User>()
+        {
+            new Admin("Admin", "admin123"),
+            new User("User", "user123")
+        };
+
         internal static Dictionary<string, decimal> currency = new Dictionary<string, decimal>()
         {
             ["SEK"] = 1.0m,
@@ -16,6 +21,34 @@ namespace BankApp
             ["GBP"] = 0.08m,
             ["USD"] = 0.11m
         };
+
+        // Loops through all users and returns the user with the matching name
+        internal static User? GetUser(string name)
+        {
+            foreach (var user in users)
+            {
+                if (user.Name == name)
+                {
+                    return user;
+                }
+            }
+
+            return null;
+        }
+
+        // Loops through all bank accounts and returns the account with the matching ID
+        internal static BankAccount? GetBankAccount(int id)
+        {
+            foreach (var account in bankAccounts)
+            {
+                if (account.ID == id)
+                {
+                    return account;
+                }
+            }
+
+            return null;
+        }
 
         // Checks every bank account and generates a unique ID
         internal static int GetUniqueID()
