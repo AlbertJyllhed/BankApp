@@ -14,7 +14,7 @@ namespace BankApp
         internal void PrintLoanInterest()
         {
             Console.WriteLine($"Requested loan: {Amount}\n" +
-                $"Loan interest: {Interest}\n" +
+                $"Loan interest: {Amount * Interest - Amount}\n" +
                 $"Total amount payback {Amount * Interest}");
         }
         internal static decimal GetMaxLoan()
