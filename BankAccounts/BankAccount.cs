@@ -17,7 +17,7 @@
         }
 
         // Method to add balance to account
-        internal void AddBalance(decimal value)
+        internal virtual void AddBalance(decimal value)
         {
             value = ConvertCurrency(value);
             _transactions.Add(value);
@@ -67,9 +67,10 @@
         }
 
         // Convert current balance to SEK and then to account currency
-        private decimal ConvertCurrency(decimal value)
+        protected decimal ConvertCurrency(decimal value)
         {
-            return value /= Data.currency["SEK"] * Data.currency[Currency];
+            value /= Data.currency["SEK"] * Data.currency[Currency];
+            return Math.Round(value, 2);
         }
     }
 }
