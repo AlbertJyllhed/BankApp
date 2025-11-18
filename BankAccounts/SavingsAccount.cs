@@ -4,31 +4,20 @@ namespace BankApp.BankAccounts
 {
     internal class SavingsAccount : BankAccount
     {
-        internal decimal Interest { get; set; } = 1.0186m;
+        internal decimal Interest { get; set; }
 
         // Constructors
-        internal SavingsAccount(string name, string currency, decimal interest) : base(name, currency)
+        internal SavingsAccount(string name, string currency, decimal interest = 1.0186m) : base(name, currency)
         {
             Interest = interest;
         }
 
-
-        //internal void CreateSavingAccount(string countyCode)
-        //{
-        //    //Ask user to choose the name of the created account.
-        //    Console.WriteLine("Savings account name:");
-        //    var accountName = Input.GetString();
-
-        //    Console.WriteLine("What amount do you want put in the savings account?");
-        //    var amount = Input.GetDecimal();
-
-        //    var currency = Data.GetCurrency();
-
-        //    Console.WriteLine($"Intrest rate :{Intrest}");
-
-        //    //Add the new bank account into the list.
-        //    var bankAccount = new BankAccount(accountName, currency);
-        //    BankAccounts.Add(bankAccount);
-        //}
+        internal void PrintSavingsInterest(decimal amount)
+        {
+            Console.WriteLine($"Money put in savings {amount} {Currency}\n" +
+                $"Savings interest {amount * Interest - amount}\n" +
+                $"Total amount after interest in savings account {amount * Interest}");
+        }
+      
     }
 }
