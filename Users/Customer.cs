@@ -41,6 +41,43 @@ namespace BankApp.Users
             return null;
         }
 
+        // Transfers balance from one account to another
+        internal void TransferBalance()
+        {
+            // Choose from which account to transfer
+            Console.WriteLine("From which account do you want to transfer?");
+            PrintBankAccounts();
+            int fromIndex = Input.GetIndex(BankAccounts.Count);
+            BankAccount fromAccount = BankAccounts[fromIndex];
+
+            // Choose to which account to transfer
+            Console.WriteLine("Which account do you want to transfer to?");
+            int id = Input.GetInt();
+            BankAccount? toAccount = Data.GetBankAccount(id);
+            if (toAccount != null)
+            {
+                // Choose amount to transfer
+                Console.WriteLine("How much money do you want to transfer?");
+                decimal amount = Input.GetDecimal();
+
+                // Check if there are sufficient funds and perform the transfer
+                decimal result = fromAccount.RemoveBalance(amount);
+                if (result == 0)
+                {
+                    Console.WriteLine("Transfer failed due to insufficient funds.");
+                }
+                else
+                {
+                    Console.WriteLine("Transfer successful.");
+                    toAccount.AddBalance(amount);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Account not found, please try again.");
+            }
+        }
+
         internal void PrintBankAccounts()
         {
             int index = 1;

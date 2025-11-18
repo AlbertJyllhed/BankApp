@@ -11,7 +11,6 @@
                 Console.WriteLine("Invalid input try again!");
                 input = Console.ReadLine();
             }
-
             return input;
         }
 
@@ -19,8 +18,7 @@
         internal static decimal GetDecimal()
         {
             decimal input;
-            while (!
-                decimal.TryParse(Console.ReadLine(), out input))
+            while (!decimal.TryParse(Console.ReadLine(), out input))
             {
                 Console.WriteLine("Invalid input try again!");
             }
@@ -60,7 +58,6 @@
                 Console.WriteLine("Invalid input, please enter 'y' or 'n'.");
                 input = GetString().ToLower();
             }
-
             return input == "y";
         }
     }
