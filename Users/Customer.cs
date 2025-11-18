@@ -111,7 +111,7 @@ namespace BankApp.Users
         //Savings account creation method
         internal void CreateSavingAccount(string countyCode)
         {
-            decimal intrest = 1.0184m;
+            decimal interest = 1.0184m;
 
             //Ask user to choose the name of the created account.
             Console.WriteLine("Savings account name:");
@@ -122,11 +122,13 @@ namespace BankApp.Users
 
             var currency = Data.GetCurrency();
 
-            Console.WriteLine($"Intrest rate :{intrest}");
+            Console.WriteLine($"Intrest rate :{interest}");
 
             //Add the new bank account into the list.
-            var bankAccount = new BankAccount(accountName, currency);
-            BankAccounts.Add(bankAccount);
+            var savingsAccount = new SavingsAccount(accountName, currency, interest);
+            savingsAccount.AddBalance(amount);
+
+            BankAccounts.Add(savingsAccount);
         }
     }
 }

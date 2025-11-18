@@ -2,10 +2,10 @@
 
 namespace BankApp.Users
 {
-    internal class User
+    internal abstract class User
     {
-        internal string Name { get; set; }
-        internal string Password { get; set; }
+        internal string Name { get; }
+        internal string Password { get; }
 
         internal User(string name, string password)
         {

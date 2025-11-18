@@ -2,14 +2,14 @@
 
 namespace BankApp.BankAccounts
 {
-    internal class SavingsAccount : User
+    internal class SavingsAccount : BankAccount
     {
-        internal decimal Intrest { get; set; } = 1.0186m;
+        internal decimal Interest { get; set; } = 1.0186m;
 
         // Constructors
-        internal SavingsAccount(string name, string currency, decimal intrest) : base(name, currency)
+        internal SavingsAccount(string name, string currency, decimal interest) : base(name, currency)
         {
-            Intrest = intrest;
+            Interest = interest;
         }
 
 
