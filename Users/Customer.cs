@@ -100,30 +100,39 @@ namespace BankApp.Users
         internal void CreateLoan()
         {
             //PrintBankAccount to show all user's accounts and amount of money. 
-            Console.WriteLine("The maximum amount of money you can borrow:");
             decimal maxLoan = 0;
             foreach (var account in BankAccounts)
             {
                 maxLoan += account.GetBalance();
             }
             maxLoan *= 5;
+            Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
 
             Console.WriteLine("How much would you like to borrow?");
             var borrowedAmount = Input.GetInt();
-            while (borrowedAmount > maxLoan || borrowedAmount <= 0)
+
+            if (maxLoan <= 0)
             {
-                Console.WriteLine("Input exceeded maximum allowed loan");
-                borrowedAmount = Input.GetInt();
+                Console.WriteLine("You have no money, you are not able to borrow.");
+
             }
+            else
+            {
+                while (borrowedAmount > maxLoan || borrowedAmount <= 0)
+                {
+                    Console.WriteLine("Input exceeded maximum allowed loan");
+                    borrowedAmount = Input.GetInt();
+                }
 
-            Console.WriteLine("Which bank account would put your borrowed money in?");
-            PrintBankAccounts();
-            var chosenAccount = Input.GetIndex(BankAccounts.Count);
+                Console.WriteLine("Which bank account would put your borrowed money in?");
+                PrintBankAccounts();
+                var chosenAccount = Input.GetIndex(BankAccounts.Count);
 
-            var newLoan = new Loan(borrowedAmount);
-            Loans.Add(newLoan);
+                var newLoan = new Loan(borrowedAmount);
+                Loans.Add(newLoan);
 
-            BankAccounts[chosenAccount].AddBalance(borrowedAmount);
+                BankAccounts[chosenAccount].AddBalance(borrowedAmount);
+            }
         }
 
         internal void PrintLoans()
@@ -139,7 +148,7 @@ namespace BankApp.Users
                     totalLoan += loan.GetTotalLoan();
                 }
 
-                Console.Write($"Your current debt: {totalLoan}");
+                Console.Write($"Your current debt: {totalLoan}\n");
             }
             else
             {
