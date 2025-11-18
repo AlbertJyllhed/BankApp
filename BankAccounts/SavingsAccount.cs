@@ -1,4 +1,5 @@
 ﻿using BankApp.Users;
+using System.Transactions;
 
 namespace BankApp.BankAccounts
 {
@@ -15,9 +16,16 @@ namespace BankApp.BankAccounts
         internal void PrintSavingsInterest(decimal amount)
         {
             Console.WriteLine($"Money put in savings {amount} {Currency}\n" +
-                $"Savings interest {amount * Interest - amount}\n" +
-                $"Total amount after interest in savings account {amount * Interest}");
+                $"Savings interest is {Interest}%\n" +
+                $"After One Year you will have {amount * Interest} {Currency}\n"); //+
+                //$"Total amount after interest in savings account {amount * Interest} {Currency}");
+
         }
-      
+
+        internal override void AddBalance(decimal value)
+        {
+            Balance += value;
+            Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
+        }
     }
 }

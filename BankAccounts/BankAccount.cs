@@ -2,11 +2,13 @@
 {
     internal class BankAccount
     {
-        internal int ID { get; set; }
-        internal string Name { get; set; }
+        private decimal _balance;
+
+        private List<decimal> _transactions = [];
+        internal int ID { get; }
+        internal string Name { get; }
         internal string Currency { get; set; } = "SEK";
-        protected decimal Balance { get; set; } = 0;
-        internal List<decimal> Transactions { get; set; } = [];
+        private decimal Balance { get; set; } = 0;
 
         // Constructor
         internal BankAccount(string name, string currency)
@@ -17,7 +19,7 @@
         }
 
         // Method to add balance to account
-        internal void AddBalance(decimal value)
+        internal virtual void AddBalance(decimal value)
         {
             value = ConvertCurrency(value);
             Transactions.Add(value);
@@ -68,9 +70,10 @@
         }
 
         // Convert current balance to SEK and then to account currency
-        private decimal ConvertCurrency(decimal value)
+        protected decimal ConvertCurrency(decimal value)
         {
-            return value /= Data.currency["SEK"] * Data.currency[Currency];
+            value /= Data.currency["SEK"] * Data.currency[Currency];
+            return Math.Round(value, 2);
         }
 
 
