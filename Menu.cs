@@ -3,17 +3,17 @@ namespace BankApp
 {
     internal class Menu
     {
-        internal void PrintCustomerMenu(Customer customer)
+        internal bool PrintCustomerMenu(Customer customer)
         {
-            Console.WriteLine("");
+            Console.WriteLine("What type of banking transaction would you like to proceed with?");
             Console.WriteLine("1. Create an account");
             Console.WriteLine("2. Create savings account");
             Console.WriteLine("3. Show bank accounts");
             Console.WriteLine("4. Create loan");
-            Console.WriteLine("5. Show your loans");
+            Console.WriteLine("5. Show current debt");
+            Console.WriteLine("6. Log out");
 
-            int choice = Input.GetIndex(5);
-            switch (choice)
+            switch (Input.GetInt())
             {
                 case 0:
                     customer.CreateBankAccount();
@@ -30,19 +30,23 @@ namespace BankApp
                 case 4:
                     customer.PrintLoans();
                     break;
+                case 5:
+                    return false;
                 default:
                     Console.WriteLine("Invalid choice, try again.");
                     break;
 
             }
+            Console.Clear();
+            return true;
         }
-        internal void PrintAdminMenu(Admin admin)
+        internal bool PrintAdminMenu(Admin admin)
         {
             Console.WriteLine("1. Update currency");
             Console.WriteLine("2. Create user");
-
-            int choice = Input.GetIndex(2);
-            switch (choice)
+            Console.WriteLine("3. Log out ");
+           
+            switch (Input.GetInt())
             {
                 case 0:
                     admin.UpdateCurrency();
@@ -50,10 +54,15 @@ namespace BankApp
                 case 1:
                     admin.CreateCustomer();
                     break;
+                case 2:
+                    return false;
                 default:
                     Console.WriteLine("Invalid choice, try again.");
                     break;
             }
+            Console.Clear();
+            return true;
+            
         }
         internal void PrintTitle()
         {

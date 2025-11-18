@@ -10,9 +10,9 @@ namespace BankApp
         //Will run the program need more here later
         internal void Run()
         {
-            bool loggedIn = LogIn();
+            LogIn();
 
-            while (loggedIn)
+            while (activeUser != null)
             {
                 Console.WriteLine("-- Welcome to Liskov Bank --");
                 CreateMenu();
@@ -57,6 +57,7 @@ namespace BankApp
         {
             Console.WriteLine("You have been logged out.");
             activeUser = null;
+            LogIn();
         }
 
         // Method to create menu based on user type
@@ -67,15 +68,21 @@ namespace BankApp
 
             if (activeUser != null)
             {
+                bool restart = false;
+               
                 if (activeUser is Customer)
                 {
                     var customer = activeUser as Customer;
-                    menu.PrintCustomerMenu(customer);
+                    restart = menu.PrintCustomerMenu(customer);
                 }
                 else if (activeUser is Admin)
                 {
                     var admin = activeUser as Admin;
-                    menu.PrintAdminMenu(admin);
+                    restart = menu.PrintAdminMenu(admin);
+                }
+                if (!restart)
+                {
+                    LogOut();
                 }
             }
         }
