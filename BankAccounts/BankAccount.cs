@@ -61,7 +61,7 @@
         //Method to print info and the method gets called in get PrintBankAccounts
         internal void PrintInfo()
         {
-            Console.WriteLine($"Name: {Name} [{ID}]\n" +
+            Console.WriteLine($"{Name} [{ID}]\n" +
                 $"Balance: {Balance}");
         }
 

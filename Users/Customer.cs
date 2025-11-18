@@ -47,7 +47,7 @@ namespace BankApp.Users
                 Console.WriteLine("Your bank accounts:");
                 foreach (var account in BankAccounts)
                 {
-                    Console.Write(index);
+                    Console.Write($"{index}. ");
                     account.PrintInfo();
                     index++;
                 }
@@ -58,7 +58,7 @@ namespace BankApp.Users
             }
         }
 
-        internal void CreateLoan(int id)
+        internal void CreateLoan()
         {
             //PrintBankAccount to show all user's accounts and amount of money. 
             Console.WriteLine("The maximum amount of money you can borrow:");

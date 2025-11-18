@@ -63,16 +63,19 @@ namespace BankApp
         internal void CreateMenu()
         {
             var menu = new Menu();
+            menu.PrintTitle();
 
             if (activeUser != null)
             {
                 if (activeUser is Customer)
                 {
-                    menu.PrintCustomerMenu();
+                    var customer = activeUser as Customer;
+                    menu.PrintCustomerMenu(customer);
                 }
                 else if (activeUser is Admin)
                 {
-                    menu.PrintAdminMenu();
+                    var admin = activeUser as Admin;
+                    menu.PrintAdminMenu(admin);
                 }
             }
         }
