@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Bank.Run();
+            var bank = new Bank();
+            bank.Run();
         }
     }
 }

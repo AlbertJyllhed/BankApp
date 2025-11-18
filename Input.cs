@@ -50,5 +50,17 @@
 
             return index;
         }
+
+        internal static bool GetYesOrNo()
+        {
+            string input = GetString().ToLower();
+            while (input != "y" && input != "n")
+            {
+                Console.WriteLine("Invalid input, please enter 'y' or 'n'.");
+                input = GetString().ToLower();
+            }
+
+            return input == "y";
+        }
     }
 }

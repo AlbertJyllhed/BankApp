@@ -5,18 +5,22 @@ namespace BankApp
 {
     internal class Bank
     {
-        User? loggedInUser;
+        User? activeUser;
 
         //Will run the program need more here later
-        internal static void Run()
+        internal void Run()
         {
-            Console.WriteLine("-- Welcome to Liskov Bank --");
+            bool loggedIn = LogIn();
 
-
+            while (loggedIn)
+            {
+                Console.WriteLine("-- Welcome to Liskov Bank --");
+                CreateMenu();
+            }
         }
 
         // Log in method with 3 attempts
-        internal void LogIn()
+        internal bool LogIn()
         {
             int maxAttempts = 3;
             int attempts = 0;
@@ -33,25 +37,44 @@ namespace BankApp
                 var user = Data.GetUser(username);
                 if (user != null && user.Password == password)
                 {
-                    loggedInUser = user;
+                    activeUser = user;
+                    return true;
                 }
                 else
                 {
-                    loggedInUser = null;
+                    activeUser = null;
                     attempts++;
                     Console.WriteLine($"Wrong username or password\n" +
                         $"Attempts left {maxAttempts - attempts}");
                 }
             }
+
+            return false;
         }
 
         // Log out method
         internal void LogOut()
         {
             Console.WriteLine("You have been logged out.");
-            loggedInUser = null;
+            activeUser = null;
         }
-        
-    
+
+        // Method to create menu based on user type
+        internal void CreateMenu()
+        {
+            var menu = new Menu();
+
+            if (activeUser != null)
+            {
+                if (activeUser is Customer)
+                {
+                    menu.PrintCustomerMenu();
+                }
+                else if (activeUser is Admin)
+                {
+                    menu.PrintAdminMenu();
+                }
+            }
+        }
     }
 }
