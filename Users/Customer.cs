@@ -4,14 +4,16 @@ namespace BankApp.Users
 {
     internal class Customer : User
     {
-        internal List<BankAccount> BankAccounts { get; set; }
-        internal List<Loan> Loans { get; set; }
+        private List<BankAccount> BankAccounts { get; set; }
+        private List<Loan> Loans { get; set; }
 
         internal Customer(string name, string password) : base(name, password)
         {
             BankAccounts = new List<BankAccount>();
             Loans = new List<Loan>();
         }
+
+        //Add a method to ensure bank account is unique
 
         internal virtual void CreateBankAccount()
         {
@@ -26,7 +28,7 @@ namespace BankApp.Users
             BankAccounts.Add(bankAccount);
         }
 
-        internal BankAccount? GetAccount(int id)
+        internal BankAccount? GetBankAccount(int id)
         {
             //Check every ID in each BankAccounts
             foreach (var account in BankAccounts)
@@ -128,8 +130,6 @@ namespace BankApp.Users
             savingsAccount.AddBalance(amount);
 
             BankAccounts.Add(savingsAccount);
-
-
         }
     }
 }
