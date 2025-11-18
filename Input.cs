@@ -46,7 +46,8 @@
                 Console.WriteLine("Invald index try again!");
                 index = GetInt();
             }
-            return index;
+
+            return index - 1;
         }
 
         internal static bool GetYesOrNo()
