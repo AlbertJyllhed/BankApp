@@ -18,13 +18,32 @@ namespace BankApp.Users
             Loans = new List<Loan>();
         }
 
-        internal virtual void CreateBankAccount(string countyCode)
+        internal void CreateBankAccount(string countyCode)
         {   
             //Ask user to choose the name of the created account.
             Console.WriteLine("Account name:");
             var accountName = Input.GetString();
 
             var currency = Data.GetCurrency();
+
+            //Add the new bank account into the list.
+            var bankAccount = new BankAccount(accountName, currency);
+            BankAccounts.Add(bankAccount);
+        }
+
+        internal void CreateSavingAccount(string countyCode)
+        {
+            decimal intrest = 1.0185m;
+            //Ask user to choose the name of the created account.
+            Console.WriteLine("Savings account name:");
+            var accountName = Input.GetString();
+
+            Console.WriteLine("What amount do you want put in the savings account?");
+            var amount = Input.GetDecimal();
+
+            var currency = Data.GetCurrency();
+
+            Console.WriteLine($"Intrest rate :{intrest}");
 
             //Add the new bank account into the list.
             var bankAccount = new BankAccount(accountName, currency);
