@@ -15,15 +15,15 @@
             Data.currency[currency] = Input.GetDecimal();
         }
 
-        internal void CreateUser()
+        internal void CreateCustomer()
         {
             Console.WriteLine("Creating new user.");
             Console.Write("Type username: ");
             var name = Input.GetString();
             Console.Write("Type password: ");
             var password = Input.GetString();
-            var user = new User(name, password);
-            Data.users.Add(user);
+            var customer = new Customer(name, password);
+            Data.users.Add(customer);
             Console.WriteLine($"User {name} created.");
         }
     }

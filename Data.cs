@@ -9,7 +9,7 @@ namespace BankApp
         internal static List<User> users = new List<User>()
         {
             new Admin("Admin", "admin123"),
-            new User("User", "user123")
+            new Customer("User", "user123")
         };
 
         internal static Dictionary<string, decimal> currency = new Dictionary<string, decimal>()

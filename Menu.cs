@@ -3,7 +3,7 @@ namespace BankApp
 {
     internal class Menu
     {
-        internal void PrintUserMenu()
+        internal void PrintCustomerMenu(Customer customer)
         {
             Console.WriteLine("");
             Console.WriteLine("1. Create an account");
@@ -15,20 +15,24 @@ namespace BankApp
             switch (choice)
             {
                 case 1:
-                    User.CreateBankAccount();
+                    customer.CreateBankAccount();
                     break;
                 case 2:
-                    User.PrintBankAccounts();
+                    customer.PrintBankAccounts();
                     break; 
                 case 3:
-                    User.CreateLoan();
+                    customer.CreateLoan();
                     break;
                 case 4:
-                    User.PrintLoans();
+                    customer.PrintLoans();
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice, try again.");
+                    break;
                 
             }
         }
-        internal void PrintAdminMenu()
+        internal void PrintAdminMenu(Admin admin)
         {
             Console.WriteLine("1. Update currency");
             Console.WriteLine("2. Create user");
@@ -37,14 +41,17 @@ namespace BankApp
             switch (choice)
             {
                 case 1:
-                    Admin.UpdeteCurrency();
+                    admin.UpdateCurrency();
                     break;
                 case 2:
-                    Admin.CreateUser();
+                    admin.CreateCustomer();
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice, try again.");
                     break;
             }
         }
-        internal void Title()
+        internal void PrintTitle()
         {
             Console.WriteLine("██████████████████████████████████████████████████████████████████████████████████████████████████████████████\r\n█▌                                                                                                          ▐█\r\n█▌   $$\\       $$\\           $$\\                                 $$$$$$$\\                      $$\\          ▐█\r\n█▌   $$ |      \\__|          $$ |                                $$  __$$\\                     $$ |         ▐█\r\n█▌   $$ |      $$\\  $$$$$$$\\ $$ |  $$\\  $$$$$$\\ $$\\    $$\\       $$ |  $$ | $$$$$$\\  $$$$$$$\\  $$ |  $$\\    ▐█\r\n█▌   $$ |      $$ |$$  _____|$$ | $$  |$$  __$$\\\\$$\\  $$  |      $$$$$$$\\ | \\____$$\\ $$  __$$\\ $$ | $$  |   ▐█\r\n█▌   $$ |      $$ |\\$$$$$$\\  $$$$$$  / $$ /  $$ |\\$$\\$$  /       $$  __$$\\  $$$$$$$ |$$ |  $$ |$$$$$$  /    ▐█\r\n█▌   $$ |      $$ | \\____$$\\ $$  _$$<  $$ |  $$ | \\$$$  /        $$ |  $$ |$$  __$$ |$$ |  $$ |$$  _$$<     ▐█\r\n█▌   $$$$$$$$\\ $$ |$$$$$$$  |$$ | \\$$\\ \\$$$$$$  |  \\$  /         $$$$$$$  |\\$$$$$$$ |$$ |  $$ |$$ | \\$$\\    ▐█\r\n█▌   \\________|\\__|\\_______/ \\__|  \\__| \\______/    \\_/          \\_______/  \\_______|\\__|  \\__|\\__|  \\__|   ▐█\r\n█▌                                                                                                          ▐█\r\n██████████████████████████████████████████████████████████████████████████████████████████████████████████████");
         }
