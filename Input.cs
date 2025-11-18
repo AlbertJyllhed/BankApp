@@ -19,11 +19,12 @@
         internal static decimal GetDecimal()
         {
             decimal input;
-            while(decimal.TryParse(Console.ReadLine(), out input))
+            while(!
+                decimal.TryParse(Console.ReadLine(), out input))
             {
                 Console.WriteLine("Invalid input try again!");
             }
-            return input;
+            return Math.Round(input,2);
         }
 
         //Method to get int input from the user

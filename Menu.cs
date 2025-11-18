@@ -7,29 +7,33 @@ namespace BankApp
         {
             Console.WriteLine("");
             Console.WriteLine("1. Create an account");
-            Console.WriteLine("2. Show bank accounts");
-            Console.WriteLine("3. Create loan");
-            Console.WriteLine("4. Show your loans");
+            Console.WriteLine("2. Create savings account");
+            Console.WriteLine("3. Show bank accounts");
+            Console.WriteLine("4. Create loan");
+            Console.WriteLine("5. Show your loans");
 
-            int choice = Input.GetIndex( 4);
+            int choice = Input.GetIndex(4);
             switch (choice)
             {
                 case 1:
                     customer.CreateBankAccount();
                     break;
                 case 2:
-                    customer.PrintBankAccounts();
-                    break; 
+                    customer.CreateSavingAccount();
+                    break;
                 case 3:
-                    customer.CreateLoan();
+                    customer.PrintBankAccounts();
                     break;
                 case 4:
+                    customer.CreateLoan();
+                    break;
+                case 5:
                     customer.PrintLoans();
                     break;
                 default:
                     Console.WriteLine("Invalid choice, try again.");
                     break;
-                
+
             }
         }
         internal void PrintAdminMenu(Admin admin)

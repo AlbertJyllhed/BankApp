@@ -5,9 +5,10 @@
         internal int ID { get; set; }
         internal string Name { get; set; }
         internal string Currency { get; set; } = "SEK";
-        private decimal Balance { get; set; } = 0;
+        protected decimal Balance { get; set; } = 0;
         internal List<decimal> Transactions { get; set; } = [];
 
+        // Constructor
         internal BankAccount(string name, string currency)
         {
             Name = name;
@@ -15,6 +16,7 @@
             ID = Data.GetUniqueID();
         }
 
+        // Method to add balance to account
         internal void AddBalance(decimal value)
         {
             value = ConvertCurrency(value);
@@ -23,7 +25,7 @@
             Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
         }
 
-        //Not done yet, need rest value 
+        // Method to remove balance from account
         internal decimal RemoveBalance(decimal value)
         {
             value = ConvertCurrency(value);
@@ -62,7 +64,7 @@
         internal void PrintInfo()
         {
             Console.WriteLine($"{Name} [{ID}]\n" +
-                $"Balance: {Balance}");
+                $"Balance: {Balance} {Currency}");
         }
 
         // Convert current balance to SEK and then to account currency
