@@ -6,7 +6,7 @@
         internal int ID { get; }
         internal string Name { get; }
         internal string Currency { get; set; } = "SEK";
-        private decimal Balance { get; set; } = 0;
+        protected decimal Balance { get; set; } = 0;
 
         // Constructor
         internal BankAccount(string name, string currency)
