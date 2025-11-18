@@ -109,7 +109,7 @@ namespace BankApp.Users
         }
 
         //Savings account creation method
-        internal void CreateSavingAccount(string countyCode)
+        internal void CreateSavingAccount()
         {
             decimal interest = 1.0184m;
 
