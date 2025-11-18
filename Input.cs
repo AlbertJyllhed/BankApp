@@ -19,12 +19,12 @@
         internal static decimal GetDecimal()
         {
             decimal input;
-            while(!
+            while (!
                 decimal.TryParse(Console.ReadLine(), out input))
             {
                 Console.WriteLine("Invalid input try again!");
             }
-            return Math.Round(input,2);
+            return Math.Round(input, 2);
         }
 
         //Method to get int input from the user
@@ -49,7 +49,7 @@
                 index = GetInt();
             }
 
-            return index;
+            return index - 1;
         }
 
         internal static bool GetYesOrNo()
