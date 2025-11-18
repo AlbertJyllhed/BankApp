@@ -20,7 +20,7 @@ namespace BankApp
         }
 
         // Log in method with 3 attempts
-        internal bool LogIn()
+        private bool LogIn()
         {
             int maxAttempts = 3;
             int attempts = 0;
@@ -60,7 +60,7 @@ namespace BankApp
         }
 
         // Method to create menu based on user type
-        internal void CreateMenu()
+        private void CreateMenu()
         {
             var menu = new Menu();
             menu.PrintTitle();
