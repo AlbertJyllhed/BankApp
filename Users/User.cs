@@ -17,7 +17,7 @@ namespace BankApp.Users
             Loans = new List<Loan>();
         }
 
-        internal void CreateBankAccount(string countyCode)
+        internal void CreateBankAccount()
         {   
             //Ask user to choose the name of the created account.
             Console.WriteLine("Account name:");
