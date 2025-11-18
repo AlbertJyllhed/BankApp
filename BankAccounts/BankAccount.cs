@@ -2,11 +2,11 @@
 {
     internal class BankAccount
     {
-        internal int ID { get; set; }
-        internal string Name { get; set; }
+        private List<decimal> _transactions = [];
+        internal int ID { get; }
+        internal string Name { get; }
         internal string Currency { get; set; } = "SEK";
-        protected decimal Balance { get; set; } = 0;
-        internal List<decimal> Transactions { get; set; } = [];
+        private decimal Balance { get; set; } = 0;
 
         // Constructor
         internal BankAccount(string name, string currency)
@@ -20,12 +20,11 @@
         internal void AddBalance(decimal value)
         {
             value = ConvertCurrency(value);
-            Transactions.Add(value);
+            _transactions.Add(value);
             Balance += value;
             Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
         }
 
-        // Method to remove balance from account
         internal decimal RemoveBalance(decimal value)
         {
             value = ConvertCurrency(value);
@@ -34,7 +33,7 @@
             {
                 Console.WriteLine($"{value} {Currency} was transferred from account {ID}.");
                 Balance -= value;
-                Transactions.Add(-value);
+                _transactions.Add(-value);
                 return value;
             }
             else
@@ -54,7 +53,7 @@
         internal void PrintTransactions()
         {
             Console.WriteLine("--- Transactions ---");
-            foreach (var transaction in Transactions)
+            foreach (var transaction in _transactions)
             {
                 Console.WriteLine($"* {transaction} {Currency}, Account: {ID}");
             }
@@ -72,7 +71,5 @@
         {
             return value /= Data.currency["SEK"] * Data.currency[Currency];
         }
-
-
     }
 }
