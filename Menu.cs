@@ -12,22 +12,22 @@ namespace BankApp
             Console.WriteLine("4. Create loan");
             Console.WriteLine("5. Show your loans");
 
-            int choice = Input.GetIndex(4);
+            int choice = Input.GetIndex(5);
             switch (choice)
             {
-                case 1:
+                case 0:
                     customer.CreateBankAccount();
                     break;
-                case 2:
+                case 1:
                     customer.CreateSavingAccount();
                     break;
-                case 3:
+                case 2:
                     customer.PrintBankAccounts();
                     break;
-                case 4:
+                case 3:
                     customer.CreateLoan();
                     break;
-                case 5:
+                case 4:
                     customer.PrintLoans();
                     break;
                 default:
@@ -44,10 +44,10 @@ namespace BankApp
             int choice = Input.GetIndex(2);
             switch (choice)
             {
-                case 1:
+                case 0:
                     admin.UpdateCurrency();
                     break;
-                case 2:
+                case 1:
                     admin.CreateCustomer();
                     break;
                 default:

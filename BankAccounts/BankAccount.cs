@@ -2,8 +2,6 @@
 {
     internal class BankAccount
     {
-        private decimal _balance;
-
         private List<decimal> _transactions = [];
         internal int ID { get; }
         internal string Name { get; }
@@ -27,7 +25,6 @@
             Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
         }
 
-        // Method to remove balance from account
         internal decimal RemoveBalance(decimal value)
         {
             value = ConvertCurrency(value);
@@ -75,7 +72,5 @@
             value /= Data.currency["SEK"] * Data.currency[Currency];
             return Math.Round(value, 2);
         }
-
-
     }
 }
