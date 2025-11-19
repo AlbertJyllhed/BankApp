@@ -3,7 +3,7 @@
     internal class BankAccount
     {
         private List<decimal> _transactions = [];
-        internal int ID { get; }
+        internal string ID { get; }
         internal string Name { get; }
         internal string Currency { get; set; } = "SEK";
         protected decimal Balance { get; set; } = 0;

@@ -28,7 +28,7 @@ namespace BankApp.Users
             BankAccounts.Add(bankAccount);
         }
 
-        internal BankAccount? GetBankAccount(int id)
+        internal BankAccount? GetBankAccount(string id)
         {
             //Check every ID in each BankAccounts
             foreach (var account in BankAccounts)
@@ -52,7 +52,7 @@ namespace BankApp.Users
 
             // Choose to which account to transfer
             Console.WriteLine("Which account do you want to transfer to?");
-            int id = Input.GetInt();
+            string id = Input.GetString();
             BankAccount? toAccount = Data.GetBankAccount(id);
             if (toAccount != null)
             {
