@@ -1,4 +1,5 @@
 ﻿using BankApp.BankAccounts;
+using System.Security.Principal;
 
 namespace BankApp.Users
 {
@@ -194,6 +195,22 @@ namespace BankApp.Users
             savingsAccount.AddBalance(amount);
 
             BankAccounts.Add(savingsAccount);
+        }
+
+        internal void InsertMoney()
+        {
+            
+            Console.WriteLine("Which account do you want to insert money in to.");
+            PrintBankAccounts();
+            int fromIndex = Input.GetIndex(BankAccounts.Count);
+            BankAccount InsertMoneyToAccount = BankAccounts[fromIndex];
+
+            Console.WriteLine("How much money do you want to insert to account?");
+            decimal amount = Input.GetDecimal();
+
+            Console.WriteLine("Transfer successful.");
+            InsertMoneyToAccount.AddBalance(amount);
+
         }
     }
 }
