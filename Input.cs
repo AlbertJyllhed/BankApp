@@ -46,7 +46,6 @@
                 Console.WriteLine("Invald index try again!");
                 index = GetInt();
             }
-
             return index - 1;
         }
 
