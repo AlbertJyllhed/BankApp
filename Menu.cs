@@ -9,35 +9,47 @@ namespace BankApp
             Console.WriteLine("1. Create an account");
             Console.WriteLine("2. Create savings account");
             Console.WriteLine("3. Show bank accounts");
-            Console.WriteLine("4. Create loan");
-            Console.WriteLine("5. Show current debt");
-            Console.WriteLine("6. Log out");
+            Console.WriteLine("4. Transfer balance");
+            Console.WriteLine("5. Create loan");
+            Console.WriteLine("6. Show current debt");
+            Console.WriteLine("7. Log out");
 
             switch (Input.GetInt())
             {
-                case 0:
+                case 1:
+                    //Console.Clear();
                     customer.CreateBankAccount();
                     break;
-                case 1:
+                case 2:
+                    //Console.Clear();
                     customer.CreateSavingAccount();
                     break;
-                case 2:
+                case 3:
+                    //Console.Clear();
                     customer.PrintBankAccounts();
                     break;
-                case 3:
-                    customer.CreateLoan();
-                    break;
                 case 4:
-                    customer.PrintLoans();
+                    //Console.Clear();
+                    customer.TransferBalance();
                     break;
                 case 5:
+                    //Console.Clear();
+                    customer.CreateLoan();
+                    break;
+                case 6:
+                    //Console.Clear();
+                    customer.PrintLoans();
+                    break;
+                case 7:
+                    //Console.Clear();
                     return false;
                 default:
                     Console.WriteLine("Invalid choice, try again.");
                     break;
 
             }
-            Console.Clear();
+            Console.ReadKey();
+            Console.Clear(); //Looks weird on console window to put clear here...? 
             return true;
         }
         internal bool PrintAdminMenu(Admin admin)
@@ -48,19 +60,22 @@ namespace BankApp
            
             switch (Input.GetInt())
             {
-                case 0:
+                case 1:
+                    Console.Clear();
                     admin.UpdateCurrency();
                     break;
-                case 1:
+                case 2:
+                    Console.Clear();
                     admin.CreateCustomer();
                     break;
-                case 2:
+                case 3:
+                    Console.Clear();
                     return false;
                 default:
                     Console.WriteLine("Invalid choice, try again.");
                     break;
             }
-            Console.Clear();
+            //Console.Clear();
             return true;
             
         }
