@@ -14,8 +14,10 @@ namespace BankApp
 
             while (activeUser != null)
             {
-                Console.WriteLine("-- Welcome to Liskov Bank --");
                 CreateMenu();
+                Console.WriteLine("Press an key to continue...");
+                Console.ReadKey();
+                Console.Clear();
             }
         }
 
@@ -32,6 +34,7 @@ namespace BankApp
                 var username = Input.GetString();
                 Console.WriteLine("Please enter password");
                 var password = Input.GetString();
+                Console.Clear();
 
                 // Check if the username and password are correct
                 var user = Data.GetUser(username);
@@ -57,7 +60,13 @@ namespace BankApp
         {
             Console.WriteLine("You have been logged out.");
             activeUser = null;
-            LogIn();
+
+            Console.WriteLine("Do you want to exit the application? y/n");
+            bool answer = Input.GetYesOrNo();
+            if (!answer)
+            {
+                LogIn();
+            }
         }
 
         // Method to create menu based on user type
@@ -65,6 +74,7 @@ namespace BankApp
         {
             var menu = new Menu();
             menu.PrintTitle();
+            Console.WriteLine("-- Welcome to Liskov Bank --");
 
             if (activeUser != null)
             {
@@ -80,6 +90,7 @@ namespace BankApp
                     var admin = activeUser as Admin;
                     restart = menu.PrintAdminMenu(admin);
                 }
+
                 if (!restart)
                 {
                     LogOut();
