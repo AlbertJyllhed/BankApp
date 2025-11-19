@@ -48,8 +48,9 @@ namespace BankApp
                     break;
 
             }
+            Console.WriteLine("Press an key to continue...");
             Console.ReadKey();
-            Console.Clear(); //Looks weird on console window to put clear here...? 
+            Console.Clear();
             return true;
         }
         internal bool PrintAdminMenu(Admin admin)
@@ -61,21 +62,22 @@ namespace BankApp
             switch (Input.GetInt())
             {
                 case 1:
-                    Console.Clear();
+                    //Console.Clear();
                     admin.UpdateCurrency();
                     break;
                 case 2:
-                    Console.Clear();
+                    //Console.Clear();
                     admin.CreateCustomer();
                     break;
                 case 3:
-                    Console.Clear();
+                    //Console.Clear();
                     return false;
                 default:
                     Console.WriteLine("Invalid choice, try again.");
                     break;
             }
-            //Console.Clear();
+            Console.WriteLine("Press an key to continue...");
+            Console.Clear();
             return true;
             
         }
