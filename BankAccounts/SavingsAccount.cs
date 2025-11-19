@@ -26,6 +26,7 @@ namespace BankApp.BankAccounts
         {
             Balance += value;
             Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
+            Console.ReadLine();
         }
     }
 }
