@@ -18,7 +18,7 @@ namespace BankApp.Users
         internal virtual void CreateBankAccount()
         {
             //Ask user to choose the name of the created account.
-            Console.WriteLine("Account name:");
+            Console.Write("New bank account name: ");
             var accountName = Input.GetString();
 
             var currency = Data.GetCurrency();
@@ -26,6 +26,8 @@ namespace BankApp.Users
             //Add the new bank account into the list.
             var bankAccount = new BankAccount(accountName, currency);
             BankAccounts.Add(bankAccount);
+
+            Console.WriteLine($"Your new bank account ({accountName}, {currency}) has been successfully created!");
         }
 
         internal BankAccount? GetBankAccount(string id)
@@ -148,7 +150,7 @@ namespace BankApp.Users
                     totalLoan += loan.GetTotalLoan();
                 }
 
-                Console.Write($"Your current debt: {totalLoan}\n");
+                Console.Write($"Your current debt: {totalLoan}");
             }
             else
             {
