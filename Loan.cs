@@ -21,7 +21,8 @@ namespace BankApp
 
         internal decimal GetTotalLoan()
         {
-            return Amount * Interest;
+            var totalAmount = Amount * Interest;
+            return Math.Round(totalAmount, 2);
         }
     }
 }

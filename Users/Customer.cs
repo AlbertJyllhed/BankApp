@@ -169,7 +169,7 @@ namespace BankApp.Users
                     totalLoan += loan.GetTotalLoan();
                 }
 
-                Console.Write($"Your current debt: {totalLoan}");
+                Console.Write($"Your current debt: {totalLoan}\n");
             }
             else
             {
