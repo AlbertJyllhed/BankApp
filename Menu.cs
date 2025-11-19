@@ -9,10 +9,11 @@ namespace BankApp
             Console.WriteLine("1. Create an account");
             Console.WriteLine("2. Create savings account");
             Console.WriteLine("3. Show bank accounts");
-            Console.WriteLine("4. Transfer balance");
-            Console.WriteLine("5. Create loan");
-            Console.WriteLine("6. Show current debt");
-            Console.WriteLine("7. Log out");
+            Console.WriteLine("4. Insert money to account");
+            Console.WriteLine("5. Transfer balance");
+            Console.WriteLine("6. Create loan");
+            Console.WriteLine("7. Show current debt");
+            Console.WriteLine("8. Log out");
 
             switch (Input.GetInt())
             {
@@ -29,18 +30,21 @@ namespace BankApp
                     customer.PrintBankAccounts();
                     break;
                 case 4:
-                    //Console.Clear();
-                    customer.TransferBalance();
+                    customer.InsertMoney();
                     break;
                 case 5:
                     //Console.Clear();
-                    customer.CreateLoan();
+                    customer.TransferBalance();
                     break;
                 case 6:
                     //Console.Clear();
-                    customer.PrintLoans();
+                    customer.CreateLoan();
                     break;
                 case 7:
+                    //Console.Clear();
+                    customer.PrintLoans();
+                    break;
+                case 8:
                     //Console.Clear();
                     return false;
                 default:
@@ -48,8 +52,9 @@ namespace BankApp
                     break;
 
             }
+            Console.WriteLine("Press an key to continue...");
             Console.ReadKey();
-            Console.Clear(); //Looks weird on console window to put clear here...? 
+            Console.Clear();
             return true;
         }
         internal bool PrintAdminMenu(Admin admin)
@@ -61,21 +66,22 @@ namespace BankApp
             switch (Input.GetInt())
             {
                 case 1:
-                    Console.Clear();
+                    //Console.Clear();
                     admin.UpdateCurrency();
                     break;
                 case 2:
-                    Console.Clear();
+                    //Console.Clear();
                     admin.CreateCustomer();
                     break;
                 case 3:
-                    Console.Clear();
+                    //Console.Clear();
                     return false;
                 default:
                     Console.WriteLine("Invalid choice, try again.");
                     break;
             }
-            //Console.Clear();
+            Console.WriteLine("Press an key to continue...");
+            Console.Clear();
             return true;
             
         }
