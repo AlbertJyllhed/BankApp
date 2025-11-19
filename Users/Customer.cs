@@ -26,6 +26,7 @@ namespace BankApp.Users
             //Add the new bank account into the list.
             var bankAccount = new BankAccount(accountName, currency);
             BankAccounts.Add(bankAccount);
+            Data.AddBankAccount(bankAccount);
         }
 
         internal BankAccount? GetBankAccount(string id)
@@ -44,44 +45,62 @@ namespace BankApp.Users
         // Transfers balance from one account to another
         internal void TransferBalance()
         {
-            // Choose from which account to transfer
-            Console.WriteLine("From which account do you want to transfer?");
-            PrintBankAccounts();
-            int fromIndex = Input.GetIndex(BankAccounts.Count);
-            BankAccount fromAccount = BankAccounts[fromIndex];
-
-            // Choose to which account to transfer
-            Console.WriteLine("Which account do you want to transfer to?");
-            string id = Input.GetString();
-            BankAccount? toAccount = Data.GetBankAccount(id);
-            if (toAccount != null)
+            // Check if there are any bank accounts to transfer from
+            if (HasBankAccounts())
             {
-                // Choose amount to transfer
-                Console.WriteLine("How much money do you want to transfer?");
-                decimal amount = Input.GetDecimal();
+                // Choose from which account to transfer
+                Console.WriteLine("From which account do you want to transfer?");
+                PrintBankAccounts();
+                int fromIndex = Input.GetIndex(BankAccounts.Count);
+                BankAccount fromAccount = BankAccounts[fromIndex];
 
-                // Check if there are sufficient funds and perform the transfer
-                decimal result = fromAccount.RemoveBalance(amount);
-                if (result == 0)
+                // Choose to which account to transfer
+                Console.WriteLine("Which account do you want to transfer to?");
+                string id = Input.GetString();
+                BankAccount? toAccount = Data.GetBankAccount(id);
+                if (toAccount != null)
                 {
-                    Console.WriteLine("Transfer failed due to insufficient funds.");
+                    // Choose amount to transfer
+                    Console.WriteLine("How much money do you want to transfer?");
+                    decimal amount = Input.GetDecimal();
+
+                    // Check if there are sufficient funds and perform the transfer
+                    if (CanTransfer(fromAccount, amount))
+                    {
+                        Console.WriteLine($"Transferred {amount} {fromAccount.Currency} to {toAccount.Name}.");
+                        fromAccount.RemoveBalance(amount);
+                        toAccount.AddBalance(amount);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Transfer failed due to insufficient funds.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Transfer successful.");
-                    toAccount.AddBalance(amount);
+                    Console.WriteLine("Account not found, please try again.");
                 }
             }
             else
             {
-                Console.WriteLine("Account not found, please try again.");
+                Console.WriteLine("You don't have any accounts to transfer from.");
             }
+        }
+
+        private bool HasBankAccounts()
+        {
+            return BankAccounts.Count > 0;
+        }
+
+        private bool CanTransfer(BankAccount fromAccount, decimal amount)
+        {
+            return fromAccount.GetBalance() >= amount;
         }
 
         internal void PrintBankAccounts()
         {
             int index = 1;
-            if (BankAccounts.Count > 0)
+            if (HasBankAccounts())
             {
                 Console.WriteLine("Your bank accounts:");
                 foreach (var account in BankAccounts)
@@ -114,7 +133,6 @@ namespace BankApp.Users
             if (maxLoan <= 0)
             {
                 Console.WriteLine("You have no money, you are not able to borrow.");
-
             }
             else
             {
