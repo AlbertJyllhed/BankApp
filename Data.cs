@@ -36,6 +36,12 @@ namespace BankApp
             return null;
         }
 
+        // Adds a bank account to the list of all bank accounts
+        internal static void AddBankAccount(BankAccount account)
+        {
+            bankAccounts.Add(account);
+        }
+
         // Loops through all bank accounts and returns the account with the matching ID
         internal static BankAccount? GetBankAccount(string id)
         {
