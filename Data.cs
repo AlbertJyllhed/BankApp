@@ -37,7 +37,7 @@ namespace BankApp
         }
 
         // Loops through all bank accounts and returns the account with the matching ID
-        internal static BankAccount? GetBankAccount(int id)
+        internal static BankAccount? GetBankAccount(string id)
         {
             foreach (var account in bankAccounts)
             {
@@ -51,16 +51,26 @@ namespace BankApp
         }
 
         // Checks every bank account and generates a unique ID
-        internal static int GetUniqueID()
+        internal static string GetUniqueID()
         {
             var random = new Random();
-            int id = random.Next(00000, 99999);
+            int id = random.Next(0, 99999);
+            string idString = id.ToString();
+
+            // Pads the ID with leading zeros to ensure it is 5 digits long
+            for (int i = 0; i < 5; i++)
+            {
+                if (idString.Length < 5)
+                {
+                    idString = "0" + idString;
+                }
+            }
 
             // Not sure we need to check if there are any accounts
             // As far as i know foreach will just skip if there are no items
             foreach (var account in bankAccounts)
             {
-                if (account.ID == id)
+                if (account.ID == idString)
                 {
                     // This runs the method again if the ID is not unique
                     return GetUniqueID();
@@ -69,7 +79,7 @@ namespace BankApp
 
             // Method never gets here if the ID is not unique
             // because return ends the method
-            return id;
+            return idString;
         }
 
         // Method to get a valid currency from user input
