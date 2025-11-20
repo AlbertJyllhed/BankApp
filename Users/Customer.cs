@@ -29,7 +29,8 @@ namespace BankApp.Users
             BankAccounts.Add(bankAccount);
             Data.AddBankAccount(bankAccount);
 
-            Console.WriteLine($"Your new bank account ({accountName}, {currency}) has been successfully created!");
+            Console.WriteLine($"Your new {bankAccount.GetAccountType()} ({accountName}, {currency}) " +
+                $"has been successfully created!");
         }
 
         internal BankAccount? GetBankAccount(string id)

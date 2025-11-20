@@ -59,6 +59,11 @@
             }
         }
 
+        internal string GetAccountType()
+        {
+            return GetType().Name;
+        }
+
         //Method to print info and the method gets called in get PrintBankAccounts
         internal void PrintInfo()
         {
