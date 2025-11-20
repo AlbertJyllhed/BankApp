@@ -40,13 +40,13 @@
         //Method to get int input within a specific range
         internal static int GetIndex(int maxIndex)
         {
-            int index = GetInt();
+            int index = GetInt() -1;
             while (index < 0 || index > maxIndex)
             {
                 Console.WriteLine("Invald index try again!");
-                index = GetInt();
+                index = GetInt() -1;
             }
-            return index - 1;
+            return index;
         }
 
         internal static bool GetYesOrNo()
