@@ -36,6 +36,7 @@ namespace BankApp
                 var password = Input.GetString();
                 Console.Clear();
 
+
                 // Check if the username and password are correct
                 var user = Data.GetUser(username);
                 if (user != null && user.Password == password)

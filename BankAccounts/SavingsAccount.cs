@@ -15,11 +15,9 @@ namespace BankApp.BankAccounts
 
         internal void PrintSavingsInterest(decimal amount)
         {
-            Console.WriteLine($"Money put in savings {amount} {Currency}\n" +
+            Console.WriteLine($"Money put in savings account {amount} {Currency}\n" +
                 $"Savings interest is {Interest}%\n" +
                 $"After One Year you will have {amount * Interest} {Currency}\n"); //+
-                //$"Total amount after interest in savings account {amount * Interest} {Currency}");
-
         }
 
         internal override void AddBalance(decimal value)

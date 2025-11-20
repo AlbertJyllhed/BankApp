@@ -146,7 +146,7 @@ namespace BankApp.Users
                     borrowedAmount = Input.GetInt();
                 }
 
-                Console.WriteLine("Which bank account would put your borrowed money in?");
+                Console.WriteLine("Which bank account would you like to put your borrowed money in?");
                 PrintBankAccounts();
                 var chosenAccount = Input.GetIndex(BankAccounts.Count);
 
