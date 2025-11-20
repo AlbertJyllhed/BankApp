@@ -16,7 +16,10 @@ namespace BankApp
             Console.WriteLine("7. Show current debt");
             Console.WriteLine("8. Log out");
 
-            switch (Input.GetInt())
+            int input = Input.GetInt();
+            Console.Clear();
+
+            switch (input)
             {
                 case 1:
                     customer.CreateBankAccount();
@@ -54,8 +57,11 @@ namespace BankApp
             Console.WriteLine("1. Update currency");
             Console.WriteLine("2. Create user");
             Console.WriteLine("3. Log out ");
-           
-            switch (Input.GetInt())
+
+            int input = Input.GetInt();
+            Console.Clear();
+
+            switch (input)
             {
                 case 1:
                     admin.UpdateCurrency();

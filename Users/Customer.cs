@@ -131,29 +131,39 @@ namespace BankApp.Users
             maxLoan *= 5;
             Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
 
-            Console.WriteLine("How much would you like to borrow?");
-            var borrowedAmount = Input.GetInt();
+            Console.WriteLine("Are you sure you want to make a loan? y/n");
+            bool confirmLoan = Input.GetYesOrNo();
 
-            if (maxLoan <= 0)
+            if (confirmLoan)
             {
-                Console.WriteLine("You have no money, you are not able to borrow.");
+                Console.WriteLine("How much would you like to borrow?");
+                var borrowedAmount = Input.GetInt();
+
+                if (maxLoan <= 0)
+                {
+                    Console.WriteLine("You have no money, you are not able to borrow.");
+                }
+                else
+                {
+                    while (borrowedAmount > maxLoan || borrowedAmount <= 0)
+                    {
+                        Console.WriteLine($"You're not allowed to borrow {borrowedAmount}");
+                        borrowedAmount = Input.GetInt();
+                    }
+
+                    Console.WriteLine("Which bank account would you like to put your borrowed money in?");
+                    PrintBankAccounts();
+                    var chosenAccount = Input.GetIndex(BankAccounts.Count);
+
+                    var newLoan = new Loan(borrowedAmount);
+                    Loans.Add(newLoan);
+
+                    BankAccounts[chosenAccount].AddBalance(borrowedAmount);
+                }
             }
             else
             {
-                while (borrowedAmount > maxLoan || borrowedAmount <= 0)
-                {
-                    Console.WriteLine("Input exceeded maximum allowed loan");
-                    borrowedAmount = Input.GetInt();
-                }
-
-                Console.WriteLine("Which bank account would you like to put your borrowed money in?");
-                PrintBankAccounts();
-                var chosenAccount = Input.GetIndex(BankAccounts.Count);
-
-                var newLoan = new Loan(borrowedAmount);
-                Loans.Add(newLoan);
-
-                BankAccounts[chosenAccount].AddBalance(borrowedAmount);
+                Console.WriteLine("Loan has been cancelled.");
             }
         }
 
@@ -202,7 +212,7 @@ namespace BankApp.Users
 
         internal void InsertMoney()
         {
-            
+
             Console.WriteLine("Which account do you want to insert money in to.");
             PrintBankAccounts();
             int fromIndex = Input.GetIndex(BankAccounts.Count);

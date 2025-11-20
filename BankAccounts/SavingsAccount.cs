@@ -17,14 +17,13 @@ namespace BankApp.BankAccounts
         {
             Console.WriteLine($"Money put in savings account {amount} {Currency}\n" +
                 $"Savings interest is {Interest}%\n" +
-                $"After One Year you will have {amount * Interest} {Currency}\n"); //+
+                $"After one year you will have {amount * Interest} {Currency}");
         }
 
         internal override void AddBalance(decimal value)
         {
             Balance += value;
             Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
-            Console.ReadLine();
         }
     }
 }
