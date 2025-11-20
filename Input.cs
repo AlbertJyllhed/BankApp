@@ -41,7 +41,7 @@
         internal static int GetIndex(int maxIndex)
         {
             int index = GetInt() -1;
-            while (index < 0 || index > maxIndex)
+            while (index < 0 || index >= maxIndex)
             {
                 Console.WriteLine("Invald index try again!");
                 index = GetInt() -1;
