@@ -128,68 +128,69 @@ namespace BankApp.Users
                 account.PrintTransactions();
             }
         }
-              internal void CreateLoan()
+
+        // Loan creation method
+        internal void CreateLoan()
         {
             //Check if user has any bank accounts
-            if (BankAccounts.Count == 0)
+            if (BankAccounts.Count > 0)
             {
-                Console.WriteLine("You don´t have any accounts. Please make one before you make a loan.");
-                return;
-            }
-
-            //PrintBankAccount to show all user's accounts and amount of money. 
-            decimal totalInSEK = 0;
-            foreach (var account in BankAccounts)
-            {
-                decimal balance = account.GetBalance();
-                decimal balanceInSEK = account.ToSEK(balance);
-                totalInSEK += balanceInSEK;
-            }
-
-            //Calculate max loan, 5 times the total balance in SEK)
-            decimal maxLoan = totalInSEK * 5;
-            Console.WriteLine($"Your total balance in SEK: {totalInSEK}");
-            Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
-            Console.WriteLine("Are you sure you want to make a loan? y/n");
-
-            bool confirmLoan = Input.GetYesOrNo();
-
-            if (confirmLoan)
-            {
-                Console.WriteLine("How much would you like to borrow?");
-                var borrowedAmountSEK = Input.GetInt();
-
-                if (maxLoan <= 0)
+                //PrintBankAccount to show all user's accounts and amount of money. 
+                decimal totalInSEK = 0;
+                foreach (var account in BankAccounts)
                 {
-                    Console.WriteLine("You have no money, you are not able to borrow.");
+                    decimal balance = account.GetBalance();
+                    decimal balanceInSEK = account.ToSEK(balance);
+                    totalInSEK += balanceInSEK;
+                }
+
+                //Calculate max loan, 5 times the total balance in SEK)
+                decimal maxLoan = totalInSEK * 5;
+                Console.WriteLine($"Your total balance in SEK: {totalInSEK}");
+                Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
+                Console.WriteLine("Are you sure you want to make a loan? y/n");
+
+                bool confirmLoan = Input.GetYesOrNo();
+
+                if (confirmLoan)
+                {
+                    Console.WriteLine("How much would you like to borrow?");
+                    var borrowedAmountSEK = Input.GetInt();
+
+                    if (maxLoan <= 0)
+                    {
+                        Console.WriteLine("You have no money, you are not able to borrow.");
+                    }
+                    else
+                    {
+                        while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
+                        {
+                            Console.WriteLine($"You're not allowed to borrow {borrowedAmountSEK}");
+                            borrowedAmountSEK = Input.GetInt();
+                        }
+
+                        Console.WriteLine("Which bank account would you like to put your borrowed money in?");
+                        PrintBankAccounts();
+                        var chosenAccount = Input.GetIndex(BankAccounts.Count);
+
+                        var newLoan = new Loan(borrowedAmountSEK);
+                        Loans.Add(newLoan);
+
+                        decimal depositedAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
+
+                        BankAccounts[chosenAccount].AddBalance(depositedAmount);
+
+                        Console.WriteLine($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
+                    }
                 }
                 else
                 {
-                    while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
-                    {
-                        Console.WriteLine($"You're not allowed to borrow {borrowedAmountSEK}");
-                        borrowedAmountSEK = Input.GetInt();
-                    }
-
-                    Console.WriteLine("Which bank account would you like to put your borrowed money in?");
-                    PrintBankAccounts();
-                    var chosenAccount = Input.GetIndex(BankAccounts.Count);
-
-                    var newLoan = new Loan(borrowedAmountSEK);
-                    Loans.Add(newLoan);
-
-                    decimal depositedAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
-
-                    BankAccounts[chosenAccount].AddBalance(depositedAmount);
-
-                    Console.WriteLine($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
+                    Console.WriteLine("Loan has been cancelled.");
                 }
-
             }
             else
             {
-                Console.WriteLine("Loan has been cancelled.");
-
+                Console.WriteLine("You don´t have any accounts. Please make one before you make a loan.");
             }
         }
 
