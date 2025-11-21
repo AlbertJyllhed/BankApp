@@ -10,11 +10,11 @@ namespace BankApp
         private static Dictionary<string, decimal> currency = new Dictionary<string, decimal>()
         {
             ["SEK"] = 1.0m,
-            ["DKK"] = 0.68m,
-            ["NOK"] = 1.07m,
-            ["EUR"] = 0.09m,
-            ["GBP"] = 0.08m,
-            ["USD"] = 0.11m
+            ["DKK"] = 1.54m,
+            ["NOK"] = 1.01m,
+            ["EUR"] = 11.5m,
+            ["GBP"] = 13.0m,
+            ["USD"] = 10.8m
         };
 
         // Setup method to initialize user data

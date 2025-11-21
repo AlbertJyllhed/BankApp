@@ -122,11 +122,29 @@ namespace BankApp.Users
 
         internal void CreateLoan()
         {
-            if (HasBankAccounts())
+
+            //PrintBankAccount to show all user's accounts and amount of money. 
+            decimal totalInSEK = 0;
+            foreach (var account in BankAccounts)
             {
-                //PrintBankAccount to show all user's accounts and amount of money. 
-                decimal maxLoan = 0;
-                foreach (var account in BankAccounts)
+                decimal balance = account.GetBalance();
+                decimal balanceInSEK = account.ToSEK(balance);
+                totalInSEK += balanceInSEK;
+            }
+
+            decimal maxLoan = totalInSEK * 5;
+            Console.WriteLine($"Your total balance in SEK: {totalInSEK}");
+            Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
+            Console.WriteLine("Are you sure you want to make a loan? y/n");
+            
+            bool confirmLoan = Input.GetYesOrNo();
+
+            if (confirmLoan)
+            {
+                Console.WriteLine("How much would you like to borrow?");
+                var borrowedAmountSEK = Input.GetInt();
+
+                if (maxLoan <= 0)
                 {
                     maxLoan += account.GetBalance();
                 }
@@ -138,12 +156,10 @@ namespace BankApp.Users
 
                 if (confirmLoan)
                 {
-                    Console.WriteLine("How much would you like to borrow?");
-                    var borrowedAmount = Input.GetInt();
-
-                    if (maxLoan <= 0)
+                    while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
                     {
-                        Console.WriteLine("You have no money, you are not able to borrow.");
+                        Console.WriteLine($"You're not allowed to borrow {borrowedAmountSEK}");
+                        borrowedAmountSEK = Input.GetInt();
                     }
                     else
                     {
@@ -157,15 +173,12 @@ namespace BankApp.Users
                         PrintBankAccounts();
                         var chosenAccount = Input.GetIndex(BankAccounts.Count);
 
-                        var newLoan = new Loan(borrowedAmount);
-                        Loans.Add(newLoan);
+                    var newLoan = new Loan(borrowedAmountSEK);
+                    Loans.Add(newLoan);
 
-                        BankAccounts[chosenAccount].AddBalance(borrowedAmount);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Loan has been cancelled.");
+                    decimal depositAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
+
+                    BankAccounts[chosenAccount].AddBalance(borrowedAmountSEK);
                 }
             }
             else
