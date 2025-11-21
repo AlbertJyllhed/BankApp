@@ -126,7 +126,7 @@ namespace BankApp.Users
             if (BankAccounts.Count == 0)
             {
                 Console.WriteLine("You don´t have any accounts. Please make one before you make a loan.");
-                return;
+                return; 
             }
 
             //PrintBankAccount to show all user's accounts and amount of money. 
