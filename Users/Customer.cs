@@ -131,6 +131,12 @@ namespace BankApp.Users
 
         internal void CreateLoan()
         {
+            //Check if user has any bank accounts
+            if (BankAccounts.Count == 0)
+            {
+                Console.WriteLine("You don´t have any accounts. Please make one before you make a loan.");
+                return; 
+            }
 
             //PrintBankAccount to show all user's accounts and amount of money. 
             decimal totalInSEK = 0;
@@ -141,11 +147,12 @@ namespace BankApp.Users
                 totalInSEK += balanceInSEK;
             }
 
+            //Calculate max loan, 5 times the total balance in SEK)
             decimal maxLoan = totalInSEK * 5;
             Console.WriteLine($"Your total balance in SEK: {totalInSEK}");
             Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
             Console.WriteLine("Are you sure you want to make a loan? y/n");
-            
+
             bool confirmLoan = Input.GetYesOrNo();
 
             if (confirmLoan)
@@ -185,14 +192,18 @@ namespace BankApp.Users
                     var newLoan = new Loan(borrowedAmountSEK);
                     Loans.Add(newLoan);
 
-                    decimal depositAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
+                    decimal depositedAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
 
-                    BankAccounts[chosenAccount].AddBalance(borrowedAmountSEK);
+                    BankAccounts[chosenAccount].AddBalance(depositedAmount);
+
+                    Console.WriteLine($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
                 }
+
             }
             else
             {
-                Console.WriteLine("You don´t have any accounts. Please make one before you make a loan.");
+                Console.WriteLine("Loan has been cancelled.");
+
             }
         }
 
