@@ -1,6 +1,4 @@
 ﻿using BankApp.BankAccounts;
-using System;
-using System.Security.Principal;
 
 namespace BankApp.Users
 {
@@ -23,7 +21,7 @@ namespace BankApp.Users
             Console.Write("New bank account name: ");
             var accountName = Input.GetString();
 
-            var currency = Data.GetCurrency();
+            var currency = Data.GetCurrency().Key;
 
             //Add the new bank account into the list.
             var bankAccount = new BankAccount(accountName, currency);
@@ -225,7 +223,7 @@ namespace BankApp.Users
             Console.WriteLine("What amount do you want put in the savings account?");
             var amount = Input.GetDecimal();
 
-            var currency = Data.GetCurrency();
+            var currency = Data.GetCurrency().Key;
 
             //Add the new bank account into the list.
             var savingsAccount = new SavingsAccount(accountName, currency);
