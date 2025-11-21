@@ -19,7 +19,7 @@
         // Method to add balance to account
         internal virtual void AddBalance(decimal value)
         {
-            value = ConvertCurrency(value);
+            value = Math.Round(value, 2);
             _transactions.Add(value);
             Balance += value;
             Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
@@ -27,13 +27,13 @@
 
         internal decimal RemoveBalance(decimal value)
         {
-            value = ConvertCurrency(value);
+            value = Math.Round(value, 2);
 
-            if (Balance > value)
+            if (Balance >= value)
             {
-                Console.WriteLine($"{value} {Currency} was transferred from account {ID}.");
                 Balance -= value;
                 _transactions.Add(-value);
+                Console.WriteLine($"{value} {Currency} was transferred from account {ID}.");
                 return value;
             }
             else
@@ -71,11 +71,23 @@
                 $"Balance: {Balance} {Currency}");
         }
 
-        // Convert current balance to SEK and then to account currency
-        protected decimal ConvertCurrency(decimal value)
+        //// Convert current balance to SEK and then to account currency
+        //protected decimal ConvertCurrency(decimal value)
+        //{
+        //    value /= Data.currency["SEK"] * Data.currency[Currency];
+        //    return Math.Round(value, 2);
+        //}
+
+        // Convert value to SEK from account currency
+        internal decimal ToSEK(decimal value)
         {
-            value /= Data.currency["SEK"] * Data.currency[Currency];
-            return Math.Round(value, 2);
+            return Math.Round(value * Data.currency[Currency], 2);
+        }
+
+        // Convert value from SEK to account currency
+        internal decimal FromSEK(decimal value)
+        {
+            return Math.Round(value / Data.currency[Currency], 2);
         }
     }
 }
