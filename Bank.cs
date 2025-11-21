@@ -1,5 +1,4 @@
 ﻿using BankApp.Users;
-using BankApp.BankAccounts;
 
 namespace BankApp
 {
@@ -7,22 +6,23 @@ namespace BankApp
     {
         User? activeUser;
 
-        //Will run the program need more here later
+        // Loops the application until user logs out
         internal void Run()
         {
             LogIn();
+            Console.Clear();
 
             while (activeUser != null)
             {
                 CreateMenu();
-                Console.WriteLine("Press an key to continue...");
+                Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 Console.Clear();
             }
         }
 
         // Log in method with 3 attempts
-        private bool LogIn()
+        private void LogIn()
         {
             int maxAttempts = 3;
             int attempts = 0;
@@ -34,15 +34,12 @@ namespace BankApp
                 var username = Input.GetString();
                 Console.WriteLine("Please enter password");
                 var password = Input.GetString();
-                Console.Clear();
-
 
                 // Check if the username and password are correct
                 var user = Data.GetUser(username);
                 if (user != null && user.Password == password)
                 {
                     activeUser = user;
-                    return true;
                 }
                 else
                 {
@@ -52,8 +49,6 @@ namespace BankApp
                         $"Attempts left {maxAttempts - attempts}");
                 }
             }
-
-            return false;
         }
 
         // Log out method
@@ -75,7 +70,7 @@ namespace BankApp
         {
             var menu = new Menu();
             menu.PrintTitle();
-            Console.WriteLine("-- Welcome to Liskov Bank --");
+            Console.WriteLine("--- Welcome to Liskov Bank ---");
 
             if (activeUser != null)
             {
