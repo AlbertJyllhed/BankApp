@@ -12,9 +12,10 @@ namespace BankApp
             Console.WriteLine("3. Show bank accounts");
             Console.WriteLine("4. Insert money to account");
             Console.WriteLine("5. Transfer balance");
-            Console.WriteLine("6. Create loan");
-            Console.WriteLine("7. Show current debt");
-            Console.WriteLine("8. Log out");
+            Console.WriteLine("6. Print transactions");
+            Console.WriteLine("7. Create loan");
+            Console.WriteLine("8. Show current debt");
+            Console.WriteLine("9. Log out");
 
             int input = Input.GetInt();
             Console.Clear();
@@ -37,12 +38,15 @@ namespace BankApp
                     customer.TransferBalance();
                     break;
                 case 6:
-                    customer.CreateLoan();
+                    customer.PrintTransactionsActivity();
                     break;
                 case 7:
-                    customer.PrintLoans();
+                    customer.CreateLoan();
                     break;
                 case 8:
+                    customer.PrintLoans();
+                    break;
+                case 9:
                     return false;
                 default:
                     Console.WriteLine("Invalid choice, try again.");

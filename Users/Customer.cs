@@ -1,4 +1,5 @@
 ﻿using BankApp.BankAccounts;
+using System;
 using System.Security.Principal;
 
 namespace BankApp.Users
@@ -117,6 +118,14 @@ namespace BankApp.Users
             else
             {
                 Console.WriteLine("You don't have any accounts.");
+            }
+        }
+
+        internal void PrintTransactionsActivity()
+        {
+            foreach (var account in BankAccounts)
+            {
+                account.PrintTransactions();
             }
         }
 
