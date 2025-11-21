@@ -52,11 +52,12 @@
         //Method to print all transactions
         internal void PrintTransactions()
         {
-            Console.WriteLine("--- Transactions ---");
+            Console.WriteLine($"--- Transactions {Name}---");
             foreach (var transaction in _transactions)
             {
                 Console.WriteLine($"* {transaction} {Currency}, Account: {ID}");
             }
+            Console.WriteLine("");
         }
 
         internal string GetAccountType()
