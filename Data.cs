@@ -152,5 +152,19 @@ namespace BankApp
 
             return currencyCode;
         }
+
+        // Method to set the exchange rate for a given currency code
+        internal static void SetCurrency(string code, decimal rate)
+        {
+            if (currency.ContainsKey(code))
+            {
+                currency[code] = rate;
+            }
+            else
+            {
+                Console.WriteLine($"{code} is not a valid currency.\n" +
+                    $"We apologize for the inconvenience.");
+            }
+        }
     }
 }
