@@ -59,7 +59,7 @@ namespace BankApp.Users
                 BankAccount fromAccount = BankAccounts[fromIndex];
 
                 // Choose to which account to transfer
-                Console.WriteLine("Which account do you want to transfer to?");
+                Console.WriteLine("Which account do you want to transfer to? Enter account number.");
                 string id = Input.GetString();
                 BankAccount? toAccount = Data.GetBankAccount(id);
                 if (toAccount != null)
@@ -146,19 +146,32 @@ namespace BankApp.Users
 
                 if (maxLoan <= 0)
                 {
-                    Console.WriteLine("You have no money, you are not able to borrow.");
+                    maxLoan += account.GetBalance();
                 }
-                else
+                maxLoan *= 5;
+                Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
+
+                Console.WriteLine("Are you sure you want to make a loan? y/n");
+                bool confirmLoan = Input.GetYesOrNo();
+
+                if (confirmLoan)
                 {
                     while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
                     {
                         Console.WriteLine($"You're not allowed to borrow {borrowedAmountSEK}");
                         borrowedAmountSEK = Input.GetInt();
                     }
+                    else
+                    {
+                        while (borrowedAmount > maxLoan || borrowedAmount <= 0)
+                        {
+                            Console.WriteLine($"You're not allowed to borrow {borrowedAmount}");
+                            borrowedAmount = Input.GetInt();
+                        }
 
-                    Console.WriteLine("Which bank account would you like to put your borrowed money in?");
-                    PrintBankAccounts();
-                    var chosenAccount = Input.GetIndex(BankAccounts.Count);
+                        Console.WriteLine("Which bank account would you like to put your borrowed money in?");
+                        PrintBankAccounts();
+                        var chosenAccount = Input.GetIndex(BankAccounts.Count);
 
                     var newLoan = new Loan(borrowedAmountSEK);
                     Loans.Add(newLoan);
@@ -170,7 +183,7 @@ namespace BankApp.Users
             }
             else
             {
-                Console.WriteLine("Loan has been cancelled.");
+                Console.WriteLine("You don´t have any accounts. Please make one before you make a loan.");
             }
         }
 
