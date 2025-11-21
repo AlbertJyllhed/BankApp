@@ -59,7 +59,7 @@ namespace BankApp.Users
                 BankAccount fromAccount = BankAccounts[fromIndex];
 
                 // Choose to which account to transfer
-                Console.WriteLine("Which account do you want to transfer to?");
+                Console.WriteLine("Which account do you want to transfer to? Enter account number.");
                 string id = Input.GetString();
                 BankAccount? toAccount = Data.GetBankAccount(id);
                 if (toAccount != null)
