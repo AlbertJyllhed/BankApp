@@ -23,7 +23,7 @@ namespace BankApp
             switch (input)
             {
                 case 1:
-                    customer.CreateBankAccount();
+                    customer.SetupBankAccount();
                     break;
                 case 2:
                     customer.CreateSavingAccount();

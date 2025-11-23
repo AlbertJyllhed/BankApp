@@ -20,20 +20,41 @@ namespace BankApp
         // Setup method to initialize user data
         internal static void Setup()
         {
+            // Setup user list
             users = new List<User>()
             {
-                new Admin("Admin", "admin123"),
-                new Customer("User", "user123")
+                new Admin("Admin", "a1"),
+                new Customer("User1", "u1"),
+                new Customer("User2", "u2")
             };
+
+            // Create a new random instance to reuse for each customer
+            var random = new Random();
 
             foreach (var user in users)
             {
+                int counter = 1;
+
                 if (user is Customer customer)
                 {
-                    var account = new BankAccount("User1 Account", "SEK");
-                    account.AddBalance(500.0m);
-                    customer.CreateBankAccount();
-                    AddBankAccount(account);
+                    // Randomize currency for new account
+                    int randomIndex = random.Next(0, currency.Count);
+                    string randomCurrency = currency.ElementAt(randomIndex).Key;
+
+                    // Randomize how many accounts user has
+                    int accountAmount = random.Next(1, 3);
+
+                    for (int i = 0; i < accountAmount; i++)
+                    {
+                        // Create new account for user, also adds account to Data
+                        var account = customer.CreateBankAccount($"{user.Name} Account {counter}", randomCurrency);
+
+                        // Randomize balance for new account
+                        decimal randomBalance = random.Next(100, 1000) * (decimal)random.NextDouble();
+                        account.AddBalance(randomBalance);
+                    }
+
+                    counter++;
                 }
             }
         }
