@@ -9,6 +9,7 @@ namespace BankApp
         // Loops the application until user logs out
         internal void Run()
         {
+            Data.Setup();
             LogIn();
             Console.Clear();
 
@@ -24,11 +25,10 @@ namespace BankApp
         // Log in method with 3 attempts
         private void LogIn()
         {
-            int maxAttempts = 3;
-            int attempts = 0;
+            int maxAttempts = 3, attempts = 0;
 
             // Loop until the user is logged in or max attempts reached
-            while (attempts < maxAttempts)
+            while (attempts < maxAttempts && activeUser == null)
             {
                 Console.WriteLine("Please enter username.");
                 var username = Input.GetString();

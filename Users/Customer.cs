@@ -15,21 +15,28 @@ namespace BankApp.Users
 
         //Add a method to ensure bank account is unique
 
-        internal virtual void CreateBankAccount()
+        // Method to get user input and create a new bank account
+        internal void SetupBankAccount()
         {
-            //Ask user to choose the name of the created account.
+            // Ask user to choose the name of the created account.
             Console.Write("New bank account name: ");
             var accountName = Input.GetString();
 
             var currency = Data.GetCurrency().Key;
 
-            //Add the new bank account into the list.
-            var bankAccount = new BankAccount(accountName, currency);
-            BankAccounts.Add(bankAccount);
-            Data.AddBankAccount(bankAccount);
+            var bankAccount = CreateBankAccount(accountName, currency);
 
             Console.WriteLine($"Your new {bankAccount.GetAccountType()} ({accountName}, {currency}) " +
                 $"has been successfully created!");
+        }
+
+        // Method to create a new bank account without user input
+        internal BankAccount CreateBankAccount(string accountName, string currency)
+        {
+            var bankAccount = new BankAccount(accountName, currency);
+            BankAccounts.Add(bankAccount);
+            Data.AddBankAccount(bankAccount);
+            return bankAccount;
         }
 
         internal BankAccount? GetBankAccount(string id)
