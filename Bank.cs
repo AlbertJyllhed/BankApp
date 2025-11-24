@@ -61,7 +61,7 @@ namespace BankApp
             if(user != null && user is Customer)
             {
                 var customer = user as Customer;
-                customer.SetLocked(true);
+                customer.TryLogin();
             }
         }
 
