@@ -31,9 +31,9 @@ namespace BankApp
             while (attempts < maxAttempts && activeUser == null)
             {
                 Console.WriteLine("Please enter username.");
-                var username = Input.GetString();
+                var username = InputUtilities.GetString();
                 Console.WriteLine("Please enter password");
-                var password = Input.GetString();
+                var password = InputUtilities.GetString();
 
                 // Check if the username and password are correct
                 var user = Data.GetUser(username);
@@ -58,7 +58,7 @@ namespace BankApp
             activeUser = null;
 
             Console.WriteLine("Do you want to exit the application? y/n");
-            bool answer = Input.GetYesOrNo();
+            bool answer = InputUtilities.GetYesOrNo();
             if (!answer)
             {
                 LogIn();

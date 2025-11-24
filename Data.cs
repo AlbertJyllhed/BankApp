@@ -166,7 +166,7 @@ namespace BankApp
                 Console.WriteLine($"{count}. {currencyKey}");
                 count++;
             }
-            var index = Input.GetIndex(currency.Count);
+            var index = InputUtilities.GetIndex(currency.Count);
 
             // Get the currency code from the dictionary based on the chosen index.
             var currencyCode = currency.ElementAt(index);

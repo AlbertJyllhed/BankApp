@@ -1,6 +1,6 @@
 ﻿namespace BankApp
 {
-    internal static class Input
+    internal static class InputUtilities
     {
         //Method to get string input from user
         internal static string GetString()
