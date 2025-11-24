@@ -19,11 +19,5 @@ namespace BankApp.BankAccounts
                 $"Savings interest is {Interest}%\n" +
                 $"After one year you will have {amount * Interest} {Currency}");
         }
-
-        internal override void AddBalance(decimal value)
-        {
-            Balance += value;
-            Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
-        }
     }
 }
