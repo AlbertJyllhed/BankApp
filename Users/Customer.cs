@@ -6,6 +6,7 @@ namespace BankApp.Users
     {
         private List<BankAccount> BankAccounts { get; set; }
         private List<Loan> Loans { get; set; }
+        private bool Locked = false;
 
         internal Customer(string name, string password) : base(name, password)
         {
@@ -13,7 +14,15 @@ namespace BankApp.Users
             Loans = new List<Loan>();
         }
 
-        //Add a method to ensure bank account is unique
+        internal void SetLocked(bool isLocked)
+        {
+            Locked = isLocked;
+        }
+
+        internal bool IsLocked()
+        {
+            return Locked;
+        }
 
         // Method to get user input and create a new bank account
         internal void SetupBankAccount()
