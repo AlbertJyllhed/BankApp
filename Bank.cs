@@ -71,17 +71,17 @@ namespace BankApp
             {
                 bool restart = false;
 
-                if (activeUser is Customer)
+                // Print menu based on user type
+                if (activeUser is Customer customer)
                 {
-                    var customer = activeUser as Customer;
                     restart = menu.PrintCustomerMenu(customer);
                 }
-                else if (activeUser is Admin)
+                else if (activeUser is Admin admin)
                 {
-                    var admin = activeUser as Admin;
                     restart = menu.PrintAdminMenu(admin);
                 }
 
+                // Log out if menu returns false
                 if (!restart)
                 {
                     LogOut();
