@@ -4,9 +4,10 @@ namespace BankApp.Users
 {
     internal class Customer : User
     {
+        private bool locked = false;
+        private int loginAttempts = 0;
         private List<BankAccount> BankAccounts { get; set; }
         private List<Loan> Loans { get; set; }
-        private bool Locked = false;
 
         internal Customer(string name, string password) : base(name, password)
         {
@@ -14,14 +15,20 @@ namespace BankApp.Users
             Loans = new List<Loan>();
         }
 
-        internal void SetLocked(bool isLocked)
+        internal void TryLogin()
         {
-            Locked = isLocked;
+            loginAttempts++;
+
+            if (loginAttempts >= 3)
+            {
+                locked = true;
+                loginAttempts = 0;
+            }
         }
 
         internal bool IsLocked()
         {
-            return Locked;
+            return locked;
         }
 
         // Method to get user input and create a new bank account
