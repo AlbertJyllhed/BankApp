@@ -52,9 +52,8 @@ namespace BankApp
                         // Randomize balance for new account
                         decimal randomBalance = random.Next(100, 1000) * (decimal)random.NextDouble();
                         account.AddBalance(randomBalance);
+                        counter++;
                     }
-
-                    counter++;
                 }
             }
         }
@@ -156,7 +155,7 @@ namespace BankApp
         }
 
         // Method to get a valid currency from user input
-        internal static KeyValuePair<string, decimal> GetCurrency()
+        internal static KeyValuePair<string, decimal> ChooseCurrency()
         {
             // Ask user to choose currency code by typing in number. 
             Console.WriteLine("Choose currency: ");
@@ -174,17 +173,41 @@ namespace BankApp
             return currencyCode;
         }
 
+        // Method to get the exchange rate for a given currency code
+        internal static KeyValuePair<string, decimal> GetCurrency(string code)
+        {
+            if (CurrencyExists(code))
+            {
+                return new KeyValuePair<string, decimal>(code, currency[code]);
+            }
+            else
+            {
+                return new KeyValuePair<string, decimal>("", 0);
+            }
+        }
+
         // Method to set the exchange rate for a given currency code
         internal static void SetCurrency(string code, decimal rate)
         {
-            if (currency.ContainsKey(code))
+            if (CurrencyExists(code))
             {
                 currency[code] = rate;
+            }
+        }
+
+        // Method to check if a currency code exists in the dictionary
+        private static bool CurrencyExists(string code)
+        {
+            if (currency.ContainsKey(code))
+            {
+                return true;
             }
             else
             {
                 Console.WriteLine($"{code} is not a valid currency.\n" +
                     $"We apologize for the inconvenience.");
+
+                return false;
             }
         }
     }

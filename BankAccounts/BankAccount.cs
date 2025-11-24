@@ -77,23 +77,16 @@
                 $"Balance: {Balance} {Currency}");
         }
 
-        //// Convert current balance to SEK and then to account currency
-        //protected decimal ConvertCurrency(decimal value)
-        //{
-        //    value /= Data.currency["SEK"] * Data.currency[Currency];
-        //    return Math.Round(value, 2);
-        //}
-
         // Convert value to SEK from account currency
         internal decimal ToSEK(decimal value)
         {
-            return Math.Round(value * Data.GetCurrency().Value, 2);
+            return Math.Round(value * Data.GetCurrency(Currency).Value, 2);
         }
 
         // Convert value from SEK to account currency
         internal decimal FromSEK(decimal value)
         {
-            return Math.Round(value / Data.GetCurrency().Value, 2);
+            return Math.Round(value / Data.GetCurrency(Currency).Value, 2);
         }
     }
 }
