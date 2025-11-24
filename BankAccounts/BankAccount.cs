@@ -28,26 +28,25 @@
         // Print deposit details
         internal void PrintDepositDetails(decimal value)
         {
-            Console.WriteLine($"{value} {Currency} was transferred  to account {ID}.");
+            Console.WriteLine($"{value} {Currency} was transferred to account {ID}.");
         }
 
-        // Print transfer details with from and to account IDs
-        internal void PrintTransferDetails(decimal originalAmount, string fromCurrency, decimal convertedAmount,
-            string toCurrency, string fromAccountId, string toAccountId)
+        // Print transfer details with to account IDs
+        internal void PrintTransferDetails(decimal originalAmount, decimal convertedAmount, BankAccount toAccount)
         {
-            if (fromCurrency == toCurrency)
+            if (Currency == toAccount.Currency)
             {
-                Console.WriteLine(
-        $"{originalAmount} {fromCurrency} was transferred from account {fromAccountId} to account {toAccountId}.");
+                Console.WriteLine($"{originalAmount} {Currency} was transferred from account" +
+                    $" {ID} to account {toAccount.ID}.");
             }
             else
             {
-                Console.WriteLine(
-                    $"{originalAmount} {fromCurrency} was transferred from account {fromAccountId}, converted into {convertedAmount} {toCurrency} and transferred to account {toAccountId}.");
+                Console.WriteLine($"{originalAmount} {Currency} was transferred from account {ID}," +
+                    $" converted into {convertedAmount} {toAccount.Currency} and transferred to account {toAccount.ID}.");
             }
         }
 
-
+        // Method to remove balance from account and return the removed value
         internal decimal RemoveBalance(decimal value)
         {
             value = Math.Round(value, 2);
@@ -79,7 +78,7 @@
             {
                 Console.WriteLine($"* {transaction} {Currency}");
             }
-            Console.WriteLine("");
+            Console.WriteLine();
         }
 
         internal string GetAccountType()

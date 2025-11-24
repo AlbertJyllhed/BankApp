@@ -37,15 +37,15 @@ namespace BankApp
 
                 if (user is Customer customer)
                 {
-                    // Randomize currency for new account
-                    int randomIndex = random.Next(0, currency.Count);
-                    string randomCurrency = currency.ElementAt(randomIndex).Key;
-
                     // Randomize how many accounts user has
                     int accountAmount = random.Next(1, 3);
 
                     for (int i = 0; i < accountAmount; i++)
                     {
+                        // Randomize currency for new account
+                        int randomIndex = random.Next(0, currency.Count);
+                        string randomCurrency = currency.ElementAt(randomIndex).Key;
+
                         // Create new account for user, also adds account to Data
                         var account = customer.CreateBankAccount($"{user.Name} Account {counter}", randomCurrency);
 
