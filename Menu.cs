@@ -60,7 +60,8 @@ namespace BankApp
         {
             Console.WriteLine("1. Update currency");
             Console.WriteLine("2. Create user");
-            Console.WriteLine("3. Log out ");
+            Console.WriteLine("3. Unlock customer");
+            Console.WriteLine("4. Log out ");
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -74,6 +75,9 @@ namespace BankApp
                     admin.CreateCustomer();
                     break;
                 case 3:
+                    admin.UnlockCustomerAccount();
+                    break;
+                case 4:
                     return false;
                 default:
                     Console.WriteLine("Invalid choice, try again.");
