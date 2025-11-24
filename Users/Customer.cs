@@ -84,6 +84,7 @@ namespace BankApp.Users
                 Console.WriteLine("Which account do you want to transfer to? Enter account number.");
                 string id = InputUtilities.GetString();
                 BankAccount? toAccount = Data.GetBankAccount(id);
+
                 if (toAccount != null)
                 {
                     // Choose amount to transfer
@@ -93,9 +94,16 @@ namespace BankApp.Users
                     // Check if there are sufficient funds and perform the transfer
                     if (CanTransfer(fromAccount, amount))
                     {
-                        Console.WriteLine($"Transferred {amount} {fromAccount.Currency} to {toAccount.Name}.");
+                        decimal amountCurrentCurrency = fromAccount.ToSEK(amount);
+                        decimal convertedAmount = toAccount.FromSEK(amountCurrentCurrency);
+
+                        convertedAmount = Math.Round(convertedAmount, 2);
+
+                        // Perform the transfer
                         fromAccount.RemoveBalance(amount);
-                        toAccount.AddBalance(amount);
+                        toAccount.AddBalance(convertedAmount);
+                        toAccount.PrintTransferDetails(amount, fromAccount.Currency, convertedAmount, 
+                            toAccount.Currency, fromAccount.ID, toAccount.ID);
                     }
                     else
                     {
@@ -200,7 +208,7 @@ namespace BankApp.Users
                         decimal depositedAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
 
                         BankAccounts[chosenAccount].AddBalance(depositedAmount);
-                        BankAccounts[chosenAccount].PrintTransferDetails(borrowedAmountSEK);
+                        BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
 
                         Console.WriteLine($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
                     }
@@ -255,7 +263,7 @@ namespace BankApp.Users
             savingsAccount.PrintSavingsInterest(amount);
 
             savingsAccount.AddBalance(amount);
-            savingsAccount.PrintTransferDetails(amount);
+            savingsAccount.PrintDepositDetails(amount);
 
             BankAccounts.Add(savingsAccount);
         }
@@ -273,7 +281,7 @@ namespace BankApp.Users
 
             Console.WriteLine("Transfer successful.");
             InsertMoneyToAccount.AddBalance(amount);
-            InsertMoneyToAccount.PrintTransferDetails(amount);
+            InsertMoneyToAccount.PrintDepositDetails(amount);
 
         }
     }

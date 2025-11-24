@@ -25,10 +25,20 @@
             //Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
         }
 
-        internal void PrintTransferDetails(decimal value)
+        // Print deposit details
+        internal void PrintDepositDetails(decimal value)
         {
-            Console.WriteLine($"Transferred {value} {Currency} to account {ID}.");
+            Console.WriteLine($"{value} {Currency} was transferred  to account {ID}.");
         }
+
+        // Print transfer details with from and to account IDs
+        internal void PrintTransferDetails(decimal originalAmount, string fromCurrency, decimal convertedAmount,
+            string toCurrency, string fromAccountId, string toAccountId)
+        {
+            Console.WriteLine(
+                $"{originalAmount} {fromCurrency} was transferred from account {fromAccountId}, converted into {convertedAmount} {toCurrency} and transferred to account {toAccountId}.");
+        }
+
 
         internal decimal RemoveBalance(decimal value)
         {
@@ -38,7 +48,6 @@
             {
                 Balance -= value;
                 _transactions.Add(-value);
-                Console.WriteLine($"{value} {Currency} was transferred from account {ID}.");
                 return value;
             }
             else
