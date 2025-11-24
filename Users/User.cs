@@ -12,5 +12,8 @@ namespace BankApp.Users
             Name = name;
             Password = password;
         }
+
+        // Abstract method to attempt login for user
+        internal abstract bool TryLogin(string password);
     }
 }
