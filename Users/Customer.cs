@@ -54,6 +54,11 @@ namespace BankApp.Users
             locked = false;
         }
 
+        internal bool IsLocked()
+        {
+            return locked;
+        }
+
         // Method to get user input and create a new bank account
         internal void SetupBankAccount()
         {
