@@ -11,7 +11,7 @@ namespace BankApp
         {
             Data.Setup();
             LogIn();
-            Console.Clear();
+            //Console.Clear();
 
             while (activeUser != null)
             {
@@ -28,7 +28,7 @@ namespace BankApp
             int maxAttempts = 3, attempts = 0;
 
             // Loop until the user is logged in or max attempts reached
-            while (attempts < maxAttempts && activeUser == null)
+            while (activeUser == null)
             {
                 Console.WriteLine("Please enter username.");
                 var username = InputUtilities.GetString();
@@ -43,12 +43,36 @@ namespace BankApp
                 }
                 else
                 {
+
                     activeUser = null;
                     attempts++;
                     Console.WriteLine($"Wrong username or password\n" +
                         $"Attempts left {maxAttempts - attempts}");
                 }
             }
+            if (attempts >= maxAttempts)
+            {
+                LockUser(activeUser);
+            }
+        }
+
+        private void LockUser(User? user)
+        {
+            if(user != null && user is Customer)
+            {
+                var customer = user as Customer;
+                customer.SetLocked(true);
+            }
+        }
+
+        private bool SetActiveUser(User? user)
+        {
+            if (user != null && user is Customer)
+            {
+                var customer = user as Customer;
+                return customer.IsLocked();
+            }
+            return false;
         }
 
         // Log out method
@@ -75,7 +99,7 @@ namespace BankApp
             if (activeUser != null)
             {
                 bool restart = false;
-               
+
                 if (activeUser is Customer)
                 {
                     var customer = activeUser as Customer;
