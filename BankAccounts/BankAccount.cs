@@ -35,8 +35,16 @@
         internal void PrintTransferDetails(decimal originalAmount, string fromCurrency, decimal convertedAmount,
             string toCurrency, string fromAccountId, string toAccountId)
         {
-            Console.WriteLine(
-                $"{originalAmount} {fromCurrency} was transferred from account {fromAccountId}, converted into {convertedAmount} {toCurrency} and transferred to account {toAccountId}.");
+            if (fromCurrency == toCurrency)
+            {
+                Console.WriteLine(
+        $"{originalAmount} {fromCurrency} was transferred from account {fromAccountId} to account {toAccountId}.");
+            }
+            else
+            {
+                Console.WriteLine(
+                    $"{originalAmount} {fromCurrency} was transferred from account {fromAccountId}, converted into {convertedAmount} {toCurrency} and transferred to account {toAccountId}.");
+            }
         }
 
 
