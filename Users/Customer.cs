@@ -98,15 +98,19 @@ namespace BankApp.Users
             if (HasBankAccounts())
             {
                 // Choose from which account to transfer
-                Console.WriteLine("From which account do you want to transfer?");
-                PrintBankAccounts();
-                int fromIndex = InputUtilities.GetIndex(BankAccounts.Count);
-                BankAccount fromAccount = BankAccounts[fromIndex];
+                BankAccount fromAccount = GetTransferAccountByIndex();
 
-                // Choose to which account to transfer
-                Console.WriteLine("Which account do you want to transfer to? Enter account number.");
-                string id = InputUtilities.GetString();
-                BankAccount? toAccount = Data.GetBankAccount(id);
+                BankAccount? toAccount;
+
+                // Choose to which account to transfer (using index or ID)
+                if (ChooseTransferMethod())
+                {
+                    toAccount = GetDepositAccountByIndex();
+                }
+                else
+                {
+                    toAccount = GetDepositAccountByID();
+                }
 
                 if (toAccount != null)
                 {
@@ -117,16 +121,7 @@ namespace BankApp.Users
                     // Check if there are sufficient funds and perform the transfer
                     if (CanTransfer(fromAccount, amount))
                     {
-                        decimal amountCurrentCurrency = fromAccount.ToSEK(amount);
-                        decimal convertedAmount = toAccount.FromSEK(amountCurrentCurrency);
-
-                        convertedAmount = Math.Round(convertedAmount, 2);
-
-                        // Perform the transfer
-                        fromAccount.RemoveBalance(amount);
-                        toAccount.AddBalance(convertedAmount);
-                        toAccount.PrintTransferDetails(amount, fromAccount.Currency, convertedAmount, 
-                            toAccount.Currency, fromAccount.ID, toAccount.ID);
+                        DepositToAccount(amount, toAccount, fromAccount);
                     }
                     else
                     {
@@ -138,15 +133,70 @@ namespace BankApp.Users
                     Console.WriteLine("Account not found, please try again.");
                 }
             }
-            else
-            {
-                Console.WriteLine("You don't have any accounts to transfer from.");
-            }
         }
 
+        // Method to choose transfer method
+        private bool ChooseTransferMethod()
+        {
+            Console.WriteLine("How do you want to transfer your money?\n" +
+                "1. By index\n" +
+                "2. By account ID");
+            return InputUtilities.GetIndex(2) == 0;
+        }
+
+        // Method to choose which account to transfer from
+        private BankAccount GetTransferAccountByIndex()
+        {
+            Console.WriteLine("From which account do you want to transfer?");
+            PrintBankAccounts();
+            int index = InputUtilities.GetIndex(BankAccounts.Count);
+            return BankAccounts[index];
+        }
+
+        // Method to choose which account to transfer to by index
+        private BankAccount? GetDepositAccountByIndex()
+        {
+            Console.WriteLine("Which account do you want to transfer to? Enter account index.");
+            int index = InputUtilities.GetIndex(BankAccounts.Count);
+            return Data.GetBankAccount(BankAccounts[index].ID);
+        }
+
+        // Method to choose which account to transfer to by ID
+        private BankAccount? GetDepositAccountByID()
+        {
+            Console.WriteLine("Which account do you want to transfer to? Enter account number.");
+            string id = InputUtilities.GetString();
+            return Data.GetBankAccount(id);
+        }
+
+        // Method to handle transfer to another account
+        private void DepositToAccount(decimal amount, BankAccount toAccount, BankAccount fromAccount)
+        {
+            // Convert amount to SEK and then to the target account's currency
+            decimal amountCurrentCurrency = fromAccount.ToSEK(amount);
+            decimal convertedAmount = toAccount.FromSEK(amountCurrentCurrency);
+
+            convertedAmount = Math.Round(convertedAmount, 2);
+
+            // Perform the transfer
+            fromAccount.RemoveBalance(amount);
+            toAccount.AddBalance(convertedAmount);
+            toAccount.PrintTransferDetails(amount, fromAccount.Currency, convertedAmount,
+                toAccount.Currency, fromAccount.ID, toAccount.ID);
+        }
+
+        // Check if the user has any bank accounts and print a message if not
         private bool HasBankAccounts()
         {
-            return BankAccounts.Count > 0;
+            if (BankAccounts.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("You don't have any bank accounts.");
+                return false;
+            }
         }
 
         private bool CanTransfer(BankAccount fromAccount, decimal amount)
@@ -167,14 +217,12 @@ namespace BankApp.Users
                     index++;
                 }
             }
-            else
-            {
-                Console.WriteLine("You don't have any accounts.");
-            }
         }
 
         internal void PrintTransactionsActivity()
         {
+            Console.WriteLine("--- Transactions ---");
+
             foreach (var account in BankAccounts)
             {
                 account.PrintTransactions();
@@ -249,7 +297,6 @@ namespace BankApp.Users
 
         internal void PrintLoans()
         {
-
             if (Loans.Count > 0)
             {
                 decimal totalLoan = 0;
@@ -291,21 +338,22 @@ namespace BankApp.Users
             BankAccounts.Add(savingsAccount);
         }
 
+        // Method to insert money into a bank account
         internal void InsertMoney()
         {
-
+            // Choose which account to insert money into
             Console.WriteLine("Which account do you want to insert money in to.");
             PrintBankAccounts();
-            int fromIndex = InputUtilities.GetIndex(BankAccounts.Count);
-            BankAccount InsertMoneyToAccount = BankAccounts[fromIndex];
+            int index = InputUtilities.GetIndex(BankAccounts.Count);
+            BankAccount insertMoneyAccount = BankAccounts[index];
 
-            Console.WriteLine("How much money do you want to insert to account?");
+            // Choose amount to insert
+            Console.WriteLine($"How much money do you want to insert to {insertMoneyAccount.Name}?");
             decimal amount = InputUtilities.GetDecimal();
 
-            Console.WriteLine("Transfer successful.");
-            InsertMoneyToAccount.AddBalance(amount);
-            InsertMoneyToAccount.PrintDepositDetails(amount);
-
+            // Insert the money
+            insertMoneyAccount.AddBalance(amount);
+            insertMoneyAccount.PrintDepositDetails(amount);
         }
     }
 }
