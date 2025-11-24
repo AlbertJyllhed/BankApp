@@ -10,7 +10,7 @@
         internal void UpdateCurrency()
         {
             Console.WriteLine("Which currency do you want to update?");
-            string currency = Data.GetCurrency().Key;
+            string currency = Data.ChooseCurrency().Key;
             Console.Write($"Type the new exchange rate for {currency}: ");
             Data.SetCurrency(currency, InputUtilities.GetDecimal());
         }
