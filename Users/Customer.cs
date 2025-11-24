@@ -20,7 +20,7 @@ namespace BankApp.Users
         {
             // Ask user to choose the name of the created account.
             Console.Write("New bank account name: ");
-            var accountName = Input.GetString();
+            var accountName = InputUtilities.GetString();
 
             var currency = Data.GetCurrency().Key;
 
@@ -61,18 +61,18 @@ namespace BankApp.Users
                 // Choose from which account to transfer
                 Console.WriteLine("From which account do you want to transfer?");
                 PrintBankAccounts();
-                int fromIndex = Input.GetIndex(BankAccounts.Count);
+                int fromIndex = InputUtilities.GetIndex(BankAccounts.Count);
                 BankAccount fromAccount = BankAccounts[fromIndex];
 
                 // Choose to which account to transfer
                 Console.WriteLine("Which account do you want to transfer to? Enter account number.");
-                string id = Input.GetString();
+                string id = InputUtilities.GetString();
                 BankAccount? toAccount = Data.GetBankAccount(id);
                 if (toAccount != null)
                 {
                     // Choose amount to transfer
                     Console.WriteLine("How much money do you want to transfer?");
-                    decimal amount = Input.GetDecimal();
+                    decimal amount = InputUtilities.GetDecimal();
 
                     // Check if there are sufficient funds and perform the transfer
                     if (CanTransfer(fromAccount, amount))
@@ -155,12 +155,12 @@ namespace BankApp.Users
                 Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
                 Console.WriteLine("Are you sure you want to make a loan? y/n");
 
-                bool confirmLoan = Input.GetYesOrNo();
+                bool confirmLoan = InputUtilities.GetYesOrNo();
 
                 if (confirmLoan)
                 {
                     Console.WriteLine("How much would you like to borrow?");
-                    var borrowedAmountSEK = Input.GetInt();
+                    var borrowedAmountSEK = InputUtilities.GetInt();
 
                     if (maxLoan <= 0)
                     {
@@ -171,12 +171,12 @@ namespace BankApp.Users
                         while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
                         {
                             Console.WriteLine($"You're not allowed to borrow {borrowedAmountSEK}");
-                            borrowedAmountSEK = Input.GetInt();
+                            borrowedAmountSEK = InputUtilities.GetInt();
                         }
 
                         Console.WriteLine("Which bank account would you like to put your borrowed money in?");
                         PrintBankAccounts();
-                        var chosenAccount = Input.GetIndex(BankAccounts.Count);
+                        var chosenAccount = InputUtilities.GetIndex(BankAccounts.Count);
 
                         var newLoan = new Loan(borrowedAmountSEK);
                         Loans.Add(newLoan);
@@ -225,10 +225,10 @@ namespace BankApp.Users
         {
             //Ask user to choose the name of the created account.
             Console.WriteLine("Savings account name:");
-            var accountName = Input.GetString();
+            var accountName = InputUtilities.GetString();
 
             Console.WriteLine("What amount do you want put in the savings account?");
-            var amount = Input.GetDecimal();
+            var amount = InputUtilities.GetDecimal();
 
             var currency = Data.GetCurrency().Key;
 
@@ -247,11 +247,11 @@ namespace BankApp.Users
 
             Console.WriteLine("Which account do you want to insert money in to.");
             PrintBankAccounts();
-            int fromIndex = Input.GetIndex(BankAccounts.Count);
+            int fromIndex = InputUtilities.GetIndex(BankAccounts.Count);
             BankAccount InsertMoneyToAccount = BankAccounts[fromIndex];
 
             Console.WriteLine("How much money do you want to insert to account?");
-            decimal amount = Input.GetDecimal();
+            decimal amount = InputUtilities.GetDecimal();
 
             Console.WriteLine("Transfer successful.");
             InsertMoneyToAccount.AddBalance(amount);
