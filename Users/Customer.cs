@@ -181,8 +181,7 @@ namespace BankApp.Users
             // Perform the transfer
             fromAccount.RemoveBalance(amount);
             toAccount.AddBalance(convertedAmount);
-            toAccount.PrintTransferDetails(amount, fromAccount.Currency, convertedAmount,
-                toAccount.Currency, fromAccount.ID, toAccount.ID);
+            fromAccount.PrintTransferDetails(amount, convertedAmount, toAccount);
         }
 
         // Check if the user has any bank accounts and print a message if not
@@ -221,7 +220,7 @@ namespace BankApp.Users
 
         internal void PrintTransactionsActivity()
         {
-            Console.WriteLine("--- Transactions ---");
+            Console.WriteLine("--- Your Transactions ---\n");
 
             foreach (var account in BankAccounts)
             {
