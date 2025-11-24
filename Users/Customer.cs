@@ -184,6 +184,7 @@ namespace BankApp.Users
                         decimal depositedAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
 
                         BankAccounts[chosenAccount].AddBalance(depositedAmount);
+                        BankAccounts[chosenAccount].PrintTransferDetails(borrowedAmountSEK);
 
                         Console.WriteLine($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
                     }
@@ -238,6 +239,7 @@ namespace BankApp.Users
             savingsAccount.PrintSavingsInterest(amount);
 
             savingsAccount.AddBalance(amount);
+            savingsAccount.PrintTransferDetails(amount);
 
             BankAccounts.Add(savingsAccount);
         }
@@ -255,6 +257,7 @@ namespace BankApp.Users
 
             Console.WriteLine("Transfer successful.");
             InsertMoneyToAccount.AddBalance(amount);
+            InsertMoneyToAccount.PrintTransferDetails(amount);
 
         }
     }

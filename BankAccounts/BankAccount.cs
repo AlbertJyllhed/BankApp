@@ -22,7 +22,12 @@
             value = Math.Round(value, 2);
             _transactions.Add(value);
             Balance += value;
-            Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
+            //Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
+        }
+
+        internal void PrintTransferDetails(decimal value)
+        {
+            Console.WriteLine($"Transferred {value} {Currency} to account {ID}.");
         }
 
         internal decimal RemoveBalance(decimal value)
