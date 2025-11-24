@@ -15,20 +15,43 @@ namespace BankApp.Users
             Loans = new List<Loan>();
         }
 
-        internal void TryLogin()
+        // Override TryLogin method for Customer
+        internal override bool TryLogin(string password)
         {
-            loginAttempts++;
-
-            if (loginAttempts >= 3)
+            if (locked)
             {
-                locked = true;
-                loginAttempts = 0;
+                // Check if account is locked and block login if so
+                Console.WriteLine("Your account is locked due to too many failed login attempts.");
+                return false;
+            }
+
+            if (Password == password)
+            {
+                // Reset login attempts on successful login
+                UnlockAccount();
+                return true;
+            }
+            else
+            {
+                // Increment login attempts on failed login
+                loginAttempts++;
+
+                // Lock account if maximum attempts reached
+                if (loginAttempts >= 3)
+                {
+                    locked = true;
+                }
+                Console.WriteLine($"Wrong username or password\n" +
+                        $"Attempts left {3 - loginAttempts}");
+
+                return false;
             }
         }
 
-        internal bool IsLocked()
+        internal void UnlockAccount()
         {
-            return locked;
+            loginAttempts = 0;
+            locked = false;
         }
 
         // Method to get user input and create a new bank account

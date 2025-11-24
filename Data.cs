@@ -83,6 +83,20 @@ namespace BankApp
             return users;
         }
 
+        // Returns a list of all customers
+        internal static List<Customer> GetCustomers()
+        {
+            List<Customer> customers = new List<Customer>();
+            foreach (var user in users)
+            {
+                if (user is Customer customer)
+                {
+                    customers.Add(customer);
+                }
+            }
+            return customers;
+        }
+
         // Adds a bank account to the list of all bank accounts
         internal static void AddBankAccount(BankAccount account)
         {
