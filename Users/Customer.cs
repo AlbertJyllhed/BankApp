@@ -131,6 +131,12 @@ namespace BankApp.Users
             Console.WriteLine("How much money do you want to transfer?");
             decimal amount = InputUtilities.GetDecimal();
 
+            if (amount <= 0)
+            {
+                Console.WriteLine("Felaktig summa försök igen.");
+                return;
+            }
+
             // Check if there are sufficient funds and perform the transfer
             if (CanTransfer(fromAccount, amount))
             {
@@ -297,7 +303,7 @@ namespace BankApp.Users
 
         internal void PrintLoans()
         {
-            if ( Loans.Count == 0)
+            if (Loans.Count == 0)
             {
                 Console.WriteLine("You have no loans.");
                 return;
@@ -349,6 +355,12 @@ namespace BankApp.Users
             // Choose amount to insert
             Console.WriteLine($"How much money do you want to insert to {insertMoneyAccount.Name}?");
             decimal amount = InputUtilities.GetDecimal();
+
+            if (amount <= 0)
+            {
+                Console.WriteLine("Felaktigt val, kan inte sätta in negativt värde.");
+                return;
+            }
 
             // Insert the money
             insertMoneyAccount.AddBalance(amount);

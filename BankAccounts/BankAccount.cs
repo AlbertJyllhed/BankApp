@@ -51,6 +51,12 @@
         {
             value = Math.Round(value, 2);
 
+            if(value <= 0)
+            {
+                Console.WriteLine("Felaktigt summa, måste vara högre än noll.");
+                return 0;
+            }
+
             if (Balance >= value)
             {
                 Balance -= value;
