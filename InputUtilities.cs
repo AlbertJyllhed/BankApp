@@ -8,7 +8,7 @@
             string? input = Console.ReadLine();
             while (string.IsNullOrWhiteSpace(input))
             {
-                Console.WriteLine("Invalid input try again!");
+                PrintUtilities.PrintError("Input cannot be empty. Please try again.");
                 input = Console.ReadLine();
             }
             return input;
@@ -20,22 +20,21 @@
             decimal input;
             while (!decimal.TryParse(Console.ReadLine(), out input))
             {
-                Console.WriteLine("Invalid input try again!");
+                PrintUtilities.PrintError("Invald input. Please try again.");
             }
             return Math.Round(input, 2);
         }
 
+        //Method to get positive decimal input from the user
         internal static decimal GetPositiveDecimal()
         {
-            while (true)
+            decimal input = GetDecimal();
+            while (input <= 0)
             {
-                decimal value = GetDecimal();
-                if (value > 0)
-                {
-                    return value;
-                }
-                Console.WriteLine("Felaktit värde, värdet måste vara positivt");
+                input = GetDecimal();
+                PrintUtilities.PrintError("Felaktit värde, värdet måste vara positivt");
             }
+            return input;
         }
 
         //Method to get int input from the user
@@ -44,7 +43,7 @@
             int input;
             while (!int.TryParse(Console.ReadLine(), out input))
             {
-                Console.WriteLine("Invald input try again!");
+                PrintUtilities.PrintError("Invald input. Please try again.");
             }
             return input;
 
@@ -53,11 +52,11 @@
         //Method to get int input within a specific range
         internal static int GetIndex(int maxIndex)
         {
-            int index = GetInt() -1;
+            int index = GetInt() - 1;
             while (index < 0 || index >= maxIndex)
             {
-                Console.WriteLine("Invald index try again!");
-                index = GetInt() -1;
+                PrintUtilities.PrintError("Invalid index. Please try again.");
+                index = GetInt() - 1;
             }
             return index;
         }
@@ -67,7 +66,7 @@
             string input = GetString().ToLower();
             while (input != "y" && input != "n")
             {
-                Console.WriteLine("Invalid input, please enter 'y' or 'n'.");
+                PrintUtilities.PrintError("Invalid input. Please enter 'y' for yes or 'n' for no.");
                 input = GetString().ToLower();
             }
             return input == "y";
