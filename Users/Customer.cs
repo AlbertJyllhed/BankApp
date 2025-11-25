@@ -100,43 +100,45 @@ namespace BankApp.Users
         internal void TransferBalance()
         {
             // Check if there are any bank accounts to transfer from
-            if (HasBankAccounts())
+            if (!HasBankAccounts())
             {
-                // Choose from which account to transfer
-                BankAccount fromAccount = GetTransferAccountByIndex();
+                Console.WriteLine("You don't have any bank accounts.");
+                return;
+            }
 
-                BankAccount? toAccount;
+            // Choose from which account to transfer
+            BankAccount fromAccount = GetTransferAccountByIndex();
 
-                // Choose to which account to transfer (using index or ID)
-                if (ChooseTransferMethod())
-                {
-                    toAccount = GetDepositAccountByIndex();
-                }
-                else
-                {
-                    toAccount = GetDepositAccountByID();
-                }
+            BankAccount? toAccount;
 
-                if (toAccount != null)
-                {
-                    // Choose amount to transfer
-                    Console.WriteLine("How much money do you want to transfer?");
-                    decimal amount = InputUtilities.GetDecimal();
+            // Choose to which account to transfer (using index or ID)
+            if (ChooseTransferMethod())
+            {
+                toAccount = GetAccountByIndex();
+            }
+            else
+            {
+                toAccount = GetAccountByID();
+            }
 
-                    // Check if there are sufficient funds and perform the transfer
-                    if (CanTransfer(fromAccount, amount))
-                    {
-                        DepositToAccount(amount, toAccount, fromAccount);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Transfer failed due to insufficient funds.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Account not found, please try again.");
-                }
+            if (toAccount == null)
+            {
+                Console.WriteLine("Account not found, please try again.");
+                return;
+            }
+
+            // Choose amount to transfer
+            Console.WriteLine("How much money do you want to transfer?");
+            decimal amount = InputUtilities.GetDecimal();
+
+            // Check if there are sufficient funds and perform the transfer
+            if (CanTransfer(fromAccount, amount))
+            {
+                DepositToAccount(amount, toAccount, fromAccount);
+            }
+            else
+            {
+                Console.WriteLine("Transfer failed due to insufficient funds.");
             }
         }
 
@@ -159,7 +161,7 @@ namespace BankApp.Users
         }
 
         // Method to choose which account to transfer to by index
-        private BankAccount? GetDepositAccountByIndex()
+        private BankAccount? GetAccountByIndex()
         {
             Console.WriteLine("Which account do you want to transfer to? Enter account index.");
             int index = InputUtilities.GetIndex(BankAccounts.Count);
@@ -167,7 +169,7 @@ namespace BankApp.Users
         }
 
         // Method to choose which account to transfer to by ID
-        private BankAccount? GetDepositAccountByID()
+        private BankAccount? GetAccountByID()
         {
             Console.WriteLine("Which account do you want to transfer to? Enter account number.");
             string id = InputUtilities.GetString();
@@ -189,20 +191,13 @@ namespace BankApp.Users
             fromAccount.PrintTransferDetails(amount, convertedAmount, toAccount);
         }
 
-        // Check if the user has any bank accounts and print a message if not
+        // Check if the user has any bank accounts
         private bool HasBankAccounts()
         {
-            if (BankAccounts.Count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("You don't have any bank accounts.");
-                return false;
-            }
+            return BankAccounts.Count > 0;
         }
 
+        // Check if there are sufficient funds to transfer
         private bool CanTransfer(BankAccount fromAccount, decimal amount)
         {
             return fromAccount.GetBalance() >= amount;
@@ -210,16 +205,19 @@ namespace BankApp.Users
 
         internal void PrintBankAccounts()
         {
-            int index = 1;
-            if (HasBankAccounts())
+            if (!HasBankAccounts())
             {
-                Console.WriteLine("Your bank accounts:");
-                foreach (var account in BankAccounts)
-                {
-                    Console.Write($"{index}. ");
-                    account.PrintInfo();
-                    index++;
-                }
+                Console.WriteLine("You don't have any bank accounts.");
+                return;
+            }
+
+            int index = 1;
+            Console.WriteLine("Your bank accounts:");
+            foreach (var account in BankAccounts)
+            {
+                Console.Write($"{index}. ");
+                account.PrintInfo();
+                index++;
             }
         }
 
@@ -234,89 +232,86 @@ namespace BankApp.Users
         }
 
         // Loan creation method
+        //TODO: Refactor method to smaller methods
         internal void CreateLoan()
         {
-            //Check if user has any bank accounts
-            if (BankAccounts.Count > 0)
-            {
-                //PrintBankAccount to show all user's accounts and amount of money. 
-                decimal totalInSEK = 0;
-                foreach (var account in BankAccounts)
-                {
-                    decimal balance = account.GetBalance();
-                    decimal balanceInSEK = account.ToSEK(balance);
-                    totalInSEK += balanceInSEK;
-                }
-
-                //Calculate max loan, 5 times the total balance in SEK)
-                decimal maxLoan = totalInSEK * 5;
-                Console.WriteLine($"Your total balance in SEK: {totalInSEK}");
-                Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
-                Console.WriteLine("Are you sure you want to make a loan? y/n");
-
-                bool confirmLoan = InputUtilities.GetYesOrNo();
-
-                if (confirmLoan)
-                {
-                    Console.WriteLine("How much would you like to borrow?");
-                    var borrowedAmountSEK = InputUtilities.GetInt();
-
-                    if (maxLoan <= 0)
-                    {
-                        Console.WriteLine("You have no money, you are not able to borrow.");
-                    }
-                    else
-                    {
-                        while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
-                        {
-                            Console.WriteLine($"You're not allowed to borrow {borrowedAmountSEK}");
-                            borrowedAmountSEK = InputUtilities.GetInt();
-                        }
-
-                        Console.WriteLine("Which bank account would you like to put your borrowed money in?");
-                        PrintBankAccounts();
-                        var chosenAccount = InputUtilities.GetIndex(BankAccounts.Count);
-
-                        var newLoan = new Loan(borrowedAmountSEK);
-                        Loans.Add(newLoan);
-
-                        decimal depositedAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
-
-                        BankAccounts[chosenAccount].AddBalance(depositedAmount);
-                        BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
-
-                        Console.WriteLine($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Loan has been cancelled.");
-                }
-            }
-            else
+            //Check if user has any bank accounts, stop method if not.
+            if (BankAccounts.Count == 0)
             {
                 Console.WriteLine("You don´t have any accounts. Please make one before you make a loan.");
+                return;
             }
+
+            //PrintBankAccount to show all user's accounts and amount of money. 
+            decimal totalInSEK = 0;
+            foreach (var account in BankAccounts)
+            {
+                decimal balance = account.GetBalance();
+                decimal balanceInSEK = account.ToSEK(balance);
+                totalInSEK += balanceInSEK;
+            }
+
+            //Calculate max loan, 5 times the total balance in SEK)
+            decimal maxLoan = totalInSEK * 5;
+            Console.WriteLine($"Your total balance in SEK: {totalInSEK}");
+            Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
+            Console.WriteLine("Are you sure you want to make a loan? y/n");
+
+            // Confirm loan creation, stop method if user inputs no.
+            if (!InputUtilities.GetYesOrNo())
+            {
+                Console.WriteLine("Loan has been cancelled.");
+                return;
+            }
+
+            Console.WriteLine("How much would you like to borrow?");
+            var borrowedAmountSEK = InputUtilities.GetInt();
+
+            // Check if the requested loan amount is valid, stop method if not.
+            if (maxLoan <= 0)
+            {
+                Console.WriteLine("You have no money, you are not able to borrow.");
+                return;
+            }
+
+            while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
+            {
+                Console.WriteLine($"You're not allowed to borrow {borrowedAmountSEK}");
+                borrowedAmountSEK = InputUtilities.GetInt();
+            }
+
+            Console.WriteLine("Which bank account would you like to put your borrowed money in?");
+            PrintBankAccounts();
+            var chosenAccount = InputUtilities.GetIndex(BankAccounts.Count);
+
+            var newLoan = new Loan(borrowedAmountSEK);
+            Loans.Add(newLoan);
+
+            decimal depositedAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
+
+            BankAccounts[chosenAccount].AddBalance(depositedAmount);
+            BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
+
+            Console.WriteLine($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
         }
 
         internal void PrintLoans()
         {
-            if (Loans.Count > 0)
-            {
-                decimal totalLoan = 0;
-
-                //Shows current debt
-                foreach (var loan in Loans)
-                {
-                    totalLoan += loan.GetTotalLoan();
-                }
-
-                Console.Write($"Your current debt: {totalLoan} SEK\n");
-            }
-            else
+            if ( Loans.Count == 0)
             {
                 Console.WriteLine("You have no loans.");
+                return;
             }
+
+            decimal totalLoan = 0;
+
+            //Shows current debt
+            foreach (var loan in Loans)
+            {
+                totalLoan += loan.GetTotalLoan();
+            }
+
+            Console.Write($"Your current debt: {totalLoan} SEK\n");
         }
 
         //Savings account creation method
