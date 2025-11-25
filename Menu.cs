@@ -6,16 +6,16 @@ namespace BankApp
     {
         internal bool PrintCustomerMenu(Customer customer)
         {
-            Console.WriteLine("What type of banking transaction would you like to proceed with?");
-            Console.WriteLine("1. Create an account");
-            Console.WriteLine("2. Create savings account");
-            Console.WriteLine("3. Show bank accounts");
-            Console.WriteLine("4. Insert money to account");
-            Console.WriteLine("5. Transfer balance");
-            Console.WriteLine("6. Print transactions");
-            Console.WriteLine("7. Create loan");
-            Console.WriteLine("8. Show current debt");
-            Console.WriteLine("9. Log out");
+            PrintUtilities.PrintMessage("--- Customer Menu ---");
+            PrintUtilities.PrintMessages(["1. Create an account",
+                "2. Create savings account",
+                "3. Show bank accounts",
+                "4. Insert money to account",
+                "5. Transfer balance",
+                "6. Print transactions",
+                "7. Create loan",
+                "8. Show current debt",
+                "9. Log out"]);
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -49,7 +49,7 @@ namespace BankApp
                 case 9:
                     return false;
                 default:
-                    Console.WriteLine("Invalid choice, try again.");
+                    PrintUtilities.PrintError("Invalid choice, try again.");
                     break;
             }
 
@@ -58,10 +58,11 @@ namespace BankApp
 
         internal bool PrintAdminMenu(Admin admin)
         {
-            Console.WriteLine("1. Update currency");
-            Console.WriteLine("2. Create user");
-            Console.WriteLine("3. Unlock customer");
-            Console.WriteLine("4. Log out ");
+            PrintUtilities.PrintMessage("--- Admin Menu ---");
+            PrintUtilities.PrintMessages(["1. Update currency",
+                "2. Create user",
+                "3. Unlock customer",
+                "4. Log out"]);
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -80,32 +81,11 @@ namespace BankApp
                 case 4:
                     return false;
                 default:
-                    Console.WriteLine("Invalid choice, try again.");
+                    PrintUtilities.PrintError("Invalid choice, try again.");
                     break;
             }
 
             return true;
-        }
-
-        internal void PrintTitle()
-        {
-            Console.WriteLine("███████████████████████████████████████████████████████████████████████" +
-                "███████████████████████████████████████\r\n█▌                                        " +
-                "                                                                  ▐█\r\n█▌   $$\\    " +
-                "   $$\\           $$\\                                 $$$$$$$\\                     " +
-                " $$\\          ▐█\r\n█▌   $$ |      \\__|          $$ |                              " +
-                "  $$  __$$\\                     $$ |         ▐█\r\n█▌   $$ |      $$\\  $$$$$$$\\ $$" +
-                " |  $$\\  $$$$$$\\ $$\\    $$\\       $$ |  $$ | $$$$$$\\  $$$$$$$\\  $$ |  $$\\    ▐" +
-                "█\r\n█▌   $$ |      $$ |$$  _____|$$ | $$  |$$  __$$\\\\$$\\  $$  |      $$$$$$$\\ | " +
-                "\\____$$\\ $$  __$$\\ $$ | $$  |   ▐█\r\n█▌   $$ |      $$ |\\$$$$$$\\  $$$$$$  / $$ " +
-                "/  $$ |\\$$\\$$  /       $$  __$$\\  $$$$$$$ |$$ |  $$ |$$$$$$  /    ▐█\r\n█▌   $$ | " +
-                "     $$ | \\____$$\\ $$  _$$<  $$ |  $$ | \\$$$  /        $$ |  $$ |$$  __$$ |$$ |  $" +
-                "$ |$$  _$$<     ▐█\r\n█▌   $$$$$$$$\\ $$ |$$$$$$$  |$$ | \\$$\\ \\$$$$$$  |  \\$  /  " +
-                "       $$$$$$$  |\\$$$$$$$ |$$ |  $$ |$$ | \\$$\\    ▐█\r\n█▌   \\________|\\__|\\___" +
-                "____/ \\__|  \\__| \\______/    \\_/          \\_______/  \\_______|\\__|  \\__|\\__|" +
-                "  \\__|   ▐█\r\n█▌                                                                   " +
-                "                                       ▐█\r\n████████████████████████████████████████" +
-                "██████████████████████████████████████████████████████████████████████");
         }
     }
 }

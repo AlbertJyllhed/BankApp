@@ -11,14 +11,11 @@ namespace BankApp
         {
             Data.Setup();
             LogIn();
-            Console.Clear();
 
             while (activeUser != null)
             {
                 CreateMenu();
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                Console.Clear();
+                PrintUtilities.PrintResetMessage();
             }
         }
 
@@ -28,9 +25,9 @@ namespace BankApp
             // Loop until a user is logged in
             while (activeUser == null)
             {
-                Console.WriteLine("Please enter username.");
+                PrintUtilities.PrintMessage("Please enter username.");
                 var username = InputUtilities.GetString();
-                Console.WriteLine("Please enter password");
+                PrintUtilities.PrintMessage("Please enter password.");
                 var password = InputUtilities.GetString();
 
                 // Check if the username and password are correct
@@ -44,15 +41,17 @@ namespace BankApp
                     activeUser = null;
                 }
             }
+
+            Console.Clear();
         }
 
         // Log out method
         internal void LogOut()
         {
-            Console.WriteLine("You have been logged out.");
+            PrintUtilities.PrintColoredMessage("You have been logged out.", ConsoleColor.Yellow);
             activeUser = null;
 
-            Console.WriteLine("Do you want to exit the application? y/n");
+            PrintUtilities.PrintColoredMessage("Do you want to exit the application? y/n", ConsoleColor.Red);
             bool answer = InputUtilities.GetYesOrNo();
             if (!answer)
             {
@@ -63,29 +62,28 @@ namespace BankApp
         // Method to create menu based on user type
         private void CreateMenu()
         {
+            if (activeUser == null) return;
+
             var menu = new Menu();
-            menu.PrintTitle();
-            Console.WriteLine("--- Welcome to Liskov Bank ---");
+            PrintUtilities.PrintLogo();
+            PrintUtilities.PrintMessage($"--- Welcome to Liskov Bank {activeUser.Name} ---");
 
-            if (activeUser != null)
+            bool restart = false;
+
+            // Print menu based on user type
+            if (activeUser is Customer customer)
             {
-                bool restart = false;
+                restart = menu.PrintCustomerMenu(customer);
+            }
+            else if (activeUser is Admin admin)
+            {
+                restart = menu.PrintAdminMenu(admin);
+            }
 
-                // Print menu based on user type
-                if (activeUser is Customer customer)
-                {
-                    restart = menu.PrintCustomerMenu(customer);
-                }
-                else if (activeUser is Admin admin)
-                {
-                    restart = menu.PrintAdminMenu(admin);
-                }
-
-                // Log out if menu returns false
-                if (!restart)
-                {
-                    LogOut();
-                }
+            // Log out if menu returns false
+            if (!restart)
+            {
+                LogOut();
             }
         }
     }
