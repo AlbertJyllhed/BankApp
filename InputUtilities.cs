@@ -25,6 +25,19 @@
             return Math.Round(input, 2);
         }
 
+        internal static decimal GetPositiveDecimal()
+        {
+            while (true)
+            {
+                decimal value = GetDecimal();
+                if (value > 0)
+                {
+                    return value;
+                }
+                Console.WriteLine("Felaktit värde, värdet måste vara positivt");
+            }
+        }
+
         //Method to get int input from the user
         internal static int GetInt()
         {

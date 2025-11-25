@@ -129,7 +129,7 @@ namespace BankApp.Users
 
             // Choose amount to transfer
             Console.WriteLine("How much money do you want to transfer?");
-            decimal amount = InputUtilities.GetDecimal();
+            decimal amount = InputUtilities.GetPositiveDecimal();
 
             if (amount <= 0)
             {
@@ -271,7 +271,7 @@ namespace BankApp.Users
             }
 
             Console.WriteLine("How much would you like to borrow?");
-            var borrowedAmountSEK = InputUtilities.GetInt();
+            var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
 
             // Check if the requested loan amount is valid, stop method if not.
             if (maxLoan <= 0)
@@ -328,7 +328,7 @@ namespace BankApp.Users
             var accountName = InputUtilities.GetString();
 
             Console.WriteLine("What amount do you want put in the savings account?");
-            var amount = InputUtilities.GetDecimal();
+            var amount = InputUtilities.GetPositiveDecimal();
 
             var currency = Data.ChooseCurrency().Key;
 
@@ -354,7 +354,7 @@ namespace BankApp.Users
 
             // Choose amount to insert
             Console.WriteLine($"How much money do you want to insert to {insertMoneyAccount.Name}?");
-            decimal amount = InputUtilities.GetDecimal();
+            decimal amount = InputUtilities.GetPositiveDecimal();
 
             if (amount <= 0)
             {
