@@ -18,6 +18,13 @@
             PrintEmptyLine();
         }
 
+        // Method to print an input prompt
+        internal static void PrintInputPrompt(string prompt)
+        {
+            Console.Write(prompt);
+            PrintEmptyLine();
+        }
+
         // Method to print a list of messages
         internal static void PrintMessages(string[] messages)
         {
