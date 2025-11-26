@@ -22,7 +22,6 @@
         internal static void PrintInputPrompt(string prompt)
         {
             Console.Write(prompt);
-            PrintEmptyLine();
         }
 
         // Method to print a list of messages
