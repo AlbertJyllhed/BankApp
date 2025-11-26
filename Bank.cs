@@ -25,9 +25,9 @@ namespace BankApp
             // Loop until a user is logged in
             while (activeUser == null)
             {
-                PrintUtilities.PrintMessage("Please enter username.");
+                PrintUtilities.PrintInputPrompt("Please enter username: ");
                 var username = InputUtilities.GetString();
-                PrintUtilities.PrintMessage("Please enter password.");
+                PrintUtilities.PrintInputPrompt("Please enter password: ");
                 var password = InputUtilities.GetString();
 
                 // Check if the username and password are correct

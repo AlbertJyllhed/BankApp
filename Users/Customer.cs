@@ -101,7 +101,7 @@ namespace BankApp.Users
             // Check if there are any bank accounts to transfer from
             if (!HasBankAccounts())
             {
-                PrintUtilities.PrintColoredMessage("You don't have any bank accounts.", ConsoleColor.Yellow);
+                PrintUtilities.PrintError("You don't have any bank accounts.");
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace BankApp.Users
 
             if (toAccount == null)
             {
-                Console.WriteLine("Account not found, please try again.");
+                PrintUtilities.PrintError("Account not found, please try again.");
                 return;
             }
 
@@ -136,7 +136,7 @@ namespace BankApp.Users
 
             if (amount <= 0)
             {
-                PrintUtilities.PrintColoredMessage("Felaktig summa försök igen.", ConsoleColor.Yellow);
+                PrintUtilities.PrintError("Felaktig summa försök igen.");
                 return;
             }
 
@@ -251,34 +251,34 @@ namespace BankApp.Users
 
             //Calculate max loan, 5 times the total balance in SEK)
             decimal maxLoan = totalInSEK * 5;
-            Console.WriteLine($"Your total balance in SEK: {totalInSEK}");
-            Console.WriteLine($"The maximum amount of money you can borrow: {maxLoan}");
-            Console.WriteLine("Are you sure you want to make a loan? y/n");
+            PrintUtilities.PrintMessage($"Your total balance in SEK: {totalInSEK}\n" +
+                $"The maximum amount of money you can borrow: {maxLoan}\n" +
+                $"Are you sure you want to make a loan? y/n");
 
             // Confirm loan creation, stop method if user inputs no.
             if (!InputUtilities.GetYesOrNo())
             {
-                Console.WriteLine("Loan has been cancelled.");
+                PrintUtilities.PrintColoredMessage("Loan has been cancelled.", ConsoleColor.Yellow);
                 return;
             }
 
-            Console.WriteLine("How much would you like to borrow?");
+            PrintUtilities.PrintMessage("How much would you like to borrow?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
 
             // Check if the requested loan amount is valid, stop method if not.
             if (maxLoan <= 0)
             {
-                Console.WriteLine("You have no money, you are not able to borrow.");
+                PrintUtilities.PrintError("You have no money, you are not able to borrow.");
                 return;
             }
 
             while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
             {
-                Console.WriteLine($"You're not allowed to borrow {borrowedAmountSEK}");
+                PrintUtilities.PrintColoredMessage($"You're not allowed to borrow {borrowedAmountSEK}", ConsoleColor.Yellow);
                 borrowedAmountSEK = InputUtilities.GetInt();
             }
 
-            Console.WriteLine("Which bank account would you like to put your borrowed money in?");
+            PrintUtilities.PrintMessage("Which bank account would you like to put your borrowed money in?");
             PrintBankAccounts();
             var chosenAccount = InputUtilities.GetIndex(BankAccounts.Count);
 
@@ -290,14 +290,14 @@ namespace BankApp.Users
             BankAccounts[chosenAccount].AddBalance(depositedAmount);
             BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
 
-            Console.WriteLine($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
+            PrintUtilities.PrintMessage($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
         }
 
         internal void PrintLoans()
         {
             if (Loans.Count == 0)
             {
-                Console.WriteLine("You have no loans.");
+                PrintUtilities.PrintError("You have no loans.");
                 return;
             }
 
@@ -309,17 +309,17 @@ namespace BankApp.Users
                 totalLoan += loan.GetTotalLoan();
             }
 
-            Console.Write($"Your current debt: {totalLoan} SEK\n");
+            PrintUtilities.PrintMessage($"Your current debt: {totalLoan} SEK");
         }
 
         //Savings account creation method
         internal void CreateSavingAccount()
         {
             //Ask user to choose the name of the created account.
-            Console.WriteLine("Savings account name:");
+            PrintUtilities.PrintInputPrompt("Savings account name: ");
             var accountName = InputUtilities.GetString();
 
-            Console.WriteLine("What amount do you want put in the savings account?");
+            PrintUtilities.PrintMessage("What amount do you want put in the savings account?");
             var amount = InputUtilities.GetPositiveDecimal();
 
             var currency = Data.ChooseCurrency().Key;
@@ -339,18 +339,18 @@ namespace BankApp.Users
         internal void InsertMoney()
         {
             // Choose which account to insert money into
-            Console.WriteLine("Which account do you want to insert money in to.");
+            PrintUtilities.PrintMessage("Which account do you want to insert money in to.");
             PrintBankAccounts();
             int index = InputUtilities.GetIndex(BankAccounts.Count);
             BankAccount insertMoneyAccount = BankAccounts[index];
 
             // Choose amount to insert
-            Console.WriteLine($"How much money do you want to insert to {insertMoneyAccount.Name}?");
+            PrintUtilities.PrintMessage($"How much money do you want to insert to {insertMoneyAccount.Name}?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             if (amount <= 0)
             {
-                Console.WriteLine("Felaktigt val, kan inte sätta in negativt värde.");
+                PrintUtilities.PrintError("Felaktigt val, kan inte sätta in negativt värde.");
                 return;
             }
 

@@ -174,9 +174,9 @@ namespace BankApp
             // Ask user to choose currency code by typing in number. 
             Console.WriteLine("Choose currency: ");
             int count = 1;
-            foreach (var currencyKey in currency)
+            foreach (var item in currency)
             {
-                Console.WriteLine($"{count}. {currencyKey}");
+                Console.WriteLine($"{count}. {item.Key}");
                 count++;
             }
             var index = InputUtilities.GetIndex(currency.Count);
