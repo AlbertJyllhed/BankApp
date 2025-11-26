@@ -83,18 +83,18 @@ namespace BankApp
             return users;
         }
 
-        // Returns a list of all customers
-        internal static List<Customer> GetCustomers()
+        // Returns a list of all locked customers
+        internal static List<Customer> GetLockedCustomers()
         {
-            List<Customer> customers = new List<Customer>();
+            List<Customer> lockedCustomers = new List<Customer>();
             foreach (var user in users)
             {
-                if (user is Customer customer)
+                if (user is Customer customer && customer.Locked)
                 {
-                    customers.Add(customer);
+                    lockedCustomers.Add(customer);
                 }
             }
-            return customers;
+            return lockedCustomers;
         }
 
         // Adds a bank account to the list of all bank accounts
