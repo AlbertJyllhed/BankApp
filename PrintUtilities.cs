@@ -3,17 +3,24 @@
     internal static class PrintUtilities
     {
         // Method to print a single message
-        internal static void PrintMessage(string message)
+        internal static void PrintMessage(string message, int padding = 0)
         {
             Console.WriteLine(message);
-            PrintEmptyLine();
+
+            // Print padding lines after message if specified
+            if (padding <= 0) return;
+
+            for (int i = 0; i < padding; i++)
+            {
+                PrintEmptyLine();
+            }
         }
 
         // Method to print a colored message
-        internal static void PrintColoredMessage(string message, ConsoleColor color)
+        internal static void PrintColoredMessage(string message, ConsoleColor color, int padding = 0)
         {
             Console.ForegroundColor = color;
-            Console.WriteLine(message);
+            PrintMessage(message, padding);
             Console.ResetColor();
             PrintEmptyLine();
         }
@@ -35,10 +42,10 @@
         }
 
         // Method to print error messages in red color
-        internal static void PrintError(string errorMessage)
+        internal static void PrintError(string errorMessage, int padding = 0)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(errorMessage);
+            PrintMessage(errorMessage, padding);
             Console.ResetColor();
         }
 
