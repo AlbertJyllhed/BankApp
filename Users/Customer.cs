@@ -4,10 +4,10 @@ namespace BankApp.Users
 {
     internal class Customer : User
     {
-        private bool locked = false;
         private int loginAttempts = 0;
         private List<BankAccount> BankAccounts { get; set; }
         private List<Loan> Loans { get; set; }
+        internal bool Locked { get; private set; } = false;
 
         internal Customer(string name, string password) : base(name, password)
         {
@@ -18,17 +18,17 @@ namespace BankApp.Users
         // Override TryLogin method for Customer
         internal override bool TryLogin(string password)
         {
-            if (locked)
+            if (Locked)
             {
                 // Check if account is locked and block login if so
-                Console.WriteLine("Your account is locked due to too many failed login attempts.");
+                PrintUtilities.PrintError("Your account is locked due to too many failed login attempts.");
                 return false;
             }
 
             if (Password == password)
             {
                 // Reset login attempts on successful login
-                UnlockAccount();
+                ResetLoginAttempts();
                 return true;
             }
             else
@@ -39,38 +39,37 @@ namespace BankApp.Users
                 // Lock account if maximum attempts reached
                 if (loginAttempts >= 3)
                 {
-                    locked = true;
+                    Locked = true;
                 }
-                Console.WriteLine($"Wrong username or password\n" +
-                        $"Attempts left {3 - loginAttempts}");
+                PrintUtilities.PrintColoredMessage($"Wrong username or password\n" +
+                        $"Attempts left {3 - loginAttempts}", ConsoleColor.Yellow);
 
                 return false;
             }
         }
 
-        internal void UnlockAccount()
+        private void ResetLoginAttempts()
         {
             loginAttempts = 0;
-            locked = false;
         }
 
-        internal bool IsLocked()
+        internal void UnlockAccount()
         {
-            return locked;
+            Locked = false;
         }
 
         // Method to get user input and create a new bank account
         internal void SetupBankAccount()
         {
             // Ask user to choose the name of the created account.
-            Console.Write("New bank account name: ");
+            PrintUtilities.PrintInputPrompt("New bank account name: ");
             var accountName = InputUtilities.GetString();
 
             var currency = Data.ChooseCurrency().Key;
 
             var bankAccount = CreateBankAccount(accountName, currency);
 
-            Console.WriteLine($"Your new {bankAccount.GetAccountType()} ({accountName}, {currency}) " +
+            PrintUtilities.PrintMessage($"Your new {bankAccount.GetAccountType()} ({accountName}, {currency}) " +
                 $"has been successfully created!");
         }
 
@@ -102,22 +101,26 @@ namespace BankApp.Users
             // Check if there are any bank accounts to transfer from
             if (!HasBankAccounts())
             {
-                Console.WriteLine("You don't have any bank accounts.");
+                PrintUtilities.PrintColoredMessage("You don't have any bank accounts.", ConsoleColor.Yellow);
                 return;
             }
 
             // Choose from which account to transfer
-            BankAccount fromAccount = GetTransferAccountByIndex();
+            PrintUtilities.PrintMessage("From which account do you want to transfer?");
+            PrintBankAccounts();
+            BankAccount fromAccount = GetAccountByIndex();
 
             BankAccount? toAccount;
 
             // Choose to which account to transfer (using index or ID)
             if (ChooseTransferMethod())
             {
+                PrintUtilities.PrintMessage("Which account do you want to transfer to? Enter account index.");
                 toAccount = GetAccountByIndex();
             }
             else
             {
+                PrintUtilities.PrintMessage("Which account do you want to transfer to? Enter account number.");
                 toAccount = GetAccountByID();
             }
 
@@ -128,12 +131,12 @@ namespace BankApp.Users
             }
 
             // Choose amount to transfer
-            Console.WriteLine("How much money do you want to transfer?");
+            PrintUtilities.PrintMessage("How much money do you want to transfer?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             if (amount <= 0)
             {
-                Console.WriteLine("Felaktig summa försök igen.");
+                PrintUtilities.PrintColoredMessage("Felaktig summa försök igen.", ConsoleColor.Yellow);
                 return;
             }
 
@@ -144,40 +147,29 @@ namespace BankApp.Users
             }
             else
             {
-                Console.WriteLine("Transfer failed due to insufficient funds.");
+                PrintUtilities.PrintError("Transfer failed due to insufficient funds.");
             }
         }
 
         // Method to choose transfer method
         private bool ChooseTransferMethod()
         {
-            Console.WriteLine("How do you want to transfer your money?\n" +
+            PrintUtilities.PrintMessage("How do you want to transfer your money?\n" +
                 "1. By index\n" +
                 "2. By account ID");
             return InputUtilities.GetIndex(2) == 0;
         }
 
-        // Method to choose which account to transfer from
-        private BankAccount GetTransferAccountByIndex()
+        // Method to find bank account by index
+        private BankAccount GetAccountByIndex()
         {
-            Console.WriteLine("From which account do you want to transfer?");
-            PrintBankAccounts();
             int index = InputUtilities.GetIndex(BankAccounts.Count);
             return BankAccounts[index];
-        }
-
-        // Method to choose which account to transfer to by index
-        private BankAccount? GetAccountByIndex()
-        {
-            Console.WriteLine("Which account do you want to transfer to? Enter account index.");
-            int index = InputUtilities.GetIndex(BankAccounts.Count);
-            return Data.GetBankAccount(BankAccounts[index].ID);
         }
 
         // Method to choose which account to transfer to by ID
         private BankAccount? GetAccountByID()
         {
-            Console.WriteLine("Which account do you want to transfer to? Enter account number.");
             string id = InputUtilities.GetString();
             return Data.GetBankAccount(id);
         }
@@ -213,12 +205,12 @@ namespace BankApp.Users
         {
             if (!HasBankAccounts())
             {
-                Console.WriteLine("You don't have any bank accounts.");
+                PrintUtilities.PrintError("You don't have any bank accounts.");
                 return;
             }
 
             int index = 1;
-            Console.WriteLine("Your bank accounts:");
+            PrintUtilities.PrintMessage("Your bank accounts:");
             foreach (var account in BankAccounts)
             {
                 Console.Write($"{index}. ");
@@ -229,7 +221,7 @@ namespace BankApp.Users
 
         internal void PrintTransactionsActivity()
         {
-            Console.WriteLine("--- Your Transactions ---\n");
+            PrintUtilities.PrintMessage("--- Your Transactions ---");
 
             foreach (var account in BankAccounts)
             {
@@ -244,7 +236,7 @@ namespace BankApp.Users
             //Check if user has any bank accounts, stop method if not.
             if (BankAccounts.Count == 0)
             {
-                Console.WriteLine("You don´t have any accounts. Please make one before you make a loan.");
+                PrintUtilities.PrintError("You don´t have any accounts. Please make one before you make a loan.");
                 return;
             }
 
