@@ -51,8 +51,6 @@
         {
             value = Math.Round(value, 2);
 
-
-
             if (Balance >= value)
             {
                 Balance -= value;
@@ -61,7 +59,7 @@
             }
             else
             {
-                Console.WriteLine("Invalid request, not enough money in account.\n" +
+                PrintUtilities.PrintError("Invalid request, not enough money in account.\n" +
                     "You are poor.");
                 return 0;
             }
@@ -75,12 +73,12 @@
         //Method to print all transactions
         internal void PrintTransactions()
         {
-            Console.WriteLine($"--- Transactions {Name} [{ID}] ---");
+            PrintUtilities.PrintMessage($"--- Transactions {Name} [{ID}] ---");
             foreach (var transaction in _transactions)
             {
-                Console.WriteLine($"* {transaction} {Currency}");
+                PrintUtilities.PrintMessage($"* {transaction} {Currency}");
             }
-            Console.WriteLine();
+            PrintUtilities.PrintEmptyLine();
         }
 
         internal string GetAccountType()

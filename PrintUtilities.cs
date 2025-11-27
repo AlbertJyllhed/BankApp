@@ -1,4 +1,6 @@
-﻿namespace BankApp
+﻿using System.Reflection;
+
+namespace BankApp
 {
     internal static class PrintUtilities
     {
@@ -37,6 +39,25 @@
             foreach (var message in messages)
             {
                 Console.WriteLine(message);
+            }
+            PrintEmptyLine();
+        }
+
+        // Method to print a list of items with ToString method
+        internal static void PrintList<T>(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                // Skip null items
+                if (item == null) continue;
+
+                // Check if the item has a ToString method
+                var type = item.GetType();
+                if (type.GetMethod("ToString") != null)
+                {
+                    // Print the string representation of the item
+                    Console.WriteLine(item.ToString());
+                }
             }
             PrintEmptyLine();
         }
