@@ -249,7 +249,13 @@ namespace BankApp.Users
             }
 
             //Calculate max loan, 5 times the total balance in SEK)
-            decimal maxLoan = totalInSEK * 5;
+            decimal maxLoan = totalInSEK;
+            foreach (var loan in Loans)
+            {
+                maxLoan -= loan.GetTotalLoan();
+            }
+            maxLoan *= 5;
+
             PrintUtilities.PrintMessage($"Your total balance in SEK: {totalInSEK}\n" +
                 $"The maximum amount of money you can borrow: {maxLoan}\n" +
                 $"Are you sure you want to make a loan? y/n");
