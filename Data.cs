@@ -42,7 +42,8 @@ namespace BankApp
                         string id = PadID(counter);
 
                         // Create bank account for customer
-                        customer.CreateBankAccount($"{customer.Name} Account {counter}", "SEK", id);
+                        var bankAccount = customer.CreateBankAccount($"{customer.Name} Account {i + 1}", "SEK", id);
+                        bankAccount.AddBalance(100m);
                         counter++;
                     }
                 }
