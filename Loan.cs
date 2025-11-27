@@ -25,5 +25,15 @@ namespace BankApp
             var totalAmount = Amount * Interest;
             return Math.Round(totalAmount, 2);
         }
+
+        internal decimal GetLoanWithoutInterest()
+        {
+            return Math.Round(Amount, 2);
+        }
+
+        public override string ToString()
+        {
+            return $"Lån: {Amount * Interest} SEK";
+        }
     }
 }
