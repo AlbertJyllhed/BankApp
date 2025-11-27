@@ -88,11 +88,11 @@
             return GetType().Name;
         }
 
-        //Method to print info and the method gets called in get PrintBankAccounts
-        internal void PrintInfo()
+        // Override ToString method to print account details
+        public override string ToString()
         {
-            Console.WriteLine($"{GetAccountType()} {Name} [{ID}]\n" +
-                $"Balance: {Balance} {Currency}");
+            return $"{GetAccountType()} {Name} [{ID}]\n" +
+                $"Balance: {Balance} {Currency}";
         }
 
         // Convert value to SEK from account currency

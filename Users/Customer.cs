@@ -213,8 +213,7 @@ namespace BankApp.Users
             PrintUtilities.PrintMessage("Your bank accounts:");
             foreach (var account in BankAccounts)
             {
-                Console.Write($"{index}. ");
-                account.PrintInfo();
+                PrintUtilities.PrintMessage($"{index}. {account.ToString()}");
                 index++;
             }
         }
