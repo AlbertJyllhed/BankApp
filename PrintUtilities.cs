@@ -53,9 +53,10 @@ namespace BankApp
                 // Skip null items
                 if (item == null) continue;
 
-                // Check if the item has a ToString method
+                // Get the type of the item
                 var type = item.GetType();
 
+                // Check if the item has a ToString method
                 if (type.GetMethod("ToString") != null)
                 {
                     // Print index if required
