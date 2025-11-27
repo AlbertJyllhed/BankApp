@@ -212,5 +212,16 @@ namespace BankApp
         {
             return currency.ContainsKey(code);
         }
+        // Convert value to SEK from account currency
+        internal static decimal ToSEK(decimal value, string currency)
+        {
+            return Math.Round(value * GetCurrency(currency).Value, 2);
+        }
+
+        // Convert value from SEK to account currency
+        internal static decimal FromSEK(decimal value, string currency)
+        {
+            return Math.Round(value / GetCurrency(currency).Value, 2);
+        }
     }
 }

@@ -178,8 +178,8 @@ namespace BankApp.Users
         private void DepositToAccount(decimal amount, BankAccount toAccount, BankAccount fromAccount)
         {
             // Convert amount to SEK and then to the target account's currency
-            decimal amountCurrentCurrency = fromAccount.ToSEK(amount);
-            decimal convertedAmount = toAccount.FromSEK(amountCurrentCurrency);
+            decimal amountCurrentCurrency = Data.ToSEK(amount, fromAccount.Currency);
+            decimal convertedAmount = Data.FromSEK(amountCurrentCurrency,toAccount.Currency);
 
             convertedAmount = Math.Round(convertedAmount, 2);
 
@@ -239,21 +239,31 @@ namespace BankApp.Users
             foreach (var account in BankAccounts)
             {
                 decimal balance = account.GetBalance();
-                decimal balanceInSEK = account.ToSEK(balance);
+                decimal balanceInSEK = Data.ToSEK(balance,account.Currency);
                 totalInSEK += balanceInSEK;
             }
+
 
             //Calculate max loan, 5 times the total balance in SEK)
             decimal maxLoan = totalInSEK;
             foreach (var loan in Loans)
             {
-                maxLoan -= loan.GetTotalLoan();
+                maxLoan -= loan.GetLoanWithoutInterest();
             }
+            
             maxLoan *= 5;
+
+            // Check if the requested loan amount is valid, stop method if not.
+            if (maxLoan <= 0)
+            {
+                PrintUtilities.PrintError("Du har inga pengar och kan därför inte skapa lån.");
+                return;
+            }
 
             PrintUtilities.PrintMessage($"Ditt totala belopp: {totalInSEK} SEK\n" +
                 $"Maximal summan du kan låna: {maxLoan} SEK\n" +
                 $"Är du säker på att du vill skapa lån? y/n");
+
 
             // Confirm loan creation, stop method if user inputs no.
             if (!InputUtilities.GetYesOrNo())
@@ -265,13 +275,6 @@ namespace BankApp.Users
             PrintUtilities.PrintMessage("Hur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
 
-            // Check if the requested loan amount is valid, stop method if not.
-            if (maxLoan <= 0)
-            {
-                PrintUtilities.PrintError("Du har inga pengar och kan därför inte skapa lån.");
-                return;
-            }
-
             while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
             {
                 PrintUtilities.PrintColoredMessage($"Du kan ej låna {borrowedAmountSEK}", ConsoleColor.Yellow);
@@ -282,15 +285,13 @@ namespace BankApp.Users
             PrintBankAccounts();
             var chosenAccount = InputUtilities.GetIndex(BankAccounts.Count);
 
-            var newLoan = new Loan(borrowedAmountSEK);
+            Loan? newLoan = new Loan(borrowedAmountSEK);
             Loans.Add(newLoan);
 
-            decimal depositedAmount = BankAccounts[chosenAccount].FromSEK(borrowedAmountSEK);
+            decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, BankAccounts[chosenAccount].Currency);
 
             BankAccounts[chosenAccount].AddBalance(depositedAmount);
             BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
-
-            PrintUtilities.PrintMessage($"Lån på {borrowedAmountSEK} SEK har överförts till #{chosenAccount+1}.");
         }
 
         internal void PrintLoans()
@@ -300,6 +301,9 @@ namespace BankApp.Users
                 PrintUtilities.PrintError("Du har inga lån.");
                 return;
             }
+            PrintUtilities.PrintMessage("--- Dina lån ---", 1);
+
+            PrintUtilities.PrintList(Loans, true);
 
             decimal totalLoan = 0;
 
@@ -309,7 +313,7 @@ namespace BankApp.Users
                 totalLoan += loan.GetTotalLoan();
             }
 
-            PrintUtilities.PrintMessage($"Din nuvarande skuld: {totalLoan} SEK");
+            PrintUtilities.PrintMessage($"Din totala skuld inklusive ränta: {totalLoan} SEK");
         }
 
         //Savings account creation method
