@@ -74,9 +74,9 @@ namespace BankApp.Users
         }
 
         // Method to create a new bank account without user input
-        internal BankAccount CreateBankAccount(string accountName, string currency)
+        internal BankAccount CreateBankAccount(string accountName, string currency, string id = "")
         {
-            var bankAccount = new BankAccount(accountName, currency);
+            var bankAccount = new BankAccount(accountName, currency, id);
             BankAccounts.Add(bankAccount);
             Data.AddBankAccount(bankAccount);
             return bankAccount;

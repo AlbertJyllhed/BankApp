@@ -28,39 +28,39 @@ namespace BankApp
                 new Customer("User2", "u2")
             };
 
-            // Create a new random instance to reuse for each customer
-            var random = new Random();
+            int counter = 1;
 
+            // Loop through all users
             foreach (var user in users)
             {
-                int counter = 1;
-
+                // If the user is a customer, create two bank accounts for them
                 if (user is Customer customer)
                 {
-                    // Randomize how many accounts user has
-                    int accountAmount = random.Next(1, 3);
-
-                    for (int i = 0; i < accountAmount; i++)
+                    for (int i = 0; i < 2; i++)
                     {
-                        // Randomize currency for new account
-                        int randomIndex = random.Next(0, currency.Count);
-                        string randomCurrency = currency.ElementAt(randomIndex).Key;
+                        // Create ID from counter and pad to 5 digits
+                        string id = PadID(counter);
 
-                        // Create new account for user, also adds account to Data
-                        var account = customer.CreateBankAccount($"{user.Name} Account {counter}", randomCurrency);
-
-                        // Randomize balance for new account
-                        decimal randomBalance = random.Next(100, 1000) * (decimal)random.NextDouble();
-                        account.AddBalance(randomBalance);
+                        // Create bank account for customer
+                        customer.CreateBankAccount($"{customer.Name} Account {counter}", "SEK", id);
                         counter++;
                     }
                 }
             }
         }
 
-        internal static void AddUser(User user)
+        // Adds a user to the list of all users if the name is unique
+        internal static void AddUser(User newUser)
         {
-            users.Add(user);
+            foreach (var user in users)
+            {
+                if (newUser.Name == user.Name)
+                {
+                    throw new Exception("Användare med samma namn finns redan.");
+                }
+            }
+
+            users.Add(newUser);
         }
 
         // Loops through all users and returns the user with the matching name
@@ -75,12 +75,6 @@ namespace BankApp
             }
 
             return null;
-        }
-
-        // Returns the list of all users
-        internal static List<User> GetUsers()
-        {
-            return users;
         }
 
         // Returns a list of all locked customers
