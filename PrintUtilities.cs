@@ -94,7 +94,7 @@ namespace BankApp
         // Method to print reset message and wait for user input
         internal static void PrintResetMessage()
         {
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("Tryck på en knapp för att forsätta... ");
             Console.ReadKey();
             Console.Clear();
         }
