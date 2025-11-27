@@ -106,7 +106,7 @@ namespace BankApp
             // If it does, throw an exception
             if (existingAccount != null)
             {
-                throw new Exception("Bank account with the same ID already exists.");
+                throw new Exception("Bankkonto med samma ID finns redan.");
             }
 
             bankAccounts.Add(account);
@@ -172,7 +172,7 @@ namespace BankApp
         internal static KeyValuePair<string, decimal> ChooseCurrency()
         {
             // Ask user to choose currency code by typing in number. 
-            Console.WriteLine("Choose currency: ");
+            Console.WriteLine("Välj valuta: ");
             int count = 1;
             foreach (var item in currency)
             {
@@ -218,8 +218,8 @@ namespace BankApp
             }
             else
             {
-                Console.WriteLine($"{code} is not a valid currency.\n" +
-                    $"We apologize for the inconvenience.");
+                Console.WriteLine($"{code} är inte en giltig valuta.\n" +
+                    $"Vi ber om ursäkt för besväret.");
 
                 return false;
             }
