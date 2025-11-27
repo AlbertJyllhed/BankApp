@@ -209,13 +209,8 @@ namespace BankApp.Users
                 return;
             }
 
-            int index = 1;
             PrintUtilities.PrintMessage("Your bank accounts:");
-            foreach (var account in BankAccounts)
-            {
-                PrintUtilities.PrintMessage($"{index}. {account.ToString()}");
-                index++;
-            }
+            PrintUtilities.PrintList(BankAccounts, true);
         }
 
         internal void PrintTransactionsActivity()
