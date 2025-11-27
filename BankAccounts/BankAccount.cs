@@ -2,18 +2,33 @@
 {
     internal class BankAccount
     {
+        private string _id = "";
         private List<decimal> _transactions = [];
-        internal string ID { get; }
+        internal string ID
+        {
+            get { return _id; }
+            private set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _id = Data.GetUniqueID();
+                }
+                else
+                {
+                    _id = value;
+                }
+            }
+        }
         internal string Name { get; }
         internal string Currency { get; set; } = "SEK";
         protected decimal Balance { get; set; } = 0;
 
         // Constructor
-        internal BankAccount(string name, string currency)
+        internal BankAccount(string name, string currency, string id = "")
         {
             Name = name;
             Currency = currency;
-            ID = Data.GetUniqueID();
+            ID = id;
         }
 
         // Method to add balance to account
@@ -22,13 +37,12 @@
             value = Math.Round(value, 2);
             _transactions.Add(value);
             Balance += value;
-            //Console.WriteLine($"{value} {Currency} was transfered to account {ID}.");
         }
 
         // Print deposit details
         internal void PrintDepositDetails(decimal value)
         {
-            Console.WriteLine($"{value} {Currency} was transferred to account {ID}.");
+            PrintUtilities.PrintMessage($"{value} {Currency} was transferred to account {ID}.");
         }
 
         // Print transfer details with to account IDs
@@ -36,12 +50,12 @@
         {
             if (Currency == toAccount.Currency)
             {
-                Console.WriteLine($"{originalAmount} {Currency} was transferred from account" +
+                PrintUtilities.PrintMessage($"{originalAmount} {Currency} was transferred from account" +
                     $" {ID} to account {toAccount.ID}.");
             }
             else
             {
-                Console.WriteLine($"{originalAmount} {Currency} was transferred from account {ID}," +
+                PrintUtilities.PrintMessage($"{originalAmount} {Currency} was transferred from account {ID}," +
                     $" converted into {convertedAmount} {toAccount.Currency} and transferred to account {toAccount.ID}.");
             }
         }
