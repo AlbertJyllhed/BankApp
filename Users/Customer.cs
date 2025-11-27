@@ -21,7 +21,7 @@ namespace BankApp.Users
             if (Locked)
             {
                 // Check if account is locked and block login if so
-                PrintUtilities.PrintError("Your account is locked due to too many failed login attempts.");
+                PrintUtilities.PrintError("Överskridit antal försökt, ditt konto är låst!");
                 return false;
             }
 
@@ -41,8 +41,8 @@ namespace BankApp.Users
                 {
                     Locked = true;
                 }
-                PrintUtilities.PrintColoredMessage($"Wrong username or password\n" +
-                        $"Attempts left {3 - loginAttempts}", ConsoleColor.Yellow);
+                PrintUtilities.PrintColoredMessage($"Fel användarnamn eller lösenord\n" +
+                        $"Försök kvar: {3 - loginAttempts}", ConsoleColor.Yellow);
 
                 return false;
             }
@@ -62,15 +62,15 @@ namespace BankApp.Users
         internal void SetupBankAccount()
         {
             // Ask user to choose the name of the created account.
-            PrintUtilities.PrintInputPrompt("New bank account name: ");
+            PrintUtilities.PrintInputPrompt("Bankkonto namn: ");
             var accountName = InputUtilities.GetString();
 
             var currency = Data.ChooseCurrency().Key;
 
             var bankAccount = CreateBankAccount(accountName, currency);
 
-            PrintUtilities.PrintMessage($"Your new {bankAccount.GetAccountType()} ({accountName}, {currency}) " +
-                $"has been successfully created!");
+            PrintUtilities.PrintMessage($"Ditt nya {bankAccount.GetAccountType()} ({accountName}, {currency}) " +
+                $"har skapats!");
         }
 
         // Method to create a new bank account without user input
@@ -101,12 +101,12 @@ namespace BankApp.Users
             // Check if there are any bank accounts to transfer from
             if (!HasBankAccounts())
             {
-                PrintUtilities.PrintError("You don't have any bank accounts.");
+                PrintUtilities.PrintError("Du har inget bankkonto.");
                 return;
             }
 
             // Choose from which account to transfer
-            PrintUtilities.PrintMessage("From which account do you want to transfer?");
+            PrintUtilities.PrintMessage("Från vilket konto vill du överföra pengarna?");
             PrintBankAccounts();
             BankAccount fromAccount = GetAccountByIndex();
 
@@ -115,23 +115,23 @@ namespace BankApp.Users
             // Choose to which account to transfer (using index or ID)
             if (ChooseTransferMethod())
             {
-                PrintUtilities.PrintMessage("Which account do you want to transfer to? Enter account index.");
+                PrintUtilities.PrintMessage("Vilket bankkonto vill du överföra pengarna till? Ange index.");
                 toAccount = GetAccountByIndex();
             }
             else
             {
-                PrintUtilities.PrintMessage("Which account do you want to transfer to? Enter account number.");
+                PrintUtilities.PrintMessage("Vilket bankkonto vill du överföra pengarna till? Ange kontonummer");
                 toAccount = GetAccountByID();
             }
 
             if (toAccount == null)
             {
-                PrintUtilities.PrintError("Account not found, please try again.");
+                PrintUtilities.PrintError("Inget konto hittades, försök igen.");
                 return;
             }
 
             // Choose amount to transfer
-            PrintUtilities.PrintMessage("How much money do you want to transfer?");
+            PrintUtilities.PrintMessage("Hur mycket pengar vill du överföra?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             if (amount <= 0)
@@ -147,16 +147,16 @@ namespace BankApp.Users
             }
             else
             {
-                PrintUtilities.PrintError("Transfer failed due to insufficient funds.");
+                PrintUtilities.PrintError("Överföring misslyckades på grund av för låg summa.");
             }
         }
 
         // Method to choose transfer method
         private bool ChooseTransferMethod()
         {
-            PrintUtilities.PrintMessage("How do you want to transfer your money?\n" +
-                "1. By index\n" +
-                "2. By account ID");
+            PrintUtilities.PrintMessage("Hur vill du överföra pengarna?\n" +
+                "1. Med index\n" +
+                "2. Med kontonummer");
             return InputUtilities.GetIndex(2) == 0;
         }
 
@@ -205,17 +205,17 @@ namespace BankApp.Users
         {
             if (!HasBankAccounts())
             {
-                PrintUtilities.PrintError("You don't have any bank accounts.");
+                PrintUtilities.PrintError("Du har inget bankkonto.");
                 return;
             }
 
-            PrintUtilities.PrintMessage("Your bank accounts:");
+            PrintUtilities.PrintMessage("Dina bankkonto:");
             PrintUtilities.PrintList(BankAccounts, true);
         }
 
         internal void PrintTransactionsActivity()
         {
-            PrintUtilities.PrintMessage("--- Your Transactions ---");
+            PrintUtilities.PrintMessage("--- Dina överföringar ---");
 
             foreach (var account in BankAccounts)
             {
@@ -230,7 +230,7 @@ namespace BankApp.Users
             //Check if user has any bank accounts, stop method if not.
             if (BankAccounts.Count == 0)
             {
-                PrintUtilities.PrintError("You don´t have any accounts. Please make one before you make a loan.");
+                PrintUtilities.PrintError("Du har inget bankkonto, vänligen skapa ett innan du gör lån.");
                 return;
             }
 
@@ -251,34 +251,34 @@ namespace BankApp.Users
             }
             maxLoan *= 5;
 
-            PrintUtilities.PrintMessage($"Your total balance in SEK: {totalInSEK}\n" +
-                $"The maximum amount of money you can borrow: {maxLoan}\n" +
-                $"Are you sure you want to make a loan? y/n");
+            PrintUtilities.PrintMessage($"Ditt totala belopp: {totalInSEK} SEK\n" +
+                $"Maximal summan du kan låna: {maxLoan} SEK\n" +
+                $"Är du säker på att du vill skapa lån? y/n");
 
             // Confirm loan creation, stop method if user inputs no.
             if (!InputUtilities.GetYesOrNo())
             {
-                PrintUtilities.PrintColoredMessage("Loan has been cancelled.", ConsoleColor.Yellow);
+                PrintUtilities.PrintColoredMessage("Lånet har blivit avbrutet.", ConsoleColor.Yellow);
                 return;
             }
 
-            PrintUtilities.PrintMessage("How much would you like to borrow?");
+            PrintUtilities.PrintMessage("Hur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
 
             // Check if the requested loan amount is valid, stop method if not.
             if (maxLoan <= 0)
             {
-                PrintUtilities.PrintError("You have no money, you are not able to borrow.");
+                PrintUtilities.PrintError("Du har inga pengar och kan därför inte skapa lån.");
                 return;
             }
 
             while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
             {
-                PrintUtilities.PrintColoredMessage($"You're not allowed to borrow {borrowedAmountSEK}", ConsoleColor.Yellow);
+                PrintUtilities.PrintColoredMessage($"Du kan ej låna {borrowedAmountSEK}", ConsoleColor.Yellow);
                 borrowedAmountSEK = InputUtilities.GetInt();
             }
 
-            PrintUtilities.PrintMessage("Which bank account would you like to put your borrowed money in?");
+            PrintUtilities.PrintMessage("Vilket konto vill du låna till? ");
             PrintBankAccounts();
             var chosenAccount = InputUtilities.GetIndex(BankAccounts.Count);
 
@@ -290,14 +290,14 @@ namespace BankApp.Users
             BankAccounts[chosenAccount].AddBalance(depositedAmount);
             BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
 
-            PrintUtilities.PrintMessage($"Loan of {borrowedAmountSEK} SEK added to account #{chosenAccount}.");
+            PrintUtilities.PrintMessage($"Lån på {borrowedAmountSEK} SEK har överförts till #{chosenAccount+1}.");
         }
 
         internal void PrintLoans()
         {
             if (Loans.Count == 0)
             {
-                PrintUtilities.PrintError("You have no loans.");
+                PrintUtilities.PrintError("Du har inga lån.");
                 return;
             }
 
@@ -309,17 +309,17 @@ namespace BankApp.Users
                 totalLoan += loan.GetTotalLoan();
             }
 
-            PrintUtilities.PrintMessage($"Your current debt: {totalLoan} SEK");
+            PrintUtilities.PrintMessage($"Din nuvarande skuld: {totalLoan} SEK");
         }
 
         //Savings account creation method
         internal void CreateSavingAccount()
         {
             //Ask user to choose the name of the created account.
-            PrintUtilities.PrintInputPrompt("Savings account name: ");
+            PrintUtilities.PrintInputPrompt("Sparkonto namn: ");
             var accountName = InputUtilities.GetString();
 
-            PrintUtilities.PrintMessage("What amount do you want put in the savings account?");
+            PrintUtilities.PrintMessage("Hur mycket vill du sätta in på sparkontot?");
             var amount = InputUtilities.GetPositiveDecimal();
 
             var currency = Data.ChooseCurrency().Key;
@@ -339,13 +339,13 @@ namespace BankApp.Users
         internal void InsertMoney()
         {
             // Choose which account to insert money into
-            PrintUtilities.PrintMessage("Which account do you want to insert money in to.");
+            PrintUtilities.PrintMessage("Vilket konto vill du sätta in pengar på?");
             PrintBankAccounts();
             int index = InputUtilities.GetIndex(BankAccounts.Count);
             BankAccount insertMoneyAccount = BankAccounts[index];
 
             // Choose amount to insert
-            PrintUtilities.PrintMessage($"How much money do you want to insert to {insertMoneyAccount.Name}?");
+            PrintUtilities.PrintMessage($"Hur mycket pengar vill du sätta in till {insertMoneyAccount.Name}?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             if (amount <= 0)
