@@ -167,13 +167,14 @@ namespace BankApp
         internal static KeyValuePair<string, decimal> ChooseCurrency()
         {
             // Ask user to choose currency code by typing in number. 
-            Console.WriteLine("Välj valuta: ");
+            PrintUtilities.PrintMessage("Välj valuta: ");
             int count = 1;
             foreach (var item in currency)
             {
-                Console.WriteLine($"{count}. {item.Key}");
+                PrintUtilities.PrintMessage($"{count}. {item.Key}");
                 count++;
             }
+
             var index = InputUtilities.GetIndex(currency.Count);
 
             // Get the currency code from the dictionary based on the chosen index.
@@ -187,11 +188,13 @@ namespace BankApp
         {
             if (CurrencyExists(code))
             {
+                // Return the currency code and its exchange rate as a KeyValuePair
                 return new KeyValuePair<string, decimal>(code, currency[code]);
             }
             else
             {
-                return new KeyValuePair<string, decimal>("", 0);
+                // Throw an exception if the currency code is invalid
+                throw new Exception("Ogiltig valuta kod.");
             }
         }
 
@@ -207,17 +210,7 @@ namespace BankApp
         // Method to check if a currency code exists in the dictionary
         private static bool CurrencyExists(string code)
         {
-            if (currency.ContainsKey(code))
-            {
-                return true;
-            }
-            else
-            {
-                Console.WriteLine($"{code} är inte en giltig valuta.\n" +
-                    $"Vi ber om ursäkt för besväret.");
-
-                return false;
-            }
+            return currency.ContainsKey(code);
         }
     }
 }
