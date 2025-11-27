@@ -15,9 +15,9 @@ namespace BankApp.BankAccounts
 
         internal void PrintSavingsInterest(decimal amount)
         {
-            Console.WriteLine($"Money put in savings account {amount} {Currency}\n" +
-                $"Savings interest is {Interest}%\n" +
-                $"After one year you will have {amount * Interest} {Currency}");
+            Console.WriteLine($"Du har satt in {amount} {Currency} i ditt sparkonto\n" +
+                $"Räntan på sparkonton är {Interest}%\n" +
+                $"Efter ett år kommer du ha {amount * Interest} {Currency} på ditt sparkonto");
         }
     }
 }
