@@ -46,6 +46,8 @@ namespace BankApp
         // Method to print a list of items with ToString method
         internal static void PrintList<T>(IEnumerable<T> items, bool withIndex = false)
         {
+            int counter = 1;
+
             foreach (var item in items)
             {
                 // Skip null items
@@ -53,7 +55,6 @@ namespace BankApp
 
                 // Check if the item has a ToString method
                 var type = item.GetType();
-                int counter = 1;
 
                 if (type.GetMethod("ToString") != null)
                 {
@@ -61,11 +62,11 @@ namespace BankApp
                     if (withIndex)
                     {
                         Console.Write($"{counter}. ");
-                        counter++;
                     }
 
                     // Print the string representation of the item
                     Console.WriteLine(item.ToString());
+                    counter++;
                 }
             }
             PrintEmptyLine();
