@@ -18,23 +18,23 @@
         internal void UpdateCurrency()
         {
             // Prompt admin to choose a currency to update
-            PrintUtilities.PrintMessage("Which currency do you want to update?");
+            PrintUtilities.PrintMessage("Vilken valuta vill du uppdatera?");
             string currency = Data.ChooseCurrency().Key;
 
             // Prompt for new exchange rate and update it in Data
-            PrintUtilities.PrintInputPrompt($"Type the new exchange rate for {currency}: ");
+            PrintUtilities.PrintInputPrompt($"Skriv in den nya växelkurden för {currency}: ");
             Data.SetCurrency(currency, InputUtilities.GetDecimal());
         }
 
         // Method to create a new customer
         internal void CreateCustomer()
         {
-            PrintUtilities.PrintMessage("Creating new user.");
+            PrintUtilities.PrintMessage("Skapar ny användare.");
 
             // Get username and password from input
-            PrintUtilities.PrintInputPrompt("Type username: ");
+            PrintUtilities.PrintInputPrompt("Skriv in användarnamn: ");
             string name = InputUtilities.GetString();
-            PrintUtilities.PrintInputPrompt("Type password: ");
+            PrintUtilities.PrintInputPrompt("Skriv in lösenord: ");
             string password = InputUtilities.GetString();
 
             // Create new Customer object with provided name and password
@@ -42,13 +42,13 @@
 
             // Add the new customer to Data
             Data.AddUser(customer);
-            PrintUtilities.PrintMessage($"User {name} created.");
+            PrintUtilities.PrintMessage($"Användare {name} skapad.");
         }
 
         // Method to unlock a customer's account
         internal void UnlockCustomerAccount()
         {
-            PrintUtilities.PrintMessage("Which customer account do you want to unlock?");
+            PrintUtilities.PrintMessage("Vilken kund profil vill du låsa upp?");
 
             // Get list of customers from Data
             var lockedCustomers = Data.GetLockedCustomers();
@@ -65,7 +65,7 @@
 
             // Unlock the selected customer's account
             customer.UnlockAccount();
-            PrintUtilities.PrintMessage($"Customer {customer.Name} account unlocked.");
+            PrintUtilities.PrintMessage($"Användare {customer.Name} profil har blivit upplåst.");
         }
     }
 }

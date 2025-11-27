@@ -6,16 +6,16 @@ namespace BankApp
     {
         internal bool PrintCustomerMenu(Customer customer)
         {
-            PrintUtilities.PrintMessage("--- Customer Menu ---");
-            PrintUtilities.PrintMessages(["1. Create an account",
-                "2. Create savings account",
-                "3. Show bank accounts",
-                "4. Insert money to account",
-                "5. Transfer balance",
-                "6. Print transactions",
-                "7. Create loan",
-                "8. Show current debt",
-                "9. Log out"]);
+            PrintUtilities.PrintMessage("--- Kund Meny ---");
+            PrintUtilities.PrintMessages(["1. Skapa ett bankkonto",
+                "2. Skapa ett sparbankskonto",
+                "3. Visa bankkonton ",
+                "4. Sätt in pengar",
+                "5. Överför pengar",
+                "6. Skriv ut transaktioner",
+                "7. Ansök om lån",
+                "8. Visa nuvarande skuld",
+                "9. Logga ut"]);
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -49,7 +49,7 @@ namespace BankApp
                 case 9:
                     return false;
                 default:
-                    PrintUtilities.PrintError("Invalid choice, try again.");
+                    PrintUtilities.PrintError("Felaktigt val, försök igen.");
                     break;
             }
 
@@ -58,11 +58,11 @@ namespace BankApp
 
         internal bool PrintAdminMenu(Admin admin)
         {
-            PrintUtilities.PrintMessage("--- Admin Menu ---");
-            PrintUtilities.PrintMessages(["1. Update currency",
-                "2. Create user",
-                "3. Unlock customer",
-                "4. Log out"]);
+            PrintUtilities.PrintMessage("--- Admin Meny ---");
+            PrintUtilities.PrintMessages(["1. Uppdatera valuta",
+                "2. Skapa användare",
+                "3. Lås upp låst kund profil",
+                "4. Logga ut"]);
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -81,7 +81,7 @@ namespace BankApp
                 case 4:
                     return false;
                 default:
-                    PrintUtilities.PrintError("Invalid choice, try again.");
+                    PrintUtilities.PrintError("Felaktigt val, försök igen.");
                     break;
             }
 
