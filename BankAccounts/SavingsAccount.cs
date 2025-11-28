@@ -13,11 +13,11 @@ namespace BankApp.BankAccounts
             Interest = interest;
         }
 
-        internal void PrintSavingsInterest(decimal amount)
+        internal string GetInterestInfo(decimal amount)
         {
-            Console.WriteLine($"Du har satt in {amount} {Currency} i ditt sparkonto\n" +
+            return $"Du har satt in {amount} {Currency} i ditt sparkonto\n" +
                 $"Räntan på sparkonton är {Interest}%\n" +
-                $"Efter ett år kommer du ha {amount * Interest} {Currency} på ditt sparkonto");
+                $"Efter ett år kommer du ha {amount * Interest} {Currency} på ditt sparkonto";
         }
     }
 }
