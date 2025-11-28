@@ -331,7 +331,7 @@ namespace BankApp.Users
             //Add the new bank account into the list.
             var savingsAccount = new SavingsAccount(accountName, currency);
 
-            savingsAccount.PrintSavingsInterest(amount);
+            PrintUtilities.PrintMessage(savingsAccount.GetInterestInfo(amount));
 
             savingsAccount.AddBalance(amount);
             savingsAccount.PrintDepositDetails(amount);
