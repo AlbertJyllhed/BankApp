@@ -13,11 +13,11 @@ namespace BankApp
             Interest = interest;
         }
 
-        internal void PrintLoanInterest()
+        internal string GetLoanInfo()
         {
-            Console.WriteLine($"Begärt lån: {Amount}\n" +
+            return $"Begärt lån: {Amount}\n" +
                 $"Lånets ränta: {Amount * Interest - Amount}\n" +
-                $"Total summa att betala tillbaka {Amount * Interest}");
+                $"Total summa att betala tillbaka {Amount * Interest}";
         }
 
         internal decimal GetTotalLoan()
