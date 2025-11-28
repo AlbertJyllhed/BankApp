@@ -179,7 +179,7 @@ namespace BankApp.Users
         {
             // Convert amount to SEK and then to the target account's currency
             decimal amountCurrentCurrency = Data.ToSEK(amount, fromAccount.Currency);
-            decimal convertedAmount = Data.FromSEK(amountCurrentCurrency,toAccount.Currency);
+            decimal convertedAmount = Data.FromSEK(amountCurrentCurrency, toAccount.Currency);
 
             convertedAmount = Math.Round(convertedAmount, 2);
 
@@ -239,19 +239,18 @@ namespace BankApp.Users
             foreach (var account in BankAccounts)
             {
                 decimal balance = account.GetBalance();
-                decimal balanceInSEK = Data.ToSEK(balance,account.Currency);
+                decimal balanceInSEK = Data.ToSEK(balance, account.Currency);
                 totalInSEK += balanceInSEK;
             }
 
+            //Own money
+            decimal ownMoney = totalInSEK - GetTotalLoanForEachAccount();
 
-            //Calculate max loan, 5 times the total balance in SEK)
-            decimal maxLoan = totalInSEK;
-            foreach (var loan in Loans)
-            {
-                maxLoan -= loan.GetLoanWithoutInterest();
-            }
-            
-            maxLoan *= 5;
+            //Maximum of what user can loan
+            decimal maxLoan = ownMoney * 5;
+
+            //What custumer can borrow apart from already borrowed money
+            maxLoan -= GetTotalLoanForEachAccount();
 
             // Check if the requested loan amount is valid, stop method if not.
             if (maxLoan <= 0)
@@ -305,15 +304,18 @@ namespace BankApp.Users
 
             PrintUtilities.PrintList(Loans, true);
 
-            decimal totalLoan = 0;
+            PrintUtilities.PrintMessage($"Din totala skuld inklusive ränta: {GetTotalLoanForEachAccount()} SEK");
+        }
 
-            //Shows current debt
+        internal decimal GetTotalLoanForEachAccount()
+        {
+            decimal sum = 0;
             foreach (var loan in Loans)
             {
-                totalLoan += loan.GetTotalLoan();
+                sum += loan.GetLoanWithoutInterest();
             }
 
-            PrintUtilities.PrintMessage($"Din totala skuld inklusive ränta: {totalLoan} SEK");
+            return sum;
         }
 
         //Savings account creation method
