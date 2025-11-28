@@ -2,7 +2,7 @@
 
 namespace BankApp
 {
-    internal static class PrintUtilities
+    internal static class UI
     {
         // Method to print a single message
         internal static void PrintMessage(string message, int padding = 0)

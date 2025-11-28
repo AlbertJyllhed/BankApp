@@ -167,11 +167,11 @@ namespace BankApp
         internal static KeyValuePair<string, decimal> ChooseCurrency()
         {
             // Ask user to choose currency code by typing in number. 
-            PrintUtilities.PrintMessage("Välj valuta: ");
+            UI.PrintMessage("Välj valuta: ");
             int count = 1;
             foreach (var item in currency)
             {
-                PrintUtilities.PrintMessage($"{count}. {item.Key}");
+                UI.PrintMessage($"{count}. {item.Key}");
                 count++;
             }
 

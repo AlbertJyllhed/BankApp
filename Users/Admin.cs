@@ -18,23 +18,23 @@
         internal void UpdateCurrency()
         {
             // Prompt admin to choose a currency to update
-            PrintUtilities.PrintMessage("Vilken valuta vill du uppdatera?");
+            UI.PrintMessage("Vilken valuta vill du uppdatera?");
             string currency = Data.ChooseCurrency().Key;
 
             // Prompt for new exchange rate and update it in Data
-            PrintUtilities.PrintInputPrompt($"Skriv in den nya växelkurden för {currency}: ");
+            UI.PrintInputPrompt($"Skriv in den nya växelkurden för {currency}: ");
             Data.SetCurrency(currency, InputUtilities.GetDecimal());
         }
 
         // Method to create a new customer
         internal void CreateCustomer()
         {
-            PrintUtilities.PrintMessage("Skapar ny användare.");
+            UI.PrintMessage("Skapar ny användare.");
 
             // Get username and password from input
-            PrintUtilities.PrintInputPrompt("Skriv in användarnamn: ");
+            UI.PrintInputPrompt("Skriv in användarnamn: ");
             string name = InputUtilities.GetString();
-            PrintUtilities.PrintInputPrompt("Skriv in lösenord: ");
+            UI.PrintInputPrompt("Skriv in lösenord: ");
             string password = InputUtilities.GetString();
 
             // Create new Customer object with provided name and password
@@ -42,13 +42,13 @@
 
             // Add the new customer to Data
             Data.AddUser(customer);
-            PrintUtilities.PrintMessage($"Användare {name} skapad.");
+            UI.PrintMessage($"Användare {name} skapad.");
         }
 
         // Method to unlock a customer's account
         internal void UnlockCustomerAccount()
         {
-            PrintUtilities.PrintMessage("Vilken kund profil vill du låsa upp?");
+            UI.PrintMessage("Vilken kund profil vill du låsa upp?");
 
             // Get list of customers from Data
             var lockedCustomers = Data.GetLockedCustomers();
@@ -56,7 +56,7 @@
             // Print list of customers with indices
             for (int i = 0; i < lockedCustomers.Count; i++)
             {
-                PrintUtilities.PrintMessage($"{i + 1}. {lockedCustomers[i].Name}");
+                UI.PrintMessage($"{i + 1}. {lockedCustomers[i].Name}");
             }
 
             // Choose customer by index
@@ -65,7 +65,7 @@
 
             // Unlock the selected customer's account
             customer.UnlockAccount();
-            PrintUtilities.PrintMessage($"Användare {customer.Name} profil har blivit upplåst.");
+            UI.PrintMessage($"Användare {customer.Name} profil har blivit upplåst.");
         }
     }
 }
