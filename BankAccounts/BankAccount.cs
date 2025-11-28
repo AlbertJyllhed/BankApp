@@ -42,7 +42,7 @@
         // Print deposit details
         internal void PrintDepositDetails(decimal value)
         {
-            PrintUtilities.PrintMessage($"{value} {Currency} was transferred to account {ID}.");
+            PrintUtilities.PrintMessage($"{value} {Currency} var överfört till konto {ID}.");
         }
 
         // Print transfer details with to account IDs
@@ -50,13 +50,13 @@
         {
             if (Currency == toAccount.Currency)
             {
-                PrintUtilities.PrintMessage($"{originalAmount} {Currency} was transferred from account" +
-                    $" {ID} to account {toAccount.ID}.");
+                PrintUtilities.PrintMessage($"{originalAmount} {Currency} var överfört från konto" +
+                    $" {ID} till konto {toAccount.ID}.");
             }
             else
             {
-                PrintUtilities.PrintMessage($"{originalAmount} {Currency} was transferred from account {ID}," +
-                    $" converted into {convertedAmount} {toAccount.Currency} and transferred to account {toAccount.ID}.");
+                PrintUtilities.PrintMessage($"{originalAmount} {Currency} var överfört från konto {ID}," +
+                    $" växlat till {convertedAmount} {toAccount.Currency} och överfört till konto {toAccount.ID}.");
             }
         }
 
@@ -73,8 +73,8 @@
             }
             else
             {
-                PrintUtilities.PrintError("Invalid request, not enough money in account.\n" +
-                    "You are poor.");
+                PrintUtilities.PrintError("Felaktigt begär, inte tillräckligt med pengar på kontot.\n" +
+                    "Du är fattig :)");
                 return 0;
             }
         }
@@ -100,7 +100,7 @@
         //Method to print all transactions
         internal void PrintTransactions()
         {
-            PrintUtilities.PrintMessage($"--- Transactions {Name} [{ID}] ---");
+            PrintUtilities.PrintMessage($"--- Transaktioner {Name} [{ID}] ---");
             PrintUtilities.PrintList(_transactions);
         }
 
@@ -113,7 +113,7 @@
         public override string ToString()
         {
             return $"{GetAccountType()} {Name} [{ID}]\n" +
-                $"Balance: {Balance} {Currency}";
+                $"Balans: {Balance} {Currency}";
         }
     }
 }
