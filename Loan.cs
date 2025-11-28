@@ -28,7 +28,7 @@ namespace BankApp
 
         internal decimal GetLoanWithoutInterest()
         {
-            return Math.Round(Amount, 2);
+            return Amount;
         }
 
         public override string ToString()
