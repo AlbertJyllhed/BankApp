@@ -3,7 +3,7 @@
     internal class BankAccount
     {
         private string _id = "";
-        private List<decimal> _transactions = [];
+        private List<Transaction> _transactions = [];
         internal string ID
         {
             get { return _id; }
@@ -32,13 +32,27 @@
         }
 
         // Method to add balance to account
-        internal virtual void AddBalance(decimal value)
+        internal virtual void AddBalance(decimal value, BankAccount? account = null)
         {
             value = Math.Round(value, 2);
-            _transactions.Add(value);
+            CreateTransaction(value, account);
             Balance += value;
         }
+        private void CreateTransaction(decimal value, BankAccount? account = null)
+        {
+            Transaction transaction;
+            if (account == null)
+            {
+                transaction = new Transaction(value, $"Sätter in pengar på konto");
+            }
+            else
+            {
+                transaction = new Transaction(value, $"Flyttar pengar från konto {account.Name}");
+            }
 
+            _transactions.Add(transaction);
+        }
+        
         // Print deposit details
         internal void PrintDepositDetails(decimal value)
         {
@@ -88,11 +102,7 @@
         internal void PrintTransactions()
         {
             PrintUtilities.PrintMessage($"--- Transactions {Name} [{ID}] ---");
-            foreach (var transaction in _transactions)
-            {
-                PrintUtilities.PrintMessage($"* {transaction} {Currency}");
-            }
-            PrintUtilities.PrintEmptyLine();
+            PrintUtilities.PrintList(_transactions);
         }
 
         internal string GetAccountType()
