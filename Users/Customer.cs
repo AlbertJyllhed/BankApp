@@ -184,8 +184,8 @@ namespace BankApp.Users
             convertedAmount = Math.Round(convertedAmount, 2);
 
             // Perform the transfer
-            fromAccount.RemoveBalance(amount);
-            toAccount.AddBalance(convertedAmount);
+            fromAccount.RemoveBalance(amount, toAccount.Name);
+            toAccount.AddBalance(convertedAmount, fromAccount.Name);
             fromAccount.PrintTransferDetails(amount, convertedAmount, toAccount);
         }
 

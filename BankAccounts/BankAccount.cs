@@ -32,25 +32,11 @@
         }
 
         // Method to add balance to account
-        internal virtual void AddBalance(decimal value, BankAccount? account = null)
+        internal virtual void AddBalance(decimal value, string fromAccount = "")
         {
             value = Math.Round(value, 2);
-            CreateTransaction(value, account);
+            CreateTransaction(value, fromAccount, "från");
             Balance += value;
-        }
-        private void CreateTransaction(decimal value, BankAccount? account = null)
-        {
-            Transaction transaction;
-            if (account == null)
-            {
-                transaction = new Transaction(value, $"Sätter in pengar på konto");
-            }
-            else
-            {
-                transaction = new Transaction(value, $"Flyttar pengar från konto {account.Name}");
-            }
-
-            _transactions.Add(transaction);
         }
         
         // Print deposit details
@@ -75,14 +61,14 @@
         }
 
         // Method to remove balance from account and return the removed value
-        internal decimal RemoveBalance(decimal value)
+        internal decimal RemoveBalance(decimal value, string toAccount = "")
         {
             value = Math.Round(value, 2);
 
             if (Balance >= value)
             {
+                CreateTransaction(-value, toAccount, "till");
                 Balance -= value;
-                _transactions.Add(-value);
                 return value;
             }
             else
@@ -91,6 +77,19 @@
                     "You are poor.");
                 return 0;
             }
+        }
+
+        // Method to create a transaction and add it to the transaction list
+        private void CreateTransaction(decimal value, string accountName, string transferType)
+        {
+            string transfer = $"{value} {Currency}";
+
+            // If account name is provided, include it in the message
+            string message = (accountName != "") ? $"{transfer} {transferType} {accountName}" : transfer;
+
+            // Create new transaction and add to list
+            var transaction = new Transaction(value, message);
+            _transactions.Add(transaction);
         }
 
         internal decimal GetBalance()
