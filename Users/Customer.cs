@@ -225,7 +225,7 @@ namespace BankApp.Users
 
         // Loan creation method
         //TODO: Refactor method to smaller methods
-        internal void CreateLoan()
+        internal void LoanSetup()
         {
             //Check if user has any bank accounts, stop method if not.
             if (BankAccounts.Count == 0)
@@ -259,10 +259,7 @@ namespace BankApp.Users
                 return;
             }
 
-            PrintUtilities.PrintMessage($"Ditt totala belopp: {totalInSEK} SEK\n" +
-                $"Maximal summan du kan låna: {maxLoan} SEK\n" +
-                $"Är du säker på att du vill skapa lån? y/n");
-
+            LoanMessage(totalInSEK, maxLoan);
 
             // Confirm loan creation, stop method if user inputs no.
             if (!InputUtilities.GetYesOrNo())
@@ -271,6 +268,11 @@ namespace BankApp.Users
                 return;
             }
 
+            CreateLoan(maxLoan);
+        }
+
+        internal void CreateLoan(decimal maxLoan)
+        {
             PrintUtilities.PrintMessage("Hur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
 
@@ -291,6 +293,13 @@ namespace BankApp.Users
 
             BankAccounts[chosenAccount].AddBalance(depositedAmount);
             BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
+        }
+
+        internal void LoanMessage(decimal total, decimal loan)
+        {
+            PrintUtilities.PrintMessage($"Ditt totala belopp: {total} SEK\n" +
+                $"Maximal summan du kan låna: {loan} SEK\n" +
+                $"Är du säker på att du vill skapa lån? y/n");
         }
 
         internal void PrintLoans()

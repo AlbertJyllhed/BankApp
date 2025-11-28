@@ -41,7 +41,7 @@ namespace BankApp
                     customer.PrintTransactionsActivity();
                     break;
                 case 7:
-                    customer.CreateLoan();
+                    customer.LoanSetup();
                     break;
                 case 8:
                     customer.PrintLoans();
