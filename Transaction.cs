@@ -13,10 +13,10 @@
             TimeStamp = DateTime.Now;
             Description = description;
         }
+
         public override string ToString()
         {
-            return $"{Description} {Amount} {TimeStamp:G} ";
+            return $"{Description}, {TimeStamp:G}";
         }
-       
     }
 }
