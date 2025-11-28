@@ -42,7 +42,7 @@
         // Print deposit details
         internal void PrintDepositDetails(decimal value)
         {
-            PrintUtilities.PrintMessage($"{value} {Currency} var överfört till konto {ID}.");
+            UI.PrintMessage($"{value} {Currency} var överfört till konto {ID}.");
         }
 
         // Print transfer details with to account IDs
@@ -50,12 +50,12 @@
         {
             if (Currency == toAccount.Currency)
             {
-                PrintUtilities.PrintMessage($"{originalAmount} {Currency} var överfört från konto" +
+                UI.PrintMessage($"{originalAmount} {Currency} var överfört från konto" +
                     $" {ID} till konto {toAccount.ID}.");
             }
             else
             {
-                PrintUtilities.PrintMessage($"{originalAmount} {Currency} var överfört från konto {ID}," +
+                UI.PrintMessage($"{originalAmount} {Currency} var överfört från konto {ID}," +
                     $" växlat till {convertedAmount} {toAccount.Currency} och överfört till konto {toAccount.ID}.");
             }
         }
@@ -73,7 +73,7 @@
             }
             else
             {
-                PrintUtilities.PrintError("Felaktigt begär, inte tillräckligt med pengar på kontot.\n" +
+                UI.PrintError("Felaktigt begär, inte tillräckligt med pengar på kontot.\n" +
                     "Du är fattig :)");
                 return 0;
             }
@@ -100,8 +100,8 @@
         //Method to print all transactions
         internal void PrintTransactions()
         {
-            PrintUtilities.PrintMessage($"--- Transaktioner {Name} [{ID}] ---");
-            PrintUtilities.PrintList(_transactions);
+            UI.PrintMessage($"--- Transaktioner {Name} [{ID}] ---");
+            UI.PrintList(_transactions);
         }
 
         internal string GetAccountType()

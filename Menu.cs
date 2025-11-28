@@ -6,8 +6,8 @@ namespace BankApp
     {
         internal bool PrintCustomerMenu(Customer customer)
         {
-            PrintUtilities.PrintMessage("--- Kund Meny ---");
-            PrintUtilities.PrintMessages(["1. Skapa ett bankkonto",
+            UI.PrintMessage("--- Kund Meny ---");
+            UI.PrintMessages(["1. Skapa ett bankkonto",
                 "2. Skapa ett sparbankskonto",
                 "3. Visa bankkonton ",
                 "4. Sätt in pengar",
@@ -49,7 +49,7 @@ namespace BankApp
                 case 9:
                     return false;
                 default:
-                    PrintUtilities.PrintError("Felaktigt val, försök igen.");
+                    UI.PrintError("Felaktigt val, försök igen.");
                     break;
             }
 
@@ -58,8 +58,8 @@ namespace BankApp
 
         internal bool PrintAdminMenu(Admin admin)
         {
-            PrintUtilities.PrintMessage("--- Admin Meny ---");
-            PrintUtilities.PrintMessages(["1. Uppdatera valuta",
+            UI.PrintMessage("--- Admin Meny ---");
+            UI.PrintMessages(["1. Uppdatera valuta",
                 "2. Skapa användare",
                 "3. Lås upp låst kund profil",
                 "4. Logga ut"]);
@@ -81,7 +81,7 @@ namespace BankApp
                 case 4:
                     return false;
                 default:
-                    PrintUtilities.PrintError("Felaktigt val, försök igen.");
+                    UI.PrintError("Felaktigt val, försök igen.");
                     break;
             }
 

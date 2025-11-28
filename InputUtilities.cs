@@ -8,7 +8,7 @@
             string? input = Console.ReadLine();
             while (string.IsNullOrWhiteSpace(input))
             {
-                PrintUtilities.PrintError("Inmatning kan inte vara tomt, försök igen.");
+                UI.PrintError("Inmatning kan inte vara tomt, försök igen.");
                 input = Console.ReadLine();
             }
             return input;
@@ -20,7 +20,7 @@
             decimal input;
             while (!decimal.TryParse(Console.ReadLine(), out input))
             {
-                PrintUtilities.PrintError("Felaktigt värde, försök igen.");
+                UI.PrintError("Felaktigt värde, försök igen.");
             }
             return Math.Round(input, 2);
         }
@@ -32,7 +32,7 @@
             while (input <= 0)
             {
                 input = GetDecimal();
-                PrintUtilities.PrintError("Felaktigt värde, värdet måste vara positivt.");
+                UI.PrintError("Felaktigt värde, värdet måste vara positivt.");
             }
             return input;
         }
@@ -43,7 +43,7 @@
             int input;
             while (!int.TryParse(Console.ReadLine(), out input))
             {
-                PrintUtilities.PrintError("Felaktigt värde, försök igen.");
+                UI.PrintError("Felaktigt värde, försök igen.");
             }
             return input;
 
@@ -55,7 +55,7 @@
             int index = GetInt() - 1;
             while (index < 0 || index >= maxIndex)
             {
-                PrintUtilities.PrintError("Felaktigt index värde, försök igen.");
+                UI.PrintError("Felaktigt index värde, försök igen.");
                 index = GetInt() - 1;
             }
             return index;
@@ -66,7 +66,7 @@
             string input = GetString().ToLower();
             while (input != "y" && input != "n")
             {
-                PrintUtilities.PrintError("Felaktigt inmatning, vänligen skriv 'y' för ja eller 'n' för nej.");
+                UI.PrintError("Felaktigt inmatning, vänligen skriv 'y' för ja eller 'n' för nej.");
                 input = GetString().ToLower();
             }
             return input == "y";
