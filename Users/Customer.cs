@@ -273,7 +273,7 @@ namespace BankApp.Users
 
         internal void CreateLoan(decimal maxLoan)
         {
-            PrintUtilities.PrintMessage("Hur mycket vill du låna?");
+            UI.PrintMessage("Hur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
 
             while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
@@ -297,7 +297,7 @@ namespace BankApp.Users
 
         internal void LoanMessage(decimal total, decimal loan)
         {
-            PrintUtilities.PrintMessage($"Ditt totala belopp: {total} SEK\n" +
+            UI.PrintMessage($"Ditt totala belopp: {total} SEK\n" +
                 $"Maximal summan du kan låna: {loan} SEK\n" +
                 $"Är du säker på att du vill skapa lån? y/n");
         }
