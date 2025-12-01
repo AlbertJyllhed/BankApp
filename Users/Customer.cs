@@ -287,7 +287,8 @@ namespace BankApp.Users
                 borrowedAmountSEK = InputUtilities.GetInt();
             }
 
-            UI.PrintMessage($"Totala beloppet att betala tillbaka (inklusive ränta): {Loan.ExpectedAmount(borrowedAmountSEK).ToString()} SEK");
+            Loan newLoan = new Loan(borrowedAmountSEK);
+            UI.PrintMessage($"Totala beloppet att betala tillbaka (inklusive ränta): {newLoan.GetTotalLoan()} SEK");
 
             UI.PrintMessage("Vilket konto vill du låna till? ");
             PrintBankAccounts();
@@ -332,7 +333,7 @@ namespace BankApp.Users
             decimal sum = 0;
             foreach (var loan in Loans)
             {
-                sum += loan.GetTotalLoan();
+                sum += loan.GetLoanWithoutInterest();
             }
             return sum;
         }
