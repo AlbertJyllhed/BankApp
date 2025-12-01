@@ -394,7 +394,11 @@ namespace BankApp.Users
             // Choose which loan to pay back to
             UI.PrintMessage("--- Dina lån ---");
             UI.PrintList(Loans, true);
+            UI.PrintLine();
+            UI.PrintMessage("Vilket lån vill du betala tillbaka?");
             int loanIndex = InputUtilities.GetIndex(Loans.Count);
+
+            
             Loan selectedLoan = Loans[loanIndex];
 
             decimal remainingLoanDept = selectedLoan.GetTotalLoan();
