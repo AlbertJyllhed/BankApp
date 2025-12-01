@@ -4,6 +4,7 @@
     {
         private decimal Amount { get; set; }
         private decimal Interest { get; set; }
+        private decimal IntrestGained;
 
         internal Loan(decimal amount, decimal interest = 1.0284m)
         {
@@ -34,6 +35,34 @@
             return $"Lån: {Amount * Interest} SEK";
         }
 
+        internal void ReduceLoan(decimal payment)
+        {
+            if (payment <= 0)
+            {
+                return;
+            }
+
+            if(IntrestGained > 0)
+            {
+                if(payment >= IntrestGained)
+                {
+                    payment -= IntrestGained;
+                    IntrestGained = 0;
+                }
+                else
+                {
+                    IntrestGained -= payment;
+                    return;
+                }
+            }
+
+            Amount -= payment;
+
+            if (Amount <= 0)
+            {
+                Amount = 0;
+            }
+        }
 
     }
 }
