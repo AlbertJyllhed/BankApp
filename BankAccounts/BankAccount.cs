@@ -38,25 +38,27 @@
             CreateTransaction(value, fromAccount, "från");
             Balance += value;
         }
-        
+
         // Print deposit details
-        internal void PrintDepositDetails(decimal value)
+        internal string GetLatestTransactionInfo()
         {
-            UI.PrintMessage($"{value} {Currency} var överfört till konto {ID}.");
+            var lastTransaction = _transactions.Last();
+            return $"{lastTransaction.Amount} {Currency} överfördes till konto {ID}.";
         }
 
         // Print transfer details with to account IDs
-        internal void PrintTransferDetails(decimal originalAmount, decimal convertedAmount, BankAccount toAccount)
+        internal void PrintTransferDetails(decimal convertedAmount, BankAccount toAccount)
         {
+            var lastTransaction = _transactions.Last();
             if (Currency == toAccount.Currency)
             {
-                UI.PrintMessage($"{originalAmount} {Currency} var överfört från konto" +
+                UI.PrintMessage($"{lastTransaction.Amount} {Currency} överfördes från konto" +
                     $" {ID} till konto {toAccount.ID}.");
             }
             else
             {
-                UI.PrintMessage($"{originalAmount} {Currency} var överfört från konto {ID}," +
-                    $" växlat till {convertedAmount} {toAccount.Currency} och överfört till konto {toAccount.ID}.");
+                UI.PrintMessage($"{lastTransaction.Amount} {Currency} hämtades från konto {ID}, " +
+                    $"växlades till {convertedAmount} {toAccount.Currency} och överfördes till konto {toAccount.ID}.");
             }
         }
 
@@ -82,13 +84,11 @@
         // Method to create a transaction and add it to the transaction list
         private void CreateTransaction(decimal value, string accountName, string transferType)
         {
-            string transfer = $"{value} {Currency}";
-
             // If account name is provided, include it in the message
-            string message = (accountName != "") ? $"{transfer} {transferType} {accountName}" : transfer;
+            string message = (accountName != "") ? $"{transferType} {accountName}" : "";
 
             // Create new transaction and add to list
-            var transaction = new Transaction(value, message);
+            var transaction = new Transaction(value, Currency, message);
             _transactions.Add(transaction);
         }
 

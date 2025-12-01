@@ -1,22 +1,34 @@
-﻿namespace BankApp
+﻿using BankApp.BankAccounts;
+using System.Security.Principal;
+
+namespace BankApp
 {
     internal class Transaction
     {
         internal decimal Amount { get; set; }
-        internal DateTime TimeStamp { get; }
+        internal string Currency { get; }
         internal string Description { get; set; }
+        internal DateTime TimeStamp { get; }
 
 
-        internal Transaction(decimal amount, string description)
+        internal Transaction(decimal amount, string currency, string description)
         {
             Amount = amount;
-            TimeStamp = DateTime.Now;
+            Currency = currency;
             Description = description;
+            TimeStamp = DateTime.Now;
         }
 
         public override string ToString()
         {
-            return $"{Description}, {TimeStamp:G}";
+            string dateFormat = TimeStamp.ToString("yyyy-MM-dd HH:mm");
+
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                return $"{Amount} {Currency}, {dateFormat}";
+            }
+
+            return $"{Amount} {Currency} {Description}, {dateFormat}";
         }
     }
 }
