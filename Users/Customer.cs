@@ -287,8 +287,7 @@ namespace BankApp.Users
                 borrowedAmountSEK = InputUtilities.GetInt();
             }
 
-            UI.PrintMessage("Totala beloppet att betala tillbaka (inklusive ränta): ");
-            Loan.GetTotalLoan(borrowedAmountSEK);
+            UI.PrintMessage($"Totala beloppet att betala tillbaka (inklusive ränta): {Loan.ExpectedAmount(borrowedAmountSEK).ToString()} SEK");
 
             UI.PrintMessage("Vilket konto vill du låna till? ");
             PrintBankAccounts();
@@ -314,7 +313,18 @@ namespace BankApp.Users
 
             UI.PrintList(Loans, true);
 
-            UI.PrintMessage($"Din totala skuld inklusive ränta: {GetTotalLoanWithoutInterest()} SEK");
+
+            UI.PrintMessage($"Din totala skuld inklusive ränta: {GetTotalLoanWithInterest()} SEK");
+
+        }
+        internal decimal GetTotalLoanWithInterest()
+        {
+            decimal sum = 0;
+            foreach (var loan in Loans)
+            {
+                sum += loan.GetTotalLoan();
+            }
+            return sum;
         }
 
         internal decimal GetTotalLoanWithoutInterest()
@@ -324,10 +334,8 @@ namespace BankApp.Users
             {
                 sum += loan.GetLoanWithoutInterest();
             }
-
             return sum;
         }
-
 
 
         //Savings account creation method

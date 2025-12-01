@@ -18,10 +18,14 @@
                 $"Är du säker på att du vill skapa lån? y/n";
         }
 
-        internal static decimal GetTotalLoan(decimal amount)
+        internal static decimal ExpectedAmount(decimal amount)
         {
             var totalAmount = amount * 1.0284m;
             return Math.Round(totalAmount, 2);
+        }
+        internal decimal GetTotalLoan()
+        {
+            return Amount * Interest;
         }
 
         internal decimal GetLoanWithoutInterest()
