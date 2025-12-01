@@ -247,22 +247,24 @@ namespace BankApp.Users
             }
 
             //Own money
-            decimal ownMoney = totalInSEK - GetTotalLoanForEachAccount();
+            decimal ownMoney = totalInSEK - GetTotalLoanWithoutInterest();
 
             //Maximum of what user can loan
             decimal maxLoan = ownMoney * 5;
 
             //What custumer can borrow apart from already borrowed money
-            maxLoan -= GetTotalLoanForEachAccount();
+            maxLoan -= GetTotalLoanWithoutInterest();
 
             // Check if the requested loan amount is valid, stop method if not.
             if (maxLoan <= 0)
             {
-                UI.PrintError("Du har inga pengar och kan därför inte skapa lån.");
+                UI.PrintError("Du har inga pengar att låna för och kan därför inte skapa lån.");
                 return;
             }
 
-            LoanMessage(totalInSEK, maxLoan);
+            string loanInfo = Loan.GetLoanInfo(totalInSEK - GetTotalLoanWithoutInterest(), maxLoan);
+
+            UI.PrintMessage(loanInfo);
 
             // Confirm loan creation, stop method if user inputs no.
             if (!InputUtilities.GetYesOrNo())
@@ -285,6 +287,9 @@ namespace BankApp.Users
                 borrowedAmountSEK = InputUtilities.GetInt();
             }
 
+            UI.PrintMessage("Totala beloppet att betala tillbaka (inklusive ränta): ");
+            Loan.GetTotalLoan(borrowedAmountSEK);
+
             UI.PrintMessage("Vilket konto vill du låna till? ");
             PrintBankAccounts();
             var chosenAccount = InputUtilities.GetIndex(BankAccounts.Count);
@@ -298,13 +303,6 @@ namespace BankApp.Users
             BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
         }
 
-        internal void LoanMessage(decimal total, decimal loan)
-        {
-            UI.PrintMessage($"Ditt totala belopp: {total} SEK\n" +
-                $"Maximal summan du kan låna: {loan} SEK\n" +
-                $"Är du säker på att du vill skapa lån? y/n");
-        }
-
         internal void PrintLoans()
         {
             if (Loans.Count == 0)
@@ -316,10 +314,10 @@ namespace BankApp.Users
 
             UI.PrintList(Loans, true);
 
-            UI.PrintMessage($"Din totala skuld inklusive ränta: {GetTotalLoanForEachAccount()} SEK");
+            UI.PrintMessage($"Din totala skuld inklusive ränta: {GetTotalLoanWithoutInterest()} SEK");
         }
 
-        internal decimal GetTotalLoanForEachAccount()
+        internal decimal GetTotalLoanWithoutInterest()
         {
             decimal sum = 0;
             foreach (var loan in Loans)
@@ -329,6 +327,8 @@ namespace BankApp.Users
 
             return sum;
         }
+
+
 
         //Savings account creation method
         internal void CreateSavingAccount()
