@@ -48,6 +48,7 @@ namespace BankApp.Users
             }
         }
 
+        // Reset login attempts counter
         private void ResetLoginAttempts()
         {
             loginAttempts = 0;
@@ -201,6 +202,7 @@ namespace BankApp.Users
             return fromAccount.GetBalance() >= amount;
         }
 
+        // Method to print all bank accounts of the user
         internal void PrintBankAccounts()
         {
             if (!HasBankAccounts())
@@ -213,6 +215,7 @@ namespace BankApp.Users
             UI.PrintList(BankAccounts, true);
         }
 
+        // Method to print all transactions from all bank accounts
         internal void PrintTransactionsActivity()
         {
             UI.PrintMessage("--- Dina överföringar ---");
