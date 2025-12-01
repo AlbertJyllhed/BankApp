@@ -187,7 +187,7 @@ namespace BankApp.Users
             // Perform the transfer
             fromAccount.RemoveBalance(amount, toAccount.Name);
             toAccount.AddBalance(convertedAmount, fromAccount.Name);
-            fromAccount.PrintTransferDetails(amount, convertedAmount, toAccount);
+            fromAccount.PrintTransferDetails(convertedAmount, toAccount);
         }
 
         // Check if the user has any bank accounts
@@ -247,22 +247,24 @@ namespace BankApp.Users
             }
 
             //Own money
-            decimal ownMoney = totalInSEK - GetTotalLoanForEachAccount();
+            decimal ownMoney = totalInSEK - GetTotalLoanWithoutInterest();
 
             //Maximum of what user can loan
             decimal maxLoan = ownMoney * 5;
 
             //What custumer can borrow apart from already borrowed money
-            maxLoan -= GetTotalLoanForEachAccount();
+            maxLoan -= GetTotalLoanWithoutInterest();
 
             // Check if the requested loan amount is valid, stop method if not.
             if (maxLoan <= 0)
             {
-                UI.PrintError("Du har inga pengar och kan därför inte skapa lån.");
+                UI.PrintError("Du har inga pengar att låna för och kan därför inte skapa lån.");
                 return;
             }
 
-            LoanMessage(totalInSEK, maxLoan);
+            string loanInfo = Loan.GetLoanInfo(totalInSEK - GetTotalLoanWithoutInterest(), maxLoan);
+
+            UI.PrintMessage(loanInfo);
 
             // Confirm loan creation, stop method if user inputs no.
             if (!InputUtilities.GetYesOrNo())
@@ -291,21 +293,15 @@ namespace BankApp.Users
 
             UI.PrintMessage("Vilket konto vill du låna till? ");
             PrintBankAccounts();
-            var chosenAccount = InputUtilities.GetIndex(BankAccounts.Count);
+            var chosenIndex = InputUtilities.GetIndex(BankAccounts.Count);
+            var account = BankAccounts[chosenIndex];
 
             Loans.Add(newLoan);
 
-            decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, BankAccounts[chosenAccount].Currency);
+            decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, account.Currency);
 
-            BankAccounts[chosenAccount].AddBalance(depositedAmount);
-            BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
-        }
-
-        internal void LoanMessage(decimal total, decimal loan)
-        {
-            UI.PrintMessage($"Ditt totala belopp: {total} SEK\n" +
-                $"Maximal summan du kan låna: {loan} SEK\n" +
-                $"Är du säker på att du vill skapa lån? y/n");
+            account.AddBalance(depositedAmount);
+            UI.PrintMessage(account.GetLatestTransactionInfo());
         }
 
         internal void PrintLoans()
@@ -319,10 +315,10 @@ namespace BankApp.Users
 
             UI.PrintList(Loans, true);
 
-            UI.PrintMessage($"Din totala skuld inklusive ränta: {GetTotalLoanForEachAccount()} SEK");
+            UI.PrintMessage($"Din totala skuld inklusive ränta: {GetTotalLoanWithoutInterest()} SEK");
         }
 
-        internal decimal GetTotalLoanForEachAccount()
+        internal decimal GetTotalLoanWithoutInterest()
         {
             decimal sum = 0;
             foreach (var loan in Loans)
@@ -332,6 +328,8 @@ namespace BankApp.Users
 
             return sum;
         }
+
+
 
         //Savings account creation method
         internal void CreateSavingAccount()
@@ -351,7 +349,7 @@ namespace BankApp.Users
             UI.PrintMessage(savingsAccount.GetInterestInfo(amount));
 
             savingsAccount.AddBalance(amount);
-            savingsAccount.PrintDepositDetails(amount);
+            UI.PrintMessage(savingsAccount.GetLatestTransactionInfo());
 
             BankAccounts.Add(savingsAccount);
         }
@@ -369,15 +367,9 @@ namespace BankApp.Users
             UI.PrintMessage($"Hur mycket pengar vill du sätta in till {insertMoneyAccount.Name}?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
-            if (amount <= 0)
-            {
-                UI.PrintError("Felaktigt val, kan inte sätta in negativt värde.");
-                return;
-            }
-
             // Insert the money
             insertMoneyAccount.AddBalance(amount);
-            insertMoneyAccount.PrintDepositDetails(amount);
+            UI.PrintMessage(insertMoneyAccount.GetLatestTransactionInfo());
         }
 
         // Method to pay back a loan
