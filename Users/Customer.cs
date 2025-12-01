@@ -186,7 +186,7 @@ namespace BankApp.Users
             // Perform the transfer
             fromAccount.RemoveBalance(amount, toAccount.Name);
             toAccount.AddBalance(convertedAmount, fromAccount.Name);
-            fromAccount.PrintTransferDetails(amount, convertedAmount, toAccount);
+            fromAccount.PrintTransferDetails(convertedAmount, toAccount);
         }
 
         // Check if the user has any bank accounts
@@ -284,15 +284,16 @@ namespace BankApp.Users
 
             UI.PrintMessage("Vilket konto vill du låna till? ");
             PrintBankAccounts();
-            var chosenAccount = InputUtilities.GetIndex(BankAccounts.Count);
+            var chosenIndex = InputUtilities.GetIndex(BankAccounts.Count);
+            var account = BankAccounts[chosenIndex];
 
             Loan? newLoan = new Loan(borrowedAmountSEK);
             Loans.Add(newLoan);
 
-            decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, BankAccounts[chosenAccount].Currency);
+            decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, account.Currency);
 
-            BankAccounts[chosenAccount].AddBalance(depositedAmount);
-            BankAccounts[chosenAccount].PrintDepositDetails(borrowedAmountSEK);
+            account.AddBalance(depositedAmount);
+            UI.PrintMessage(account.GetLatestTransactionInfo());
         }
 
         internal void LoanMessage(decimal total, decimal loan)
@@ -345,7 +346,7 @@ namespace BankApp.Users
             UI.PrintMessage(savingsAccount.GetInterestInfo(amount));
 
             savingsAccount.AddBalance(amount);
-            savingsAccount.PrintDepositDetails(amount);
+            UI.PrintMessage(savingsAccount.GetLatestTransactionInfo());
 
             BankAccounts.Add(savingsAccount);
         }
@@ -363,15 +364,9 @@ namespace BankApp.Users
             UI.PrintMessage($"Hur mycket pengar vill du sätta in till {insertMoneyAccount.Name}?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
-            if (amount <= 0)
-            {
-                UI.PrintError("Felaktigt val, kan inte sätta in negativt värde.");
-                return;
-            }
-
             // Insert the money
             insertMoneyAccount.AddBalance(amount);
-            insertMoneyAccount.PrintDepositDetails(amount);
+            UI.PrintMessage(insertMoneyAccount.GetLatestTransactionInfo());
         }
     }
 }
