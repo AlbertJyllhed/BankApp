@@ -10,6 +10,7 @@
         {
             Amount = amount;
             Interest = interest;
+            IntrestGained = amount * (interest - 1);
         }
 
         internal static string GetLoanInfo(decimal total, decimal maxLoan)
@@ -21,8 +22,7 @@
 
         internal static decimal GetTotalLoan(decimal amount)
         {
-            var totalAmount = amount * 1.0284m;
-            return Math.Round(totalAmount, 2);
+            return Math.Round(Amount+ IntrestGained, 2);
         }
 
         internal decimal GetLoanWithoutInterest()

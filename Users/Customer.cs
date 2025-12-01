@@ -287,15 +287,15 @@ namespace BankApp.Users
                 borrowedAmountSEK = InputUtilities.GetInt();
             }
 
-            UI.PrintMessage("Totala beloppet att betala tillbaka (inklusive ränta): ");
-            Loan.GetTotalLoan(borrowedAmountSEK);
+            Loan newLoan = new Loan(borrowedAmountSEK);
+
+            UI.PrintMessage($"Totala beloppet att betala tillbaka (inklusive ränta):{newLoan.GetTotalLoan} SEK");
 
             UI.PrintMessage("Vilket konto vill du låna till? ");
             PrintBankAccounts();
             var chosenIndex = InputUtilities.GetIndex(BankAccounts.Count);
             var account = BankAccounts[chosenIndex];
 
-            Loan? newLoan = new Loan(borrowedAmountSEK);
             Loans.Add(newLoan);
 
             decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, account.Currency);
