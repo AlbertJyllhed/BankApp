@@ -4,13 +4,13 @@
     {
         private decimal Amount { get; set; }
         private decimal Interest { get; set; }
-        private decimal IntrestGained;
+        private decimal InterestGained;
 
         internal Loan(decimal amount, decimal interest = 1.0284m)
         {
             Amount = amount;
             Interest = interest;
-            IntrestGained = amount * (interest - 1);
+            InterestGained = amount * (interest - 1);
         }
 
         internal static string GetLoanInfo(decimal total, decimal maxLoan)
@@ -20,13 +20,9 @@
                 $"Är du säker på att du vill skapa lån? y/n";
         }
 
-        internal static decimal ExpectedAmount(decimal amount)
-        {
-            return Math.Round(Amount+ IntrestGained, 2);
-        }
         internal decimal GetTotalLoan()
         {
-            return Amount * Interest;
+            return Math.Round(Amount + InterestGained, 2);
         }
 
         internal decimal GetLoanWithoutInterest()
@@ -46,16 +42,16 @@
                 return;
             }
 
-            if(IntrestGained > 0)
+            if(InterestGained > 0)
             {
-                if(payment >= IntrestGained)
+                if(payment >= InterestGained)
                 {
-                    payment -= IntrestGained;
-                    IntrestGained = 0;
+                    payment -= InterestGained;
+                    InterestGained = 0;
                 }
                 else
                 {
-                    IntrestGained -= payment;
+                    InterestGained -= payment;
                     return;
                 }
             }
