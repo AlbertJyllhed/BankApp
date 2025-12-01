@@ -1,6 +1,4 @@
-﻿using BankApp.Users;
-using BankApp.BankAccounts;
-namespace BankApp
+﻿namespace BankApp
 {
     internal class Loan
     {
@@ -13,16 +11,16 @@ namespace BankApp
             Interest = interest;
         }
 
-        internal string GetLoanInfo()
+        internal static string GetLoanInfo(decimal total, decimal maxLoan)
         {
-            return $"Begärt lån: {Amount}\n" +
-                $"Lånets ränta: {Amount * Interest - Amount}\n" +
-                $"Total summa att betala tillbaka {Amount * Interest}";
+            return $"Ditt totala belopp (inklusive lånade pengar): {total} SEK\n" +
+                $"Maximal summan du kan låna: {maxLoan} SEK\n" +
+                $"Är du säker på att du vill skapa lån? y/n";
         }
 
-        internal decimal GetTotalLoan()
+        internal static decimal GetTotalLoan(decimal amount)
         {
-            var totalAmount = Amount * Interest;
+            var totalAmount = amount * 1.0284m;
             return Math.Round(totalAmount, 2);
         }
 
@@ -35,5 +33,7 @@ namespace BankApp
         {
             return $"Lån: {Amount * Interest} SEK";
         }
+
+
     }
 }
