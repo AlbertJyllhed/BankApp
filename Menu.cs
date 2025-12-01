@@ -13,9 +13,8 @@ namespace BankApp
                 "4. Sätt in pengar",
                 "5. Överför pengar",
                 "6. Skriv ut transaktioner",
-                "7. Ansök om lån",
-                "8. Visa nuvarande skuld",
-                "9. Logga ut"]);
+                "7. Gå till lånemenyn",
+                "8. Logga ut"]);
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -41,12 +40,9 @@ namespace BankApp
                     customer.PrintTransactionsActivity();
                     break;
                 case 7:
-                    customer.LoanSetup();
+                    while (PrintLoanMenu(customer)) ;
                     break;
                 case 8:
-                    customer.PrintLoans();
-                    break;
-                case 9:
                     return false;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
@@ -56,6 +52,38 @@ namespace BankApp
             return true;
         }
 
+        internal bool PrintLoanMenu(Customer customer)
+        {
+            UI.PrintMessage("--- Lån Meny ---");
+            UI.PrintMessages([
+                "1. Ansök om lån",
+                "2. Visa nuvarande lån",
+                "3. Betala tillbaka lån",
+                "4. Gå tillbaka till huvudmenyn"
+            ]);
+
+            int input = InputUtilities.GetInt();
+            Console.Clear();
+
+            switch (input)
+            {
+                case 1:
+                    customer.LoanSetup();
+                    break;
+                case 2:
+                    customer.PrintLoans();
+                    break;
+                case 3:
+                    customer.PayBackLoan();
+                    break;
+                case 4:
+                    return false;
+                default:
+                    UI.PrintError("Felaktigt val, försök igen.");
+                    break;
+            }
+            return true;
+        }
         internal bool PrintAdminMenu(Admin admin)
         {
             UI.PrintMessage("--- Admin Meny ---");
