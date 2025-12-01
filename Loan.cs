@@ -12,6 +12,7 @@ namespace BankApp
         {
             Amount = amount;
             Interest = interest;
+            IntrestGained = amount * (interest - 1);
         }
 
         internal string GetLoanInfo()
@@ -23,8 +24,7 @@ namespace BankApp
 
         internal decimal GetTotalLoan()
         {
-            var totalAmount = Amount * Interest;
-            return Math.Round(totalAmount, 2);
+            return Math.Round(Amount+ IntrestGained, 2);
         }
 
         internal decimal GetLoanWithoutInterest()
