@@ -10,11 +10,9 @@ namespace BankApp
             UI.PrintMessages(["1. Skapa ett bankkonto",
                 "2. Skapa ett spar bankkonto",
                 "3. Visa bankkonton ",
-                "4. Sätt in pengar",
-                "5. Överför pengar",
-                "6. Skriv ut transaktioner",
-                "7. Gå till lånemenyn",
-                "8. Logga ut"]);
+                "4. Betala och överföra",
+                "5. Gå till lånemenyn",
+                "6. Logga ut"]);
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -31,18 +29,12 @@ namespace BankApp
                     customer.PrintBankAccounts();
                     break;
                 case 4:
-                    customer.InsertMoney();
+                    while (PrintTransactionMenu(customer)) ;
                     break;
                 case 5:
-                    customer.TransferBalance();
-                    break;
-                case 6:
-                    customer.PrintTransactionsActivity();
-                    break;
-                case 7:
                     while (PrintLoanMenu(customer)) ;
                     break;
-                case 8:
+                case 6:
                     return false;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
@@ -84,6 +76,41 @@ namespace BankApp
             }
             return true;
         }
+
+        internal bool PrintTransactionMenu(Customer customer)
+        {
+            UI.PrintMessage("--- Betala och överföra ---");
+            UI.PrintMessages([
+                "1. Sätt in pengar",
+                "2. Överföra pengarn",
+                "3. Skriv ut transaktioner",
+                "4. Gå tillbaka till huvudmenyn"
+            ]);
+
+            int input = InputUtilities.GetInt();
+            Console.Clear();
+
+            switch (input)
+            {
+                case 1:
+                    customer.InsertMoney();
+                    break;
+                case 2:
+                    customer.TransferBalance();
+                    break;
+                case 3:
+                    customer.PrintTransactionsActivity();
+                    break;
+                case 4:
+                    return false;
+                default:
+                    UI.PrintError("Felaktigt val, försök igen.");
+                    break;
+            }
+            return true;
+
+        }
+
         internal bool PrintAdminMenu(Admin admin)
         {
             UI.PrintMessage("--- Admin Meny ---");
