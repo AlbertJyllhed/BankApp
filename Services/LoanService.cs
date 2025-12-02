@@ -55,10 +55,10 @@ namespace BankApp.Services
                 return;
             }
 
-            CreateLoan(maxLoan, bankAccounts);
+            CreateLoan(maxLoan);
         }
 
-        internal void CreateLoan(decimal maxLoan, List<BankAccount> bankAccounts)
+        internal void CreateLoan(decimal maxLoan)
         {
             UI.PrintMessage("Hur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
@@ -76,6 +76,7 @@ namespace BankApp.Services
             // Choose account to deposit loan into
             UI.PrintMessage("Vilket konto vill du låna till? ");
             _customer.PrintBankAccounts();
+            var bankAccounts = _customer.GetBankAccounts();
             var chosenIndex = InputUtilities.GetIndex(bankAccounts.Count);
             var account = bankAccounts[chosenIndex];
 
@@ -86,7 +87,7 @@ namespace BankApp.Services
             UI.PrintMessage(account.GetLatestTransactionInfo());
         }
 
-        internal void PayBackLoan(List<BankAccount> bankAccounts, BankAccount accountToPayFrom)
+        internal void PayBackLoan(BankAccount accountToPayFrom)
         {
             var loans = _customer.GetLoans();
             // Check if there are any loans to pay back
@@ -106,7 +107,7 @@ namespace BankApp.Services
             // Get remaining loan debt
             Loan selectedLoan = loans[loanIndex];
             decimal remainingLoanDept = selectedLoan.GetTotalLoan();
-            var bankAccounts = customer.GetBankAccounts();
+            var bankAccounts = _customer.GetBankAccounts();
 
             // Choose amount to pay back
             UI.PrintMessage($"Din återstående skuld: {remainingLoanDept} SEK\n" +
