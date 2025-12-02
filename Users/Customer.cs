@@ -343,7 +343,7 @@ namespace BankApp.Users
             var currency = Data.ChooseCurrency().Key;
 
             //Add the new bank account into the list.
-            var savingsAccount = new SavingsAccount(accountName, currency);
+            var savingsAccount = new SavingsAccount(accountName, amount, currency);
 
             UI.PrintMessage(savingsAccount.GetInterestInfo(amount));
 
@@ -358,7 +358,7 @@ namespace BankApp.Users
         {
             // Choose which account to insert money into
             UI.PrintMessage("Vilket konto vill du sätta in pengar på?");
-            UI.PrintMessage(GetBankAccountsInfo());
+            UI.PrintList(GetBankAccounts());
             int index = InputUtilities.GetIndex(BankAccounts.Count);
             BankAccount insertMoneyAccount = BankAccounts[index];
 

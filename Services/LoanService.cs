@@ -75,7 +75,7 @@ namespace BankApp.Services
 
             // Choose account to deposit loan into
             UI.PrintMessage("Vilket konto vill du låna till? ");
-            _customer.PrintBankAccounts();
+            UI.PrintList(_customer.GetBankAccounts(), true);
             var bankAccounts = _customer.GetBankAccounts();
             var chosenIndex = InputUtilities.GetIndex(bankAccounts.Count);
             var account = bankAccounts[chosenIndex];
@@ -87,7 +87,7 @@ namespace BankApp.Services
             UI.PrintMessage(account.GetLatestTransactionInfo());
         }
 
-        internal static void PayBackLoan(BankAccount accountToPayFrom)
+        internal static void PayBackLoan()
         {
             var loans = _customer.GetLoans();
             // Check if there are any loans to pay back
@@ -118,7 +118,7 @@ namespace BankApp.Services
             PayBackLoanError(payBackAmount, remainingLoanDept);
 
             // Choose account to pay from
-            ChooseAccountToPayLoanFrom(bankAccounts);
+            var accountToPayFrom = ChooseAccountToPayLoanFrom(bankAccounts);
 
             // Check if there are sufficient funds to pay back the loan
             decimal accountBalanceInSEK = Data.ToSEK(accountToPayFrom.GetBalance(), accountToPayFrom.Currency);
@@ -168,13 +168,13 @@ namespace BankApp.Services
             }
         }
 
-        private static void ChooseAccountToPayLoanFrom(List<BankAccount> bankAccounts)
+        private static BankAccount ChooseAccountToPayLoanFrom(List<BankAccount> bankAccounts)
         {
             // Choose account to pay from
             UI.PrintMessage("Vilket konto vill du använda för att betala lånet?");
-            _customer.PrintBankAccounts();
+            UI.PrintList(_customer.GetBankAccounts(), true);
             int accountIndex = InputUtilities.GetIndex(bankAccounts.Count);
-            BankAccount accountToPayFrom = bankAccounts[accountIndex];
+            return bankAccounts[accountIndex];
         }
     }
 }
