@@ -106,6 +106,7 @@ namespace BankApp.Services
             // Get remaining loan debt
             Loan selectedLoan = loans[loanIndex];
             decimal remainingLoanDept = selectedLoan.GetTotalLoan();
+            var bankAccounts = customer.GetBankAccounts();
 
             // Choose amount to pay back
             UI.PrintMessage($"Din återstående skuld: {remainingLoanDept} SEK\n" +
