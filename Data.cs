@@ -1,4 +1,5 @@
 ﻿using BankApp.BankAccounts;
+using BankApp.Services;
 using BankApp.Users;
 
 namespace BankApp
@@ -42,7 +43,8 @@ namespace BankApp
                         string id = PadID(counter);
 
                         // Create bank account for customer
-                        var bankAccount = customer.CreateBankAccount($"{customer.Name} Account {i + 1}", "SEK", id);
+                        var bankAccount = AccountService.CreateBankAccount($"{customer.Name} Account {i + 1}", "SEK", id);
+                        customer.AddBankAccount(bankAccount);
                         bankAccount.AddBalance(100m);
                         counter++;
                     }

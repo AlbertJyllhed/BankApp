@@ -8,7 +8,7 @@ namespace BankApp.Users
         private int loginAttempts = 0;
         private List<BankAccount> BankAccounts { get; set; }
         private List<Loan> Loans { get; set; }
-        internal bool Locked { get; private set; } = false;
+        internal bool Locked { get; set; } = false;
 
         internal Customer(string name, string password) : base(name, password)
         {
@@ -29,7 +29,7 @@ namespace BankApp.Users
             if (Password == password)
             {
                 // Reset login attempts on successful login
-                ResetLoginAttempts();
+                loginAttempts = 0;
                 return true;
             }
             else
@@ -49,39 +49,47 @@ namespace BankApp.Users
             }
         }
 
-        // Reset login attempts counter
-        private void ResetLoginAttempts()
-        {
-            loginAttempts = 0;
-        }
-
-        internal void UnlockAccount()
-        {
-            Locked = false;
-        }
-
         // Method to get user input and create a new bank account
         internal void SetupBankAccount()
         {
+            UI.PrintMessage("Vad för typ av bankkonto vill du skapa?\n" +
+                "1. Vanligt bankkonto\n" +
+                "2. Sparkonto");
+
+            int choice = InputUtilities.GetIndex(2);
+
             // Ask user to choose the name of the created account.
             UI.PrintInputPrompt("Bankkonto namn: ");
             var accountName = InputUtilities.GetString();
 
+            // Ask user to choose the currency of the created account.
             var currency = Data.ChooseCurrency().Key;
 
-            var bankAccount = CreateBankAccount(accountName, currency);
+            // Create the bank account based on user choice
+            BankAccount account;
+            if (choice == 0)
+            {
+                account = AccountService.CreateBankAccount(accountName, currency);
+            }
+            else
+            {
+                // Ask user for initial deposit amount for savings account
+                UI.PrintMessage("Hur mycket vill du sätta in på sparkontot?");
+                var amount = InputUtilities.GetPositiveDecimal();
+                account = AccountService.CreateSavingsAccount(accountName, amount, currency);
+            }
 
-            UI.PrintMessage($"Ditt nya {bankAccount.GetAccountType()} ({accountName}, {currency}) " +
-                $"har skapats!");
+            // Add the new bank account into the list.
+            AddBankAccount(account);
+
+            UI.PrintMessage($"Ditt nya {account.GetAccountType()} " +
+                $"({accountName}, {currency}) har skapats!");
         }
 
-        // Method to create a new bank account without user input
-        internal BankAccount CreateBankAccount(string accountName, string currency, string id = "")
+        // Method to add an existing bank account to the user's list
+        internal void AddBankAccount(BankAccount bankAccount)
         {
-            var bankAccount = new BankAccount(accountName, currency, id);
             BankAccounts.Add(bankAccount);
-            Data.AddBankAccount(bankAccount);
-            return bankAccount;
         }
 
         internal BankAccount? GetBankAccount(string id)
@@ -119,7 +127,7 @@ namespace BankApp.Users
 
             // Choose from which account to transfer
             UI.PrintMessage("Från vilket konto vill du överföra pengarna?");
-            PrintBankAccounts();
+            UI.PrintList(GetBankAccounts(), true);
             BankAccount fromAccount = GetAccountByIndex();
 
             BankAccount? toAccount;
@@ -155,7 +163,7 @@ namespace BankApp.Users
             // Check if there are sufficient funds and perform the transfer
             if (CanTransfer(fromAccount, amount))
             {
-                DepositToAccount(amount, toAccount, fromAccount);
+                AccountService.Transfer(amount, toAccount, fromAccount);
             }
             else
             {
@@ -186,19 +194,6 @@ namespace BankApp.Users
             return Data.GetBankAccount(id);
         }
 
-        // Method to handle transfer to another account
-        private void DepositToAccount(decimal amount, BankAccount toAccount, BankAccount fromAccount)
-        {
-            // Convert amount to SEK and then to the target account's currency
-            decimal amountCurrentCurrency = Data.ToSEK(amount, fromAccount.Currency);
-            decimal convertedAmount = Data.FromSEK(amountCurrentCurrency, toAccount.Currency);
-
-            // Perform the transfer
-            fromAccount.RemoveBalance(amount, toAccount.Name);
-            toAccount.AddBalance(convertedAmount, fromAccount.Name);
-            fromAccount.PrintTransferDetails(convertedAmount, toAccount);
-        }
-
         // Check if the user has any bank accounts
         private bool HasBankAccounts()
         {
@@ -209,19 +204,6 @@ namespace BankApp.Users
         private bool CanTransfer(BankAccount fromAccount, decimal amount)
         {
             return fromAccount.GetBalance() >= amount;
-        }
-
-        // Method to print all bank accounts of the user
-        internal void PrintBankAccounts()
-        {
-            if (!HasBankAccounts())
-            {
-                UI.PrintError("Du har inget bankkonto.");
-                return;
-            }
-
-            UI.PrintMessage("Dina bankkonto:");
-            UI.PrintList(BankAccounts, true);
         }
 
         // Method to print all transactions from all bank accounts
@@ -376,7 +358,7 @@ namespace BankApp.Users
         {
             // Choose which account to insert money into
             UI.PrintMessage("Vilket konto vill du sätta in pengar på?");
-            PrintBankAccounts();
+            UI.PrintMessage(GetBankAccountsInfo());
             int index = InputUtilities.GetIndex(BankAccounts.Count);
             BankAccount insertMoneyAccount = BankAccounts[index];
 
