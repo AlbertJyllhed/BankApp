@@ -1,4 +1,5 @@
 ﻿using BankApp.BankAccounts;
+using BankApp.Services;
 
 namespace BankApp.Users
 {
@@ -68,19 +69,17 @@ namespace BankApp.Users
 
             var currency = Data.ChooseCurrency().Key;
 
-            var bankAccount = CreateBankAccount(accountName, currency);
+            var bankAccount = AccountService.CreateBankAccount(accountName, currency);
+            AddBankAccount(bankAccount);
 
-            UI.PrintMessage($"Ditt nya {bankAccount.GetAccountType()} ({accountName}, {currency}) " +
-                $"har skapats!");
+            UI.PrintMessage($"Ditt nya {bankAccount.GetAccountType()} " +
+                $"({accountName}, {currency}) har skapats!");
         }
 
-        // Method to create a new bank account without user input
-        internal BankAccount CreateBankAccount(string accountName, string currency, string id = "")
+        // Method to add an existing bank account to the user's list
+        internal void AddBankAccount(BankAccount bankAccount)
         {
-            var bankAccount = new BankAccount(accountName, currency, id);
             BankAccounts.Add(bankAccount);
-            Data.AddBankAccount(bankAccount);
-            return bankAccount;
         }
 
         internal BankAccount? GetBankAccount(string id)
@@ -144,7 +143,7 @@ namespace BankApp.Users
             // Check if there are sufficient funds and perform the transfer
             if (CanTransfer(fromAccount, amount))
             {
-                DepositToAccount(amount, toAccount, fromAccount);
+                AccountService.Transfer(amount, toAccount, fromAccount);
             }
             else
             {
@@ -173,21 +172,6 @@ namespace BankApp.Users
         {
             string id = InputUtilities.GetString();
             return Data.GetBankAccount(id);
-        }
-
-        // Method to handle transfer to another account
-        private void DepositToAccount(decimal amount, BankAccount toAccount, BankAccount fromAccount)
-        {
-            // Convert amount to SEK and then to the target account's currency
-            decimal amountCurrentCurrency = Data.ToSEK(amount, fromAccount.Currency);
-            decimal convertedAmount = Data.FromSEK(amountCurrentCurrency, toAccount.Currency);
-
-            convertedAmount = Math.Round(convertedAmount, 2);
-
-            // Perform the transfer
-            fromAccount.RemoveBalance(amount, toAccount.Name);
-            toAccount.AddBalance(convertedAmount, fromAccount.Name);
-            fromAccount.PrintTransferDetails(convertedAmount, toAccount);
         }
 
         // Check if the user has any bank accounts
