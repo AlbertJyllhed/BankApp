@@ -83,7 +83,7 @@ namespace BankApp.Services
             UI.PrintMessage(account.GetLatestTransactionInfo());
         }
 
-        internal void PayBackLoan(Customer customer, List<BankAccount> bankAccounts)
+        internal void PayBackLoan(Customer customer, List<BankAccount> bankAccounts, BankAccount accountToPayFrom)
         {
             var loans = customer.GetLoans();
             // Check if there are any loans to pay back
@@ -113,10 +113,7 @@ namespace BankApp.Services
             PayBackLoanError(payBackAmount, remainingLoanDept);
 
             // Choose account to pay from
-            UI.PrintMessage("Vilket konto vill du använda för att betala lånet?");
-            customer.PrintBankAccounts();
-            int accountIndex = InputUtilities.GetIndex(bankAccounts.Count);
-            BankAccount accountToPayFrom = bankAccounts[accountIndex];
+            ChooseAccountToPayLoanFrom(customer, bankAccounts);
 
             // Check if there are sufficient funds to pay back the loan
             decimal accountBalanceInSEK = Data.ToSEK(accountToPayFrom.GetBalance(), accountToPayFrom.Currency);
@@ -165,6 +162,15 @@ namespace BankApp.Services
                     $"Belopp blir justerat till {remainingLoanDept} ",
                     ConsoleColor.Yellow);
             }
+        }
+
+        private void ChooseAccountToPayLoanFrom(Customer customer, List<BankAccount> bankAccounts)
+        {
+            // Choose account to pay from
+            UI.PrintMessage("Vilket konto vill du använda för att betala lånet?");
+            customer.PrintBankAccounts();
+            int accountIndex = InputUtilities.GetIndex(bankAccounts.Count);
+            BankAccount accountToPayFrom = bankAccounts[accountIndex];
         }
     }
 }
