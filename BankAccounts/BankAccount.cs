@@ -61,20 +61,21 @@
             }
         }
 
-        // Method to remove balance from account and return the removed value
-        internal decimal RemoveBalance(decimal value, string toAccount = "")
+        internal bool RemoveBalance(decimal value, string toAccount = "")
         {
+
+
             if (Balance >= value)
             {
                 CreateTransaction(-value, toAccount, "till");
                 Balance -= value;
-                return value;
+                return true;
             }
             else
             {
                 UI.PrintError("Felaktigt begär, inte tillräckligt med pengar på kontot.\n" +
                     "Du är fattig :)");
-                return 0;
+                return false;
             }
         }
 
