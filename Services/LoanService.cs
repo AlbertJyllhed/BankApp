@@ -3,13 +3,13 @@ using BankApp.Users;
 
 namespace BankApp.Services
 {
-    internal class LoanService
+    internal static class LoanService
     {
-        private Customer? _customer;
+        private static Customer? _customer;
 
         // Loan creation method
         //TODO: Refactor method to smaller methods
-        internal void LoanSetup()
+        internal static void LoanSetup()
         {
             var bankAccounts = _customer.GetBankAccounts();
             //Check if user has any bank accounts, stop method if not.
@@ -58,7 +58,7 @@ namespace BankApp.Services
             CreateLoan(maxLoan);
         }
 
-        internal void CreateLoan(decimal maxLoan)
+        internal static void CreateLoan(decimal maxLoan)
         {
             UI.PrintMessage("Hur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
@@ -87,7 +87,7 @@ namespace BankApp.Services
             UI.PrintMessage(account.GetLatestTransactionInfo());
         }
 
-        internal void PayBackLoan(BankAccount accountToPayFrom)
+        internal static void PayBackLoan(BankAccount accountToPayFrom)
         {
             var loans = _customer.GetLoans();
             // Check if there are any loans to pay back
@@ -150,7 +150,7 @@ namespace BankApp.Services
             UI.PrintMessage("Återbetalning genomförd!");
         }
 
-        private void PayBackLoanError(decimal payBackAmount, decimal remainingLoanDept)
+        private static void PayBackLoanError(decimal payBackAmount, decimal remainingLoanDept)
         {
             // Validate pay back amount
             if (payBackAmount <= 0)
@@ -169,7 +169,7 @@ namespace BankApp.Services
             }
         }
 
-        private void ChooseAccountToPayLoanFrom(List<BankAccount> bankAccounts)
+        private static void ChooseAccountToPayLoanFrom(List<BankAccount> bankAccounts)
         {
             // Choose account to pay from
             UI.PrintMessage("Vilket konto vill du använda för att betala lånet?");
