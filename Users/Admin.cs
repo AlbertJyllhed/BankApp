@@ -64,7 +64,7 @@
             var customer = lockedCustomers[choice];
 
             // Unlock the selected customer's account
-            customer.UnlockAccount();
+            customer.Locked = false;
             UI.PrintMessage($"Användare {customer.Name} profil har blivit upplåst.");
         }
     }

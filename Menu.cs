@@ -1,4 +1,5 @@
-﻿using BankApp.Users;
+﻿using BankApp.Services;
+using BankApp.Users;
 
 namespace BankApp
 {
@@ -26,10 +27,10 @@ namespace BankApp
                     customer.CreateSavingAccount();
                     break;
                 case 3:
-                    customer.PrintBankAccounts();
+                    UI.PrintList(customer.GetBankAccounts(), true);
                     break;
                 case 4:
-                    while (PrintTransactionMenu(customer)) ;
+                    PrintTransactionMenu(customer);
                     break;
                 case 5:
                     while (PrintLoanMenu(customer)) ;
@@ -77,14 +78,13 @@ namespace BankApp
             return true;
         }
 
-        internal bool PrintTransactionMenu(Customer customer)
+        internal void PrintTransactionMenu(Customer customer)
         {
             UI.PrintMessage("--- Betala och överföra ---");
             UI.PrintMessages([
                 "1. Sätt in pengar",
-                "2. Överföra pengarn",
-                "3. Skriv ut transaktioner",
-                "4. Gå tillbaka till huvudmenyn"
+                "2. Överföra pengar",
+                "3. Skriv ut transaktioner"
             ]);
 
             int input = InputUtilities.GetInt();
@@ -101,14 +101,10 @@ namespace BankApp
                 case 3:
                     customer.PrintTransactionsActivity();
                     break;
-                case 4:
-                    return false;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;
             }
-            return true;
-
         }
 
         internal bool PrintAdminMenu(Admin admin)
@@ -141,6 +137,12 @@ namespace BankApp
             }
 
             return true;
+        }
+
+        internal void PrintInsertMenu()
+        {
+            UI.PrintMessage("Vilket konto vill du sätta in pengar på?");
+
         }
     }
 }

@@ -8,7 +8,6 @@ namespace BankApp.Services
         internal static BankAccount CreateBankAccount(string accountName, string currency, string id = "")
         {
             var bankAccount = new BankAccount(accountName, currency, id);
-            //BankAccounts.Add(bankAccount);
             Data.AddBankAccount(bankAccount);
             return bankAccount;
         }
