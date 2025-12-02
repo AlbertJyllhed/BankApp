@@ -5,19 +5,19 @@ namespace BankApp.BankAccounts
 {
     internal class SavingsAccount : BankAccount
     {
-        private decimal Interest { get; }
+        private decimal _interest = 1.0186m;
 
         // Constructors
-        internal SavingsAccount(string name, string currency, decimal interest = 1.0186m) : base(name, currency)
+        internal SavingsAccount(string name, decimal amount, string currency, string id = "") : base(name, currency, id)
         {
-            Interest = interest;
+            AddBalance(amount);
         }
 
         internal string GetInterestInfo(decimal amount)
         {
             return $"Du har satt in {amount} {Currency} i ditt sparkonto\n" +
-                $"Räntan på sparkonton är {Interest}%\n" +
-                $"Efter ett år kommer du ha {amount * Interest} {Currency} på ditt sparkonto";
+                $"Räntan på sparkonton är {_interest}%\n" +
+                $"Efter ett år kommer du ha {amount * _interest} {Currency} på ditt sparkonto";
         }
     }
 }
