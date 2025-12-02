@@ -5,11 +5,13 @@ namespace BankApp.Services
 {
     internal class LoanService
     {
+        private Customer? _customer;
+
         // Loan creation method
         //TODO: Refactor method to smaller methods
-        internal void LoanSetup(Customer customer)
+        internal void LoanSetup()
         {
-            var bankAccounts = customer.GetBankAccounts();
+            var bankAccounts = _customer.GetBankAccounts();
             //Check if user has any bank accounts, stop method if not.
             if (bankAccounts.Count == 0)
             {
@@ -27,13 +29,13 @@ namespace BankApp.Services
             }
 
             //Own money
-            decimal ownMoney = totalInSEK - customer.GetTotalLoanWithoutInterest();
+            decimal ownMoney = totalInSEK - _customer.GetTotalLoanWithoutInterest();
 
             //Maximum of what user can loan
             decimal maxLoan = ownMoney * 5;
 
             //What custumer can borrow apart from already borrowed money
-            maxLoan -= customer.GetTotalLoanWithoutInterest();
+            maxLoan -= _customer.GetTotalLoanWithoutInterest();
 
             // Check if the requested loan amount is valid, stop method if not.
             if (maxLoan <= 0)
@@ -42,7 +44,7 @@ namespace BankApp.Services
                 return;
             }
 
-            string loanInfo = Loan.GetLoanInfo(totalInSEK - customer.GetTotalLoanWithoutInterest(), maxLoan);
+            string loanInfo = Loan.GetLoanInfo(totalInSEK - _customer.GetTotalLoanWithoutInterest(), maxLoan);
 
             UI.PrintMessage(loanInfo);
 
@@ -53,14 +55,15 @@ namespace BankApp.Services
                 return;
             }
 
-            CreateLoan(maxLoan, bankAccounts, customer);
+            CreateLoan(maxLoan, bankAccounts);
         }
 
-        internal void CreateLoan(decimal maxLoan, List<BankAccount> bankAccounts, Customer customer)
+        internal void CreateLoan(decimal maxLoan, List<BankAccount> bankAccounts)
         {
             UI.PrintMessage("Hur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
 
+            // Validate loan amount
             while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
             {
                 UI.PrintColoredMessage($"Du kan ej låna {borrowedAmountSEK}", ConsoleColor.Yellow);
@@ -70,22 +73,22 @@ namespace BankApp.Services
             Loan newLoan = new Loan(borrowedAmountSEK);
             UI.PrintMessage($"Totala beloppet att betala tillbaka (inklusive ränta): {newLoan.GetTotalLoan()} SEK");
 
+            // Choose account to deposit loan into
             UI.PrintMessage("Vilket konto vill du låna till? ");
-            customer.PrintBankAccounts();
+            _customer.PrintBankAccounts();
             var chosenIndex = InputUtilities.GetIndex(bankAccounts.Count);
             var account = bankAccounts[chosenIndex];
 
-            customer.AddLoan(newLoan);
-
+            _customer.AddLoan(newLoan);
             decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, account.Currency);
 
             account.AddBalance(depositedAmount);
             UI.PrintMessage(account.GetLatestTransactionInfo());
         }
 
-        internal void PayBackLoan(Customer customer, List<BankAccount> bankAccounts, BankAccount accountToPayFrom)
+        internal void PayBackLoan(List<BankAccount> bankAccounts, BankAccount accountToPayFrom)
         {
-            var loans = customer.GetLoans();
+            var loans = _customer.GetLoans();
             // Check if there are any loans to pay back
             if (loans.Count == 0)
             {
@@ -113,7 +116,7 @@ namespace BankApp.Services
             PayBackLoanError(payBackAmount, remainingLoanDept);
 
             // Choose account to pay from
-            ChooseAccountToPayLoanFrom(customer, bankAccounts);
+            ChooseAccountToPayLoanFrom(bankAccounts);
 
             // Check if there are sufficient funds to pay back the loan
             decimal accountBalanceInSEK = Data.ToSEK(accountToPayFrom.GetBalance(), accountToPayFrom.Currency);
@@ -164,11 +167,11 @@ namespace BankApp.Services
             }
         }
 
-        private void ChooseAccountToPayLoanFrom(Customer customer, List<BankAccount> bankAccounts)
+        private void ChooseAccountToPayLoanFrom(List<BankAccount> bankAccounts)
         {
             // Choose account to pay from
             UI.PrintMessage("Vilket konto vill du använda för att betala lånet?");
-            customer.PrintBankAccounts();
+            _customer.PrintBankAccounts();
             int accountIndex = InputUtilities.GetIndex(bankAccounts.Count);
             BankAccount accountToPayFrom = bankAccounts[accountIndex];
         }
