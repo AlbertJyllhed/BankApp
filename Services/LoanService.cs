@@ -100,39 +100,19 @@ namespace BankApp.Services
             UI.PrintMessage("Vilket lån vill du betala tillbaka?");
             int loanIndex = InputUtilities.GetIndex(loans.Count);
 
-
+            // Get remaining loan debt
             Loan selectedLoan = loans[loanIndex];
-
             decimal remainingLoanDept = selectedLoan.GetTotalLoan();
 
             // Choose amount to pay back
             UI.PrintMessage($"Din återstående skuld: {remainingLoanDept} SEK\n" +
                 $"Hur mycket vill du betala tillbaka av lånet?");
 
-
+            // Validate pay back amount
             decimal payBackAmount = InputUtilities.GetPositiveDecimal();
+            PayBackLoanError(payBackAmount, remainingLoanDept);
 
-            if (payBackAmount <= 0)
-            {
-                UI.PrintError("Felaktig summa, belopp måste vara större än 0.");
-                return;
-            }
-
-            // Adjust pay back amount if it exceeds remaining loan debt
-            if (payBackAmount > remainingLoanDept)
-            {
-                UI.PrintColoredMessage($"Du försöker betala tillbaka mer än din nuvarande skuld ({remainingLoanDept}). Belopp blir justerat",
-                    ConsoleColor.Yellow);
-
-                payBackAmount = remainingLoanDept;
-            }
-
-            // Choose which account to pay from
-            if (bankAccounts.Count == 0)
-            {
-                UI.PrintError("Du har inga bankkonton att betala ifrån.");
-            }
-
+            // Choose account to pay from
             UI.PrintMessage("Vilket konto vill du använda för att betala lånet?");
             customer.PrintBankAccounts();
             int accountIndex = InputUtilities.GetIndex(bankAccounts.Count);
@@ -147,6 +127,7 @@ namespace BankApp.Services
                 return;
             }
 
+            // Process the loan pay back
             decimal withDrawAmount = Data.FromSEK(payBackAmount, accountToPayFrom.Currency);
             withDrawAmount = Math.Round(withDrawAmount, 2);
             accountToPayFrom.RemoveBalance(withDrawAmount);
@@ -165,6 +146,25 @@ namespace BankApp.Services
             }
 
             UI.PrintMessage("Återbetalning genomförd!");
+        }
+
+        private void PayBackLoanError(decimal payBackAmount, decimal remainingLoanDept)
+        {
+            // Validate pay back amount
+            if (payBackAmount <= 0)
+            {
+                UI.PrintError("Felaktig summa, belopp måste vara större än 0.");
+                return;
+            }
+
+            // Adjust pay back amount if it exceeds remaining loan debt
+            if (payBackAmount > remainingLoanDept)
+            {
+                payBackAmount = remainingLoanDept;
+                UI.PrintColoredMessage($"Du försöker betala tillbaka mer än din nuvarande skuld ({remainingLoanDept}).\n" +
+                    $"Belopp blir justerat till {remainingLoanDept} ",
+                    ConsoleColor.Yellow);
+            }
         }
     }
 }
