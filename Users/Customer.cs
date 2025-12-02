@@ -193,8 +193,6 @@ namespace BankApp.Users
             decimal amountCurrentCurrency = Data.ToSEK(amount, fromAccount.Currency);
             decimal convertedAmount = Data.FromSEK(amountCurrentCurrency, toAccount.Currency);
 
-            convertedAmount = Math.Round(convertedAmount, 2);
-
             // Perform the transfer
             fromAccount.RemoveBalance(amount, toAccount.Name);
             toAccount.AddBalance(convertedAmount, fromAccount.Name);
