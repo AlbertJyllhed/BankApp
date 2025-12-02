@@ -96,6 +96,16 @@ namespace BankApp.Users
             return null;
         }
 
+        internal List<BankAccount> GetBankAccounts()
+        {
+            return BankAccounts;
+        }
+
+        internal List<Loan> GetLoans()
+        {
+            return Loans;
+        }
+
         // Transfers balance from one account to another
         internal void TransferBalance()
         {
