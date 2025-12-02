@@ -33,7 +33,7 @@ namespace BankApp
                     PrintTransactionMenu(customer);
                     break;
                 case 5:
-                    while (PrintLoanMenu(customer)) ;
+                    PrintLoanMenu(customer);
                     break;
                 case 6:
                     return false;
@@ -45,14 +45,13 @@ namespace BankApp
             return true;
         }
 
-        internal bool PrintLoanMenu(Customer customer)
+        internal void PrintLoanMenu(Customer customer)
         {
             UI.PrintMessage("--- Lån Meny ---");
             UI.PrintMessages([
                 "1. Ansök om lån",
                 "2. Visa nuvarande lån",
                 "3. Betala tillbaka lån",
-                "4. Gå tillbaka till huvudmenyn"
             ]);
 
             int input = InputUtilities.GetInt();
@@ -61,21 +60,18 @@ namespace BankApp
             switch (input)
             {
                 case 1:
-                    customer.LoanSetup();
+                    LoanService.LoanSetup();
                     break;
                 case 2:
                     customer.PrintLoans();
                     break;
                 case 3:
-                    customer.PayBackLoan();
+                    LoanService.PayBackLoan();
                     break;
-                case 4:
-                    return false;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;
             }
-            return true;
         }
 
         internal void PrintTransactionMenu(Customer customer)
@@ -137,12 +133,6 @@ namespace BankApp
             }
 
             return true;
-        }
-
-        internal void PrintInsertMenu()
-        {
-            UI.PrintMessage("Vilket konto vill du sätta in pengar på?");
-
         }
     }
 }

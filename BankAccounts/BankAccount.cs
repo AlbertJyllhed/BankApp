@@ -51,7 +51,8 @@
             var lastTransaction = _transactions.Last();
             if (Currency == toAccount.Currency)
             {
-                UI.PrintMessage($"{lastTransaction.Amount} {Currency} överfördes från konto" +
+                decimal positiveAmount = Math.Abs(lastTransaction.Amount);
+                UI.PrintMessage($"{positiveAmount} {Currency} överfördes från konto" +
                     $" {ID} till konto {toAccount.ID}.");
             }
             else
