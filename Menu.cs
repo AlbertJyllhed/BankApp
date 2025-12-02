@@ -67,7 +67,7 @@ namespace BankApp
                     customer.PrintLoans();
                     break;
                 case 3:
-                    customer.PayBackLoan();
+                    customer.GetPayBackLoan();
                     break;
                 case 4:
                     return false;
