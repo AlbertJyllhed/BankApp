@@ -34,7 +34,6 @@
         // Method to add balance to account
         internal virtual void AddBalance(decimal value, string fromAccount = "")
         {
-            value = Math.Round(value, 2);
             CreateTransaction(value, fromAccount, "från");
             Balance += value;
         }
@@ -65,8 +64,6 @@
         // Method to remove balance from account and return the removed value
         internal decimal RemoveBalance(decimal value, string toAccount = "")
         {
-            value = Math.Round(value, 2);
-
             if (Balance >= value)
             {
                 CreateTransaction(-value, toAccount, "till");

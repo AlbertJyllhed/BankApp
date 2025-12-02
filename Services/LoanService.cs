@@ -131,7 +131,6 @@ namespace BankApp.Services
 
             // Process the loan pay back
             decimal withDrawAmount = Data.FromSEK(payBackAmount, accountToPayFrom.Currency);
-            withDrawAmount = Math.Round(withDrawAmount, 2);
             accountToPayFrom.RemoveBalance(withDrawAmount);
 
             selectedLoan.ReduceLoan(payBackAmount);
