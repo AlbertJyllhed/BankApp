@@ -474,5 +474,10 @@ namespace BankApp.Users
 
             UI.PrintMessage("Återbetalning genomförd!");
         }
+
+        internal void AddLoan(Loan newLoan)
+        {
+            Loans.Add(newLoan);
+        }
     }
 }

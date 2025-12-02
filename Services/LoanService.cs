@@ -53,10 +53,10 @@ namespace BankApp.Services
                 return;
             }
 
-            CreateLoan(maxLoan, bankAccounts);
+            CreateLoan(maxLoan, bankAccounts, customer);
         }
 
-        internal void CreateLoan(decimal maxLoan, List<BankAccount> bankAccounts)
+        internal void CreateLoan(decimal maxLoan, List<BankAccount> bankAccounts, Customer customer)
         {
             UI.PrintMessage("Hur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
@@ -71,11 +71,11 @@ namespace BankApp.Services
             UI.PrintMessage($"Totala beloppet att betala tillbaka (inklusive ränta): {newLoan.GetTotalLoan()} SEK");
 
             UI.PrintMessage("Vilket konto vill du låna till? ");
-            PrintBankAccounts();
+            customer.PrintBankAccounts();
             var chosenIndex = InputUtilities.GetIndex(bankAccounts.Count);
             var account = bankAccounts[chosenIndex];
 
-            Loans.Add(newLoan);
+            customer.AddLoan(newLoan);
 
             decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, account.Currency);
 
@@ -134,7 +134,7 @@ namespace BankApp.Services
             }
 
             UI.PrintMessage("Vilket konto vill du använda för att betala lånet?");
-            PrintBankAccounts();
+            customer.PrintBankAccounts();
             int accountIndex = InputUtilities.GetIndex(bankAccounts.Count);
             BankAccount accountToPayFrom = bankAccounts[accountIndex];
 
