@@ -22,7 +22,7 @@
 
         internal decimal GetTotalLoan()
         {
-            return Math.Round(Amount + InterestGained, 2);
+            return Amount + InterestGained;
         }
 
         internal decimal GetLoanWithoutInterest()

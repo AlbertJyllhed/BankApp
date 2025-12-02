@@ -1,5 +1,5 @@
-﻿using BankApp.Services;
-using BankApp.Users;
+﻿using BankApp.Users;
+using BankApp.Services;
 
 namespace BankApp
 {
