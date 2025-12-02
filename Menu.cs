@@ -8,7 +8,7 @@ namespace BankApp
         {
             UI.PrintMessage("--- Kund Meny ---");
             UI.PrintMessages(["1. Skapa ett bankkonto",
-                "2. Skapa ett spar bankkonto",
+                "2. Skapa ett sparbankskonto",
                 "3. Visa bankkonton ",
                 "4. Betala och överföra",
                 "5. Gå till lånemenyn",
