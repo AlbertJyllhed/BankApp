@@ -9,11 +9,10 @@ namespace BankApp
         {
             UI.PrintMessage("--- Kund Meny ---");
             UI.PrintMessages(["1. Skapa ett bankkonto",
-                "2. Skapa ett sparbankskonto",
-                "3. Visa bankkonton ",
-                "4. Betala och överföra",
-                "5. Gå till lånemenyn",
-                "6. Logga ut"]);
+                "2. Visa bankkonton ",
+                "3. Betala och överföra",
+                "4. Gå till lånemenyn",
+                "5. Logga ut"]);
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -24,18 +23,15 @@ namespace BankApp
                     customer.SetupBankAccount();
                     break;
                 case 2:
-                    customer.CreateSavingAccount();
-                    break;
-                case 3:
                     UI.PrintList(customer.GetBankAccounts(), true);
                     break;
-                case 4:
+                case 3:
                     PrintTransactionMenu(customer);
                     break;
-                case 5:
+                case 4:
                     PrintLoanMenu(customer);
                     break;
-                case 6:
+                case 5:
                     return false;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
