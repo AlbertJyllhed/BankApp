@@ -24,24 +24,23 @@ namespace BankApp.Services
         }
 
         // Method to handle transfer to another account
-        internal static void Transfer(decimal amount, BankAccount toAccount, BankAccount fromAccount)
+        internal static bool Transfer(decimal amount, BankAccount toAccount, BankAccount fromAccount)
         {
-            // Check if the transfer is possible
-            if (fromAccount.RemoveBalance(amount, toAccount.Name))
+            // Check if the transfer is possible and return false if not
+            if (!fromAccount.RemoveBalance(amount, toAccount.Name))
             {
-                // Simulate delay of 15 minutes (900,000 milliseconds)
-                Task.Delay(900000).ContinueWith(delay =>
-                {
-                    // Perform currency conversion and add balance to the target account
-                    decimal convertedAmount = ConvertCurrency(fromAccount, toAccount, amount);
-                    toAccount.AddBalance(convertedAmount, fromAccount.Name);
-                    //fromAccount.PrintTransferDetails(convertedAmount, toAccount);
-                });
+                return false;
             }
-            else
+
+            // Simulate delay of 15 minutes (900,000 milliseconds)
+            Task.Delay(900000).ContinueWith(delay =>
             {
-                throw new InvalidOperationException("Insufficient funds for the transfer.");
-            }
+                // Perform currency conversion and add balance to the target account
+                decimal convertedAmount = ConvertCurrency(fromAccount, toAccount, amount);
+                toAccount.AddBalance(convertedAmount, fromAccount.Name);
+                //fromAccount.PrintTransferDetails(convertedAmount, toAccount);
+            });
+            return true;
         }
 
         // Convert amount to SEK and then to the target account's currency
