@@ -49,16 +49,16 @@
         internal void PrintTransferDetails(decimal convertedAmount, BankAccount toAccount)
         {
             var lastTransaction = _transactions.Last();
+            decimal positiveAmount = Math.Abs(lastTransaction.Amount);
             if (Currency == toAccount.Currency)
             {
-                decimal positiveAmount = Math.Abs(lastTransaction.Amount);
                 UI.PrintMessage($"{positiveAmount} {Currency} överfördes från konto" +
                     $" {ID} till konto {toAccount.ID}.");
             }
             else
             {
-                UI.PrintMessage($"{lastTransaction.Amount} {Currency} hämtades från konto {ID}, " +
-                    $"växlades till {convertedAmount} {toAccount.Currency} och överfördes till konto {toAccount.ID}.");
+                UI.PrintMessage($"{positiveAmount} {Currency} hämtades från konto {ID}, " +
+                    $"växlades till {Math.Round(convertedAmount, 2)} {toAccount.Currency} och överfördes till konto {toAccount.ID}.");
             }
         }
 
