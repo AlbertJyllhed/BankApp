@@ -37,12 +37,13 @@ namespace BankApp
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;
             }
-
             return true;
         }
 
         internal void PrintLoanMenu(Customer customer)
         {
+            LoanService.SetCustomer(customer);
+
             UI.PrintMessage("--- Lån Meny ---");
             UI.PrintMessages([
                 "1. Ansök om lån",
@@ -127,7 +128,6 @@ namespace BankApp
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;
             }
-
             return true;
         }
     }

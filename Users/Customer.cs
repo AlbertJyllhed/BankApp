@@ -107,6 +107,10 @@ namespace BankApp.Users
 
         internal List<BankAccount> GetBankAccounts()
         {
+            if (!HasBankAccounts())
+            {
+                UI.PrintError("Du har inget bankkonto.");
+            }
             return BankAccounts;
         }
 
@@ -257,7 +261,7 @@ namespace BankApp.Users
         {
             // Choose which account to insert money into
             UI.PrintMessage("Vilket konto vill du sätta in pengar på?");
-            UI.PrintList(GetBankAccounts());
+            UI.PrintList(GetBankAccounts(), true);
             int index = InputUtilities.GetIndex(BankAccounts.Count);
             BankAccount insertMoneyAccount = BankAccounts[index];
 

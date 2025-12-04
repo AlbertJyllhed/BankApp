@@ -10,7 +10,6 @@ namespace BankApp
         internal string Description { get; set; }
         internal DateTime TimeStamp { get; }
 
-
         internal Transaction(decimal amount, string currency, string description)
         {
             Amount = amount;
