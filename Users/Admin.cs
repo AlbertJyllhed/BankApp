@@ -10,8 +10,16 @@
         // Override TryLogin method for Admin
         internal override bool TryLogin(string password)
         {
-            // Admin login always succeeds if the password matches
-            return Password == password;
+            if (Password == password)
+            {
+                // Admin login always succeeds if the password matches
+                return true;
+            }
+            else
+            {
+                UI.PrintError("Fel användarnamn eller lösenord");
+                return false;
+            }
         }
 
         // Method to update currency exchange rates
