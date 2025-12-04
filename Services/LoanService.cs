@@ -7,10 +7,23 @@ namespace BankApp.Services
     {
         private static Customer? _customer;
 
+        internal static void SetCustomer(Customer customer)
+        {
+            _customer = customer;
+        }
+
         // Loan creation method
         //TODO: Refactor method to smaller methods
         internal static void LoanSetup()
         {
+            if (_customer == null)
+            {
+                UI.PrintError("Ingen kund finns.");
+                return;
+            }
+
+
+
             var bankAccounts = _customer.GetBankAccounts();
             //Check if user has any bank accounts, stop method if not.
             if (bankAccounts.Count == 0)
@@ -60,6 +73,11 @@ namespace BankApp.Services
 
         internal static void CreateLoan(decimal maxLoan)
         {
+            if (_customer == null)
+            {
+                return;
+            }
+
             UI.PrintMessage("Hur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
 
@@ -67,7 +85,7 @@ namespace BankApp.Services
             while (borrowedAmountSEK > maxLoan || borrowedAmountSEK <= 0)
             {
                 UI.PrintColoredMessage($"Du kan ej låna {borrowedAmountSEK}", ConsoleColor.Yellow);
-                borrowedAmountSEK = InputUtilities.GetInt();
+                borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
             }
 
             Loan newLoan = new Loan(borrowedAmountSEK);
@@ -89,6 +107,11 @@ namespace BankApp.Services
 
         internal static void PayBackLoan()
         {
+            if (_customer == null)
+            {
+                return;
+            }
+
             var loans = _customer.GetLoans();
             // Check if there are any loans to pay back
             if (loans.Count == 0)
@@ -149,13 +172,13 @@ namespace BankApp.Services
             UI.PrintMessage("Återbetalning genomförd!");
         }
 
-        private static void PayBackLoanError(decimal payBackAmount, decimal remainingLoanDept)
+        private static decimal PayBackLoanError(decimal payBackAmount, decimal remainingLoanDept)
         {
             // Validate pay back amount
             if (payBackAmount <= 0)
             {
                 UI.PrintError("Felaktig summa, belopp måste vara större än 0.");
-                return;
+                return -1;
             }
 
             // Adjust pay back amount if it exceeds remaining loan debt
@@ -166,6 +189,8 @@ namespace BankApp.Services
                     $"Belopp blir justerat till {remainingLoanDept} ",
                     ConsoleColor.Yellow);
             }
+
+            return payBackAmount;
         }
 
         private static BankAccount ChooseAccountToPayLoanFrom(List<BankAccount> bankAccounts)
