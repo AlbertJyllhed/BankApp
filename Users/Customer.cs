@@ -106,6 +106,10 @@ namespace BankApp.Users
 
         internal List<BankAccount> GetBankAccounts()
         {
+            if (!HasBankAccounts())
+            {
+                UI.PrintError("Du har inget bankkonto.");
+            }
             return BankAccounts;
         }
 
