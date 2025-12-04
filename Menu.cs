@@ -37,7 +37,6 @@ namespace BankApp
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;
             }
-
             return true;
         }
 
@@ -127,7 +126,6 @@ namespace BankApp
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;
             }
-
             return true;
         }
     }

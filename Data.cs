@@ -62,7 +62,6 @@ namespace BankApp
                     throw new Exception("Användare med samma namn finns redan.");
                 }
             }
-
             users.Add(newUser);
         }
 
@@ -76,7 +75,6 @@ namespace BankApp
                     return user;
                 }
             }
-
             return null;
         }
 
@@ -119,7 +117,6 @@ namespace BankApp
                     return account;
                 }
             }
-
             return null;
         }
 
@@ -146,8 +143,6 @@ namespace BankApp
                 }
             }
 
-            // Method never gets here if the ID is not unique
-            // because return ends the method
             return idString;
         }
 
