@@ -26,7 +26,15 @@ namespace BankApp.Services
         // Method to handle transfer to another account
         internal static void Transfer(decimal amount, BankAccount toAccount, BankAccount fromAccount)
         {
-            if (!CanTransfer(fromAccount, amount))
+            decimal convertedAmount = ConvertCurrency(fromAccount, toAccount, amount);
+
+            // Check if the transfer is possible and perform it
+            if (fromAccount.RemoveBalance(amount, toAccount.Name))
+            {
+                toAccount.AddBalance(convertedAmount, fromAccount.Name);
+                //fromAccount.PrintTransferDetails(convertedAmount, toAccount);
+            }
+            else
             {
                 throw new InvalidOperationException("Insufficient funds for the transfer.");
             }
@@ -48,12 +56,6 @@ namespace BankApp.Services
         {
             decimal amountInSEK = Data.ToSEK(amount, fromAccount.Currency);
             return Data.FromSEK(amountInSEK, toAccount.Currency);
-        }
-
-        // Check if there are sufficient funds to transfer
-        private static bool CanTransfer(BankAccount fromAccount, decimal amount)
-        {
-            return fromAccount.GetBalance() >= amount;
         }
     }
 }
