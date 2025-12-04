@@ -44,7 +44,6 @@ namespace BankApp.Users
                 }
                 UI.PrintColoredMessage($"Fel användarnamn eller lösenord\n" +
                         $"Försök kvar: {3 - loginAttempts}", ConsoleColor.Yellow);
-
                 return false;
             }
         }
@@ -335,7 +334,6 @@ namespace BankApp.Users
             return sum;
         }
 
-
         //Savings account creation method
         internal void CreateSavingAccount()
         {
@@ -364,7 +362,7 @@ namespace BankApp.Users
         {
             // Choose which account to insert money into
             UI.PrintMessage("Vilket konto vill du sätta in pengar på?");
-            UI.PrintList(GetBankAccounts());
+            UI.PrintList(GetBankAccounts(), true);
             int index = InputUtilities.GetIndex(BankAccounts.Count);
             BankAccount insertMoneyAccount = BankAccounts[index];
 
