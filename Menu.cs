@@ -42,6 +42,8 @@ namespace BankApp
 
         internal void PrintLoanMenu(Customer customer)
         {
+            LoanService.SetCustomer(customer);
+
             UI.PrintMessage("--- Lån Meny ---");
             UI.PrintMessages([
                 "1. Ansök om lån",
