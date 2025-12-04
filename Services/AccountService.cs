@@ -38,6 +38,17 @@ namespace BankApp.Services
             {
                 throw new InvalidOperationException("Insufficient funds for the transfer.");
             }
+
+
+            // Perform the transfer
+            fromAccount.RemoveBalance(amount, toAccount.Name);
+
+            Task.Delay(900000).ContinueWith(delay =>
+            {
+                decimal convertedAmount = ConvertCurrency(fromAccount, toAccount, amount);
+                toAccount.AddBalance(convertedAmount, fromAccount.Name);
+                fromAccount.PrintTransferDetails(convertedAmount, toAccount);
+            });
         }
 
         // Convert amount to SEK and then to the target account's currency

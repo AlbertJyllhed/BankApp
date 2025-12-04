@@ -163,12 +163,18 @@ namespace BankApp.Users
             // Check if there are sufficient funds and perform the transfer
             if (CanTransfer(fromAccount, amount))
             {
-                AccountService.Transfer(amount, toAccount, fromAccount);
+                UI.PrintColoredMessage($"" +
+                    $"Överföring påbörjad: {amount} {fromAccount.Currency}\n" +
+                    $"Från: Konto [{fromAccount.ID}]\n" +
+                    $"Till: [{toAccount.ID}]\n" +
+                    $"Pengar kommer fram klockan {DateTime.Now.AddMinutes(15):HH:mm}",
+                    ConsoleColor.DarkCyan);
             }
             else
             {
                 UI.PrintError("Överföring misslyckades på grund av för låg summa.");
             }
+                AccountService.Transfer(amount, toAccount, fromAccount);
         }
 
         // Method to choose transfer method
