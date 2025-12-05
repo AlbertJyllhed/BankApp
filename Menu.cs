@@ -20,7 +20,7 @@ namespace BankApp
             switch (input)
             {
                 case 1:
-                    customer.SetupBankAccount();
+                    AccountService.SetupBankAccount(customer);
                     break;
                 case 2:
                     UI.PrintList(customer.GetBankAccounts(), true);
@@ -42,17 +42,18 @@ namespace BankApp
 
         internal void PrintLoanMenu(Customer customer)
         {
-            LoanService.SetCustomer(customer);
-
             UI.PrintMessage("--- Lån Meny ---");
             UI.PrintMessages([
                 "1. Ansök om lån",
                 "2. Visa nuvarande lån",
                 "3. Betala tillbaka lån",
+                "4. Gå tillbaka"
             ]);
 
             int input = InputUtilities.GetInt();
             Console.Clear();
+
+            LoanService.SetCustomer(customer);
 
             switch (input)
             {
@@ -65,6 +66,8 @@ namespace BankApp
                 case 3:
                     LoanService.PayBackLoan();
                     break;
+                case 4:
+                    return;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;
@@ -76,24 +79,33 @@ namespace BankApp
             UI.PrintMessage("--- Betala och överföra ---");
             UI.PrintMessages([
                 "1. Sätt in pengar",
-                "2. Överföra pengar",
-                "3. Skriv ut transaktioner"
+                "2. Ta ut pengar",
+                "3. Överför pengar",
+                "4. Skriv ut transaktioner",
+                "5. Gå tillbaka"
             ]);
 
             int input = InputUtilities.GetInt();
             Console.Clear();
 
+            TransactionService.SetCustomer(customer);
+
             switch (input)
             {
                 case 1:
-                    customer.InsertMoney();
+                    TransactionService.InsertMoney();
                     break;
                 case 2:
-                    customer.TransferBalance();
+                    TransactionService.WithdrawMoney();
                     break;
                 case 3:
-                    customer.PrintTransactionsActivity();
+                    TransactionService.TransferMoney();
                     break;
+                case 4:
+                    customer.PrintTransactions();
+                    break;
+                case 5:
+                    return;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;

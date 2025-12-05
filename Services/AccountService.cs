@@ -1,9 +1,50 @@
 ﻿using BankApp.BankAccounts;
+using BankApp.Users;
 
 namespace BankApp.Services
 {
     internal static class AccountService
     {
+        // Method to get user input and create a new bank account
+        internal static void SetupBankAccount(Customer customer)
+        {
+            UI.PrintMessage("Vad för typ av bankkonto vill du skapa?\n" +
+                "1. Vanligt bankkonto\n" +
+                "2. Sparkonto");
+
+            int choice = InputUtilities.GetIndex(2);
+
+            // Ask user to choose the name of the created account.
+            UI.PrintInputPrompt("Bankkonto namn: ");
+            var accountName = InputUtilities.GetString();
+
+            // Ask user to choose the currency of the created account.
+            var currency = Data.ChooseCurrency().Key;
+
+            // Create the bank account based on user choice
+            BankAccount account;
+            if (choice == 0)
+            {
+                account = CreateBankAccount(accountName, currency);
+            }
+            else
+            {
+                // Ask user for initial deposit amount for savings account
+                UI.PrintMessage("Hur mycket vill du sätta in på sparkontot?");
+                var amount = InputUtilities.GetPositiveDecimal();
+                account = CreateSavingsAccount(accountName, amount, currency);
+                var savingsAccount = (SavingsAccount)account;
+                UI.PrintMessage(savingsAccount.GetInterestInfo(amount));
+                UI.PrintMessage(savingsAccount.GetLatestTransactionInfo());
+            }
+
+            // Add the new bank account into the list.
+            customer.AddBankAccount(account);
+
+            UI.PrintMessage($"Ditt nya {account.GetAccountType()} " +
+                $"({accountName}, {currency}) har skapats!");
+        }
+
         // Method to create a new bank account without user input
         internal static BankAccount CreateBankAccount(string accountName, string currency, string id = "")
         {
@@ -18,36 +59,6 @@ namespace BankApp.Services
             var savingsAccount = new SavingsAccount(accountName, amount, currency, id);
             Data.AddBankAccount(savingsAccount);
             return savingsAccount;
-
-            //UI.PrintMessage(savingsAccount.GetInterestInfo(amount));
-            //UI.PrintMessage(savingsAccount.GetLatestTransactionInfo());
-        }
-
-        // Method to handle transfer to another account
-        internal static bool Transfer(decimal amount, BankAccount toAccount, BankAccount fromAccount)
-        {
-            // Check if the transfer is possible and return false if not
-            if (!fromAccount.RemoveBalance(amount, toAccount.Name))
-            {
-                return false;
-            }
-
-            // Simulate delay of 15 minutes (900,000 milliseconds)
-            Task.Delay(900000).ContinueWith(delay =>
-            {
-                // Perform currency conversion and add balance to the target account
-                decimal convertedAmount = ConvertCurrency(fromAccount, toAccount, amount);
-                toAccount.AddBalance(convertedAmount, fromAccount.Name);
-                //fromAccount.PrintTransferDetails(convertedAmount, toAccount);
-            });
-            return true;
-        }
-
-        // Convert amount to SEK and then to the target account's currency
-        private static decimal ConvertCurrency(BankAccount fromAccount, BankAccount toAccount, decimal amount)
-        {
-            decimal amountInSEK = Data.ToSEK(amount, fromAccount.Currency);
-            return Data.FromSEK(amountInSEK, toAccount.Currency);
         }
     }
 }
