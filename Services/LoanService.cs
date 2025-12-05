@@ -22,8 +22,6 @@ namespace BankApp.Services
                 return;
             }
 
-
-
             var bankAccounts = _customer.GetBankAccounts();
             //Check if user has any bank accounts, stop method if not.
             if (bankAccounts.Count == 0)
