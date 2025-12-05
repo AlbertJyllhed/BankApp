@@ -39,8 +39,41 @@ namespace BankApp.Services
             UI.PrintMessage(insertMoneyAccount.GetLatestTransactionInfo());
         }
 
+        // Method to withdraw money from a bank account
+        internal static void WithdrawMoney()
+        {
+            // Check if customer is set
+            if (_customer == null)
+            {
+                UI.PrintError("Ingen kund hittades.");
+                return;
+            }
+
+            // Choose which account to withdraw money from
+            UI.PrintMessage("Vilket konto vill du ta ut pengar från?");
+            var bankAccounts = _customer.GetBankAccounts();
+
+            UI.PrintList(bankAccounts, true);
+            int index = InputUtilities.GetIndex(bankAccounts.Count);
+            BankAccount withdrawMoneyAccount = bankAccounts[index];
+
+            // Choose amount to withdraw
+            UI.PrintMessage($"Hur mycket pengar vill du ta ut från {withdrawMoneyAccount.Name}?");
+            decimal amount = InputUtilities.GetPositiveDecimal();
+
+            // Withdraw the money
+            if (withdrawMoneyAccount.RemoveBalance(amount))
+            {
+                UI.PrintMessage(withdrawMoneyAccount.GetLatestTransactionInfo());
+            }
+            else
+            {
+                UI.PrintError("Uttag misslyckades på grund av för låg summa.");
+            }
+        }
+
         // Transfers balance from one account to another
-        internal static void TransferBalance()
+        internal static void TransferMoney()
         {
             // Check if customer is set
             if (_customer == null)

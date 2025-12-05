@@ -76,8 +76,9 @@ namespace BankApp
             UI.PrintMessage("--- Betala och överföra ---");
             UI.PrintMessages([
                 "1. Sätt in pengar",
-                "2. Överföra pengar",
-                "3. Skriv ut transaktioner"
+                "2. Ta ut pengar",
+                "3. Överför pengar",
+                "4. Skriv ut transaktioner"
             ]);
 
             int input = InputUtilities.GetInt();
@@ -91,9 +92,12 @@ namespace BankApp
                     TransactionService.InsertMoney();
                     break;
                 case 2:
-                    TransactionService.TransferBalance();
+                    TransactionService.WithdrawMoney();
                     break;
                 case 3:
+                    TransactionService.TransferMoney();
+                    break;
+                case 4:
                     customer.PrintTransactions();
                     break;
                 default:
