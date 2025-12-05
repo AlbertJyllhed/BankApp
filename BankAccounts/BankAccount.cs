@@ -21,7 +21,7 @@
         }
         internal string Name { get; }
         internal string Currency { get; set; } = "SEK";
-        protected decimal Balance { get; set; } = 0;
+        internal decimal Balance { get; private set; } = 0;
 
         // Constructor
         internal BankAccount(string name, string currency, string id = "")
@@ -64,8 +64,6 @@
 
         internal bool RemoveBalance(decimal value, string toAccount = "")
         {
-
-
             if (Balance >= value)
             {
                 CreateTransaction(-value, toAccount, "till");
@@ -89,11 +87,6 @@
             // Create new transaction and add to list
             var transaction = new Transaction(value, Currency, message);
             _transactions.Add(transaction);
-        }
-
-        internal decimal GetBalance()
-        {
-            return Balance;
         }
 
         //Method to print all transactions

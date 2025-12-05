@@ -147,7 +147,7 @@ namespace BankApp.Services
         // Check if there are sufficient funds to transfer
         private static bool CanTransfer(BankAccount fromAccount, decimal amount)
         {
-            return fromAccount.GetBalance() >= amount;
+            return fromAccount.Balance >= amount;
         }
 
         // Method to handle transfer to another account

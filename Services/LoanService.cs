@@ -34,7 +34,7 @@ namespace BankApp.Services
             decimal totalInSEK = 0;
             foreach (var account in bankAccounts)
             {
-                decimal balance = account.GetBalance();
+                decimal balance = account.Balance;
                 decimal balanceInSEK = Data.ToSEK(balance, account.Currency);
                 totalInSEK += balanceInSEK;
             }
@@ -154,7 +154,7 @@ namespace BankApp.Services
             var accountToPayFrom = ChooseAccountToPayLoanFrom(bankAccounts);
 
             // Check if there are sufficient funds to pay back the loan
-            decimal accountBalanceInSEK = Data.ToSEK(accountToPayFrom.GetBalance(), accountToPayFrom.Currency);
+            decimal accountBalanceInSEK = Data.ToSEK(accountToPayFrom.Balance, accountToPayFrom.Currency);
 
             if (accountBalanceInSEK < payBackAmount)
             {
