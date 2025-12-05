@@ -62,7 +62,7 @@
             var lockedCustomers = Data.GetLockedCustomers();
             if (lockedCustomers.Count == 0)
             {
-                UI.PrintMessage("Inga låsta kund profil");
+                UI.PrintColoredMessage("Ingen låst kund profil", ConsoleColor.Yellow);
                 return;
             }
             // Print list of customers with indices

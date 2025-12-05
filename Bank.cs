@@ -38,6 +38,7 @@ namespace BankApp
                 }
                 else
                 {
+                    UI.PrintColoredMessage($"Fel användarnamn eller lösenord", ConsoleColor.Yellow, 1);
                     activeUser = null;
                 }
             }
