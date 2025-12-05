@@ -5,7 +5,7 @@ namespace BankApp.Users
 {
     internal class Customer : User
     {
-        private int loginAttempts = 0;
+        private int _loginAttempts = 0;
         private List<BankAccount> BankAccounts { get; set; }
         private List<Loan> Loans { get; set; }
         internal bool Locked { get; set; } = false;
@@ -29,20 +29,20 @@ namespace BankApp.Users
             if (Password == password)
             {
                 // Reset login attempts on successful login
-                loginAttempts = 0;
+                _loginAttempts = 0;
                 return true;
             }
             else
             {
                 // Increment login attempts on failed login
-                loginAttempts++;
+                _loginAttempts++;
 
                 // Lock account if maximum attempts reached
-                if (loginAttempts >= 3)
+                if (_loginAttempts >= 3)
                 {
                     Locked = true;
                 }
-                UI.PrintColoredMessage($"Försök kvar: {3 - loginAttempts}", ConsoleColor.Yellow);
+                UI.PrintColoredMessage($"Försök kvar: {3 - _loginAttempts}", ConsoleColor.Yellow);
 
                 return false;
             }
