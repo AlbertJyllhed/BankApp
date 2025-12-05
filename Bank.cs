@@ -4,7 +4,7 @@ namespace BankApp
 {
     internal class Bank
     {
-        User? activeUser;
+        private User? _activeUser;
 
         // Loops the application until user logs out
         internal void Run()
@@ -12,7 +12,7 @@ namespace BankApp
             Data.Setup();
             LogIn();
 
-            while (activeUser != null)
+            while (_activeUser != null)
             {
                 CreateMenu();
                 UI.PrintResetMessage();
@@ -23,7 +23,7 @@ namespace BankApp
         private void LogIn()
         {
             // Loop until a user is logged in
-            while (activeUser == null)
+            while (_activeUser == null)
             {
                 UI.PrintInputPrompt("Vänligen ange användarnamn: ");
                 var username = InputUtilities.GetString();
@@ -34,12 +34,12 @@ namespace BankApp
                 var user = Data.GetUser(username);
                 if (user != null && user.TryLogin(password))
                 {
-                    activeUser = user;
+                    _activeUser = user;
                 }
                 else
                 {
                     UI.PrintColoredMessage($"Fel användarnamn eller lösenord", ConsoleColor.Yellow, 1);
-                    activeUser = null;
+                    _activeUser = null;
                 }
             }
 
@@ -50,7 +50,7 @@ namespace BankApp
         internal void LogOut()
         {
             UI.PrintColoredMessage("Du har blivit utloggad.", ConsoleColor.Yellow);
-            activeUser = null;
+            _activeUser = null;
 
             UI.PrintColoredMessage("Vill du stänga av applikationen y/n", ConsoleColor.Red);
             bool answer = InputUtilities.GetYesOrNo();
@@ -63,20 +63,20 @@ namespace BankApp
         // Method to create menu based on user type
         private void CreateMenu()
         {
-            if (activeUser == null) return;
+            if (_activeUser == null) return;
 
             var menu = new Menu();
             UI.PrintLogo();
-            UI.PrintMessage($"--- Välkommen till Liskov Bank {activeUser.Name} ---");
+            UI.PrintMessage($"--- Välkommen till Liskov Bank {_activeUser.Name} ---");
 
             bool restart = false;
 
             // Print menu based on user type
-            if (activeUser is Customer customer)
+            if (_activeUser is Customer customer)
             {
                 restart = menu.PrintCustomerMenu(customer);
             }
-            else if (activeUser is Admin admin)
+            else if (_activeUser is Admin admin)
             {
                 restart = menu.PrintAdminMenu(admin);
             }

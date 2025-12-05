@@ -4,13 +4,13 @@
     {
         private decimal Amount { get; set; }
         private decimal Interest { get; set; }
-        private decimal InterestGained;
+        private decimal _interestGained;
 
         internal Loan(decimal amount, decimal interest = 1.0284m)
         {
             Amount = amount;
             Interest = interest;
-            InterestGained = amount * (interest - 1);
+            _interestGained = amount * (interest - 1);
         }
 
         internal static string GetLoanInfo(decimal total, decimal maxLoan)
@@ -22,7 +22,7 @@
 
         internal decimal GetTotalLoan()
         {
-            return Amount + InterestGained;
+            return Amount + _interestGained;
         }
 
         internal decimal GetLoanWithoutInterest()
@@ -42,16 +42,16 @@
                 return;
             }
 
-            if(InterestGained > 0)
+            if(_interestGained > 0)
             {
-                if(payment >= InterestGained)
+                if(payment >= _interestGained)
                 {
-                    payment -= InterestGained;
-                    InterestGained = 0;
+                    payment -= _interestGained;
+                    _interestGained = 0;
                 }
                 else
                 {
-                    InterestGained -= payment;
+                    _interestGained -= payment;
                     return;
                 }
             }
