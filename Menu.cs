@@ -47,6 +47,7 @@ namespace BankApp
                 "1. Ansök om lån",
                 "2. Visa nuvarande lån",
                 "3. Betala tillbaka lån",
+                "4. Gå tillbaka"
             ]);
 
             int input = InputUtilities.GetInt();
@@ -65,6 +66,8 @@ namespace BankApp
                 case 3:
                     LoanService.PayBackLoan();
                     break;
+                case 4:
+                    return;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;
@@ -78,7 +81,8 @@ namespace BankApp
                 "1. Sätt in pengar",
                 "2. Ta ut pengar",
                 "3. Överför pengar",
-                "4. Skriv ut transaktioner"
+                "4. Skriv ut transaktioner",
+                "5. Gå tillbaka"
             ]);
 
             int input = InputUtilities.GetInt();
@@ -100,6 +104,8 @@ namespace BankApp
                 case 4:
                     customer.PrintTransactions();
                     break;
+                case 5:
+                    return;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
                     break;
