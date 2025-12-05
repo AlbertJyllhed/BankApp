@@ -26,7 +26,7 @@ namespace BankApp.Services
             //Check if user has any bank accounts, stop method if not.
             if (bankAccounts.Count == 0)
             {
-                UI.PrintError("Du har inget bankkonto, vänligen skapa ett innan du gör lån.");
+                UI.PrintError("Vänligen skapa ett konto innan du ansöker om ett lån.");
                 return;
             }
 
