@@ -22,6 +22,13 @@ namespace BankApp.Services
                 return;
             }
 
+            // Check if there are any bank accounts to transfer from
+            if (!_customer.HasBankAccounts())
+            {
+                UI.PrintError("Du har inget bankkonto.");
+                return;
+            }
+
             // Choose which account to insert money into
             UI.PrintMessage("Vilket konto vill du sätta in pengar på?");
             var bankAccounts = _customer.GetBankAccounts();
@@ -46,6 +53,13 @@ namespace BankApp.Services
             if (_customer == null)
             {
                 UI.PrintError("Ingen kund hittades.");
+                return;
+            }
+
+            // Check if there are any bank accounts to transfer from
+            if (!_customer.HasBankAccounts())
+            {
+                UI.PrintError("Du har inget bankkonto.");
                 return;
             }
 
