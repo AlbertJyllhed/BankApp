@@ -99,7 +99,7 @@ namespace BankApp.Services
             _customer.AddLoan(newLoan);
             decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, account.Currency);
 
-            account.AddBalance(Math.Round(depositedAmount,2));
+            account.AddBalance(Math.Round(depositedAmount, 2));
             UI.PrintMessage(account.GetLatestTransactionInfo());
         }
 
@@ -131,7 +131,7 @@ namespace BankApp.Services
             var bankAccounts = _customer.GetBankAccounts();
 
             // Choose amount to pay back
-            UI.PrintMessage($"Din återstående skuld: {remainingLoanDept} SEK\n" +
+            UI.PrintMessage($"Din återstående skuld: {Math.Round(remainingLoanDept, 2)} SEK\n" +
                 $"Hur mycket vill du betala tillbaka av lånet?");
 
             // Validate pay back amount
