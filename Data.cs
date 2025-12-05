@@ -56,7 +56,6 @@ namespace BankApp
         // Adds a user to the list of all users if the name is unique
         internal static void AddUser(User newUser)
         {
-            
             foreach (var user in users)
             {
                 if (newUser.Name == user.Name)
