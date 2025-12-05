@@ -187,7 +187,7 @@ namespace BankApp.Services
         {
             // Choose account to pay from
             UI.PrintMessage("Vilket konto vill du använda för att betala lånet?");
-            UI.PrintList(_customer.GetBankAccounts(), true);
+            UI.PrintList(bankAccounts, true);
             int accountIndex = InputUtilities.GetIndex(bankAccounts.Count);
             return bankAccounts[accountIndex];
         }
