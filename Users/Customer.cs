@@ -42,8 +42,7 @@ namespace BankApp.Users
                 {
                     Locked = true;
                 }
-                UI.PrintColoredMessage($"Fel användarnamn eller lösenord\n" +
-                    $"Försök kvar: {3 - loginAttempts}", ConsoleColor.Yellow);
+                UI.PrintColoredMessage($"Försök kvar: {3 - loginAttempts}", ConsoleColor.Yellow);
 
                 return false;
             }

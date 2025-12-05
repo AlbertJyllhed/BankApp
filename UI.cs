@@ -24,7 +24,6 @@ namespace BankApp
             Console.ForegroundColor = color;
             PrintMessage(message, padding);
             Console.ResetColor();
-            PrintEmptyLine();
         }
 
         // Method to print an input prompt
