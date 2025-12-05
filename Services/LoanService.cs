@@ -101,7 +101,7 @@ namespace BankApp.Services
             _customer.AddLoan(newLoan);
             decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, account.Currency);
 
-            account.AddBalance(depositedAmount);
+            account.AddBalance(Math.Round(depositedAmount,2));
             UI.PrintMessage(account.GetLatestTransactionInfo());
         }
 
