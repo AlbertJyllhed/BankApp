@@ -148,7 +148,7 @@ namespace BankApp.Services
             {
                 payBackAmount = remainingLoanDept;
                 UI.PrintColoredMessage($"Du försöker betala tillbaka mer än din nuvarande skuld på: ({remainingLoanDept} SEK).\n" +
-                    $"Belopp blir justerat till {remainingLoanDept} ",
+                    $"Belopp blir justerat till {remainingLoanDept} SEK ",
                     ConsoleColor.Yellow);
             }
 
