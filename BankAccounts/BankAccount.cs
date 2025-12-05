@@ -112,7 +112,7 @@
         public override string ToString()
         {
             return $"{GetAccountType()} {Name} [{ID}]\n" +
-                $"Balans: {Balance} {Currency}";
+                $"Balans: {Math.Round(Balance, 2)} {Currency}";
         }
     }
 }
