@@ -20,7 +20,7 @@ namespace BankApp
             switch (input)
             {
                 case 1:
-                    customer.SetupBankAccount();
+                    AccountService.SetupBankAccount(customer);
                     break;
                 case 2:
                     UI.PrintList(customer.GetBankAccounts(), true);
@@ -42,8 +42,6 @@ namespace BankApp
 
         internal void PrintLoanMenu(Customer customer)
         {
-            LoanService.SetCustomer(customer);
-
             UI.PrintMessage("--- Lån Meny ---");
             UI.PrintMessages([
                 "1. Ansök om lån",
@@ -53,6 +51,8 @@ namespace BankApp
 
             int input = InputUtilities.GetInt();
             Console.Clear();
+
+            LoanService.SetCustomer(customer);
 
             switch (input)
             {
@@ -83,16 +83,18 @@ namespace BankApp
             int input = InputUtilities.GetInt();
             Console.Clear();
 
+            TransactionService.SetCustomer(customer);
+
             switch (input)
             {
                 case 1:
-                    customer.InsertMoney();
+                    TransactionService.InsertMoney();
                     break;
                 case 2:
-                    customer.TransferBalance();
+                    TransactionService.TransferBalance();
                     break;
                 case 3:
-                    customer.PrintTransactionsActivity();
+                    customer.PrintTransactions();
                     break;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
