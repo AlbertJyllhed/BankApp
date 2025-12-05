@@ -1,6 +1,7 @@
 ﻿using BankApp.BankAccounts;
 using BankApp.Services;
 using BankApp.Users;
+using System.Xml.Linq;
 
 namespace BankApp
 {
@@ -59,10 +60,12 @@ namespace BankApp
             {
                 if (newUser.Name == user.Name)
                 {
-                    throw new Exception("Användare med samma namn finns redan.");
+                    UI.PrintError("Användare med samma namn finns redan.");
+                    return;
                 }
             }
             users.Add(newUser);
+            UI.PrintMessage($"Användare {newUser.Name} skapad.");
         }
 
         // Loops through all users and returns the user with the matching name

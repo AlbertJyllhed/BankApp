@@ -44,13 +44,12 @@
             string name = InputUtilities.GetString();
             UI.PrintInputPrompt("Skriv in lösenord: ");
             string password = InputUtilities.GetString();
-
+           
             // Create new Customer object with provided name and password
             var customer = new Customer(name, password);
 
             // Add the new customer to Data
             Data.AddUser(customer);
-            UI.PrintMessage($"Användare {name} skapad.");
         }
 
         // Method to unlock a customer's account
