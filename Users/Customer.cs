@@ -59,7 +59,7 @@ namespace BankApp.Users
         {
             if (!HasBankAccounts())
             {
-                UI.PrintError("Du har inget bankkonto.");
+                UI.PrintError("Inget bankkonto hittades.");
             }
             return BankAccounts;
         }

@@ -17,7 +17,7 @@ namespace BankApp.BankAccounts
         internal string GetInterestInfo(decimal amount)
         {
             return $"Du har satt in {amount} {Currency} i ditt sparkonto\n" +
-                $"Räntan på sparkonton är {_interest}%\n" +
+                $"Räntan ligger för nuvarande på {_interest}%\n" +
                 $"Efter ett år kommer du ha {Math.Round(amount * _interest, 2)} {Currency} på ditt sparkonto";
         }
     }

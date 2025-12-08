@@ -25,7 +25,7 @@ namespace BankApp.Services
             // Check if there are any bank accounts to transfer from
             if (!_customer.HasBankAccounts())
             {
-                UI.PrintError("Du har inget bankkonto.");
+                UI.PrintError("Inget bankkonto hittades.");
                 return;
             }
 
@@ -43,7 +43,9 @@ namespace BankApp.Services
 
             // Insert the money
             insertMoneyAccount.AddBalance(amount);
-            UI.PrintMessage(insertMoneyAccount.GetLatestTransactionInfo());
+
+            var latestTransaction = insertMoneyAccount.GetLatestTransaction();
+            UI.PrintMessage(latestTransaction.ToString());
         }
 
         // Method to withdraw money from a bank account
@@ -59,7 +61,7 @@ namespace BankApp.Services
             // Check if there are any bank accounts to transfer from
             if (!_customer.HasBankAccounts())
             {
-                UI.PrintError("Du har inget bankkonto.");
+                UI.PrintError("Inget bankkonto hittades.");
                 return;
             }
 
@@ -78,11 +80,13 @@ namespace BankApp.Services
             // Withdraw the money
             if (withdrawMoneyAccount.RemoveBalance(amount))
             {
-                UI.PrintMessage(withdrawMoneyAccount.GetLatestTransactionInfo());
+                var latestTransaction = withdrawMoneyAccount.GetLatestTransaction();
+                UI.PrintMessage(latestTransaction.ToString());
             }
             else
             {
-                UI.PrintError("Uttag misslyckades på grund av för låg summa.");
+                UI.PrintError("Uttag misslyckades, " +
+                    "det finns inte tillräckligt med pengar på kontot.");
             }
         }
 
@@ -99,12 +103,12 @@ namespace BankApp.Services
             // Check if there are any bank accounts to transfer from
             if (!_customer.HasBankAccounts())
             {
-                UI.PrintError("Du har inget bankkonto.");
+                UI.PrintError("Inget bankkonto hittades.");
                 return;
             }
 
             // Choose from which account to transfer
-            UI.PrintMessage("Från vilket konto vill du överföra pengarna?");
+            UI.PrintMessage("Vilket konto vill du överföra pengar ifrån?");
             UI.PrintList(_customer.GetBankAccounts(), true);
             BankAccount fromAccount = _customer.GetAccountByIndex();
 
@@ -140,21 +144,23 @@ namespace BankApp.Services
                     $"Överföring påbörjad: {amount} {fromAccount.Currency}\n" +
                     $"Från: Konto [{fromAccount.ID}]\n" +
                     $"Till: [{toAccount.ID}]\n" +
-                    $"Pengar kommer fram klockan {DateTime.Now.AddMinutes(15):HH:mm}",
+                    $"Pengarna kommer fram klockan {DateTime.Now.AddMinutes(15):HH:mm}",
                     ConsoleColor.DarkCyan);
             }
             else
             {
-                UI.PrintError("Överföring misslyckades på grund av för låg summa.");
+                UI.PrintError("Överföring misslyckades, " +
+                    "det finns inte tillräckligt med pengar på kontot.");
             }
         }
 
         // Method to choose transfer method
         private static bool ChooseTransferMethod()
         {
-            UI.PrintMessage("Hur vill du överföra pengarna?\n" +
-                "1. Med index\n" +
-                "2. Med kontonummer");
+            UI.PrintMessage("Vill du flytta pengar mellan dina egna konton " +
+                "eller till någon annan användare?\n" +
+                "1. Eget konto\n" +
+                "2. Annat konto");
             return InputUtilities.GetIndex(2) == 0;
         }
 

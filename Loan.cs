@@ -17,7 +17,7 @@
         {
             return $"Ditt totala belopp (inklusive lånade pengar): {total} SEK\n" +
                 $"Maximal summan du kan låna: {maxLoan} SEK\n" +
-                $"Är du säker på att du vill skapa lån? y/n";
+                $"Är du säker på att du vill låna pengar? y/n";
         }
 
         internal decimal GetTotalLoan()

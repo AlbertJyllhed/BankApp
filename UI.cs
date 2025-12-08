@@ -14,7 +14,7 @@ namespace BankApp
 
             for (int i = 0; i < padding; i++)
             {
-                PrintEmptyLine();
+                Console.WriteLine();
             }
         }
 
@@ -59,7 +59,7 @@ namespace BankApp
                     counter++;
                 }
             }
-            PrintEmptyLine();
+            Console.WriteLine();
         }
 
         // Method to print error messages in red color
@@ -76,16 +76,10 @@ namespace BankApp
             Console.WriteLine("--------------------------------------------------");
         }
 
-        // Method to print an empty line
-        internal static void PrintEmptyLine()
-        {
-            Console.WriteLine();
-        }
-
         // Method to print reset message and wait for user input
         internal static void PrintResetMessage()
         {
-            Console.WriteLine("Tryck på en knapp för att forsätta... ");
+            Console.WriteLine("Tryck på valfri knapp för att forsätta...");
             Console.ReadKey();
             Console.Clear();
         }

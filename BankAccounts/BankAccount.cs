@@ -38,11 +38,10 @@
             Balance += value;
         }
 
-        // Print deposit details
-        internal string GetLatestTransactionInfo()
+        // Method to get the latest transaction
+        internal Transaction GetLatestTransaction()
         {
-            var lastTransaction = _transactions.Last();
-            return $"{lastTransaction.Amount} {Currency} överfördes till konto {ID}.";
+            return _transactions.Last();
         }
 
         // Print transfer details with to account IDs
@@ -73,7 +72,7 @@
             }
             else
             {
-                UI.PrintError("Felaktigt begär, inte tillräckligt med pengar på kontot.\n" +
+                UI.PrintError("Du har inte tillräckligt med pengar på kontot.\n" +
                     "Du är fattig :)");
                 return false;
             }
@@ -106,7 +105,7 @@
         public override string ToString()
         {
             return $"{GetAccountType()} {Name} [{ID}]\n" +
-                $"Balans: {Math.Round(Balance, 2)} {Currency}";
+                $"Saldo: {Math.Round(Balance, 2)} {Currency}";
         }
     }
 }

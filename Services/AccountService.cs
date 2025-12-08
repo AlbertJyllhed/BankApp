@@ -35,7 +35,9 @@ namespace BankApp.Services
                 account = CreateSavingsAccount(accountName, amount, currency);
                 var savingsAccount = (SavingsAccount)account;
                 UI.PrintMessage(savingsAccount.GetInterestInfo(amount));
-                UI.PrintMessage(savingsAccount.GetLatestTransactionInfo());
+
+                var latestTransaction = savingsAccount.GetLatestTransaction();
+                UI.PrintMessage(latestTransaction.ToString());
             }
 
             // Add the new bank account into the list.

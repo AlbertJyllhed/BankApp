@@ -21,7 +21,7 @@
             string currency = Data.ChooseCurrency().Key;
 
             // Prompt for new exchange rate and update it in Data
-            UI.PrintInputPrompt($"Skriv in den nya växelkurden för {currency}: ");
+            UI.PrintInputPrompt($"Skriv in den nya växelkursen för {currency}: ");
             Data.SetCurrency(currency, InputUtilities.GetDecimal());
         }
 
@@ -31,9 +31,9 @@
             UI.PrintMessage("Skapar ny användare.");
 
             // Get username and password from input
-            UI.PrintInputPrompt("Skriv in användarnamn: ");
+            UI.PrintInputPrompt("Skriv ett användarnamn till den nya användaren: ");
             string name = InputUtilities.GetString();
-            UI.PrintInputPrompt("Skriv in lösenord: ");
+            UI.PrintInputPrompt("Skriv ett lösenord till den nya användaren: ");
             string password = InputUtilities.GetString();
            
             // Create new Customer object with provided name and password
@@ -46,13 +46,13 @@
         // Method to unlock a customer's account
         internal void UnlockCustomerAccount()
         {
-            UI.PrintMessage("Vilken kund profil vill du låsa upp?");
+            UI.PrintMessage("Vilken kund vill du låsa upp?");
 
             // Get list of customers from Data
             var lockedCustomers = Data.GetLockedCustomers();
             if (lockedCustomers.Count == 0)
             {
-                UI.PrintColoredMessage("Ingen låst kund profil", ConsoleColor.Yellow);
+                UI.PrintColoredMessage("Det finns inga låsta kunder.", ConsoleColor.Yellow);
                 return;
             }
             // Print list of customers with indices
@@ -67,7 +67,7 @@
 
             // Unlock the selected customer's account
             customer.Locked = false;
-            UI.PrintMessage($"Användare {customer.Name} profil har blivit upplåst.");
+            UI.PrintMessage($"Användare: {customer.Name} upplåst.");
         }
     }
 }
