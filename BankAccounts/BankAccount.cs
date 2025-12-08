@@ -62,6 +62,7 @@
             }
         }
 
+        // Method to remove balance from account
         internal bool RemoveBalance(decimal value, string toAccount = "")
         {
             if (Balance >= value)

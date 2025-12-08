@@ -4,7 +4,6 @@
     {
         internal Admin(string name, string password) : base(name, password)
         {
-
         }
 
         // Override TryLogin method for Admin
