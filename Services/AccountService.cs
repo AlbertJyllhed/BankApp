@@ -8,9 +8,9 @@ namespace BankApp.Services
         // Method to get user input and create a new bank account
         internal static void SetupBankAccount(Customer customer)
         {
-            UI.PrintMessage("Vad för typ av bankkonto vill du skapa?\n" +
+            UI.PrintMessage("Vad för typ av bankkonto vill du skapa?\n\n" +
                 "1. Vanligt bankkonto\n" +
-                "2. Sparkonto");
+                "2. Sparkonto", 1);
 
             int choice = InputUtilities.GetIndex(2);
 
@@ -30,7 +30,7 @@ namespace BankApp.Services
             else
             {
                 // Ask user for initial deposit amount for savings account
-                UI.PrintMessage("Hur mycket vill du sätta in på sparkontot?");
+                UI.PrintMessage("Hur mycket vill du sätta in på sparkontot?", 1);
                 var amount = InputUtilities.GetPositiveDecimal();
                 account = CreateSavingsAccount(accountName, amount, currency);
                 var savingsAccount = (SavingsAccount)account;
@@ -43,8 +43,8 @@ namespace BankApp.Services
             // Add the new bank account into the list.
             customer.AddBankAccount(account);
 
-            UI.PrintMessage($"Ditt nya {account.GetAccountType()} " +
-                $"({accountName}, {currency}) har skapats!");
+            UI.PrintColoredMessage($"\nDitt nya {account.GetAccountType()} " +
+                $"({accountName}, {currency}) har skapats!", ConsoleColor.Green, 1);
         }
 
         // Method to create a new bank account without user input

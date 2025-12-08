@@ -29,6 +29,7 @@ namespace BankApp
         // Method to print an input prompt
         internal static void PrintInputPrompt(string prompt)
         {
+            Console.WriteLine();
             Console.Write(prompt);
         }
 
@@ -62,9 +63,26 @@ namespace BankApp
             Console.WriteLine();
         }
 
+        // Method to print success messages in green color
+        internal static void PrintSuccess(string successMessage, int padding = 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            PrintMessage(successMessage, padding);
+            Console.ResetColor();
+        }
+
+        // Method to print warning messages in yellow color
+        internal static void PrintWarning(string warningMessage, int padding = 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            PrintMessage(warningMessage, padding);
+            Console.ResetColor();
+        }
+
         // Method to print error messages in red color
         internal static void PrintError(string errorMessage, int padding = 0)
         {
+            PrintLine();
             Console.ForegroundColor = ConsoleColor.Red;
             PrintMessage(errorMessage, padding);
             Console.ResetColor();
@@ -79,7 +97,8 @@ namespace BankApp
         // Method to print reset message and wait for user input
         internal static void PrintResetMessage()
         {
-            Console.WriteLine("Tryck på valfri knapp för att forsätta...");
+            PrintLine();
+            Console.Write("Tryck på valfri knapp för att forsätta...");
             Console.ReadKey();
             Console.Clear();
         }
