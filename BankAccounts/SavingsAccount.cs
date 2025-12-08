@@ -13,6 +13,7 @@ namespace BankApp.BankAccounts
             AddBalance(amount);
         }
 
+        // Print interest information for a given amount
         internal string GetInterestInfo(decimal amount)
         {
             return $"Du har satt in {amount} {Currency} i ditt sparkonto\n" +

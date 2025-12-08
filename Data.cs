@@ -145,7 +145,6 @@ namespace BankApp
                     return GetUniqueID();
                 }
             }
-
             return idString;
         }
 
@@ -212,6 +211,7 @@ namespace BankApp
         {
             return currency.ContainsKey(code);
         }
+
         // Convert value to SEK from account currency
         internal static decimal ToSEK(decimal value, string currency)
         {

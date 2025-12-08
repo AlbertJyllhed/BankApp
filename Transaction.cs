@@ -18,6 +18,8 @@ namespace BankApp
             TimeStamp = DateTime.Now;
         }
 
+
+        // Override ToString method for transaction representation
         public override string ToString()
         {
             string dateFormat = TimeStamp.ToString("yyyy-MM-dd HH:mm");

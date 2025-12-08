@@ -182,7 +182,6 @@ namespace BankApp.Services
             UI.PrintMessage("Återbetalning genomförd!");
         }
 
-
         private static BankAccount ChooseAccountToPayLoanFrom(List<BankAccount> bankAccounts)
         {
             // Choose account to pay from

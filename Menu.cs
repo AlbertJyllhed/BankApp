@@ -5,6 +5,7 @@ namespace BankApp
 {
     internal class Menu
     {
+        // Customer Menu
         internal bool PrintCustomerMenu(Customer customer)
         {
             UI.PrintMessage("--- Kund Meny ---");
@@ -17,6 +18,7 @@ namespace BankApp
             int input = InputUtilities.GetInt();
             Console.Clear();
 
+            // Handle customer menu options
             switch (input)
             {
                 case 1:
@@ -40,6 +42,7 @@ namespace BankApp
             return true;
         }
 
+        // Loan Menu
         internal void PrintLoanMenu(Customer customer)
         {
             UI.PrintMessage("--- Lån Meny ---");
@@ -55,6 +58,7 @@ namespace BankApp
 
             LoanService.SetCustomer(customer);
 
+            // Handle loan menu options
             switch (input)
             {
                 case 1:
@@ -74,6 +78,7 @@ namespace BankApp
             }
         }
 
+        // Transaction Menu
         internal void PrintTransactionMenu(Customer customer)
         {
             UI.PrintMessage("--- Betala och överföra ---");
@@ -90,6 +95,7 @@ namespace BankApp
 
             TransactionService.SetCustomer(customer);
 
+            // Handle transaction menu options
             switch (input)
             {
                 case 1:
@@ -112,6 +118,7 @@ namespace BankApp
             }
         }
 
+        // Admin Menu
         internal bool PrintAdminMenu(Admin admin)
         {
             UI.PrintMessage("--- Admin Meny ---");
@@ -123,6 +130,8 @@ namespace BankApp
             int input = InputUtilities.GetInt();
             Console.Clear();
 
+
+            // Handle admin menu options
             switch (input)
             {
                 case 1:
