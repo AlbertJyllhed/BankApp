@@ -8,7 +8,7 @@
             string? input = Console.ReadLine();
             while (string.IsNullOrWhiteSpace(input))
             {
-                UI.PrintError("Inmatning kan inte vara tomt, försök igen.");
+                UI.PrintError("Inmatningen kan inte vara tom, försök igen.");
                 input = Console.ReadLine();
             }
             return input;
@@ -54,7 +54,7 @@
             int index = GetInt() - 1;
             while (index < 0 || index >= maxIndex)
             {
-                UI.PrintError("Felaktigt index värde, försök igen.");
+                UI.PrintError("Felaktigt indexvärde, försök igen.");
                 index = GetInt() - 1;
             }
             return index;
@@ -65,7 +65,7 @@
             string input = GetString().ToLower();
             while (input != "y" && input != "n")
             {
-                UI.PrintError("Felaktigt inmatning, vänligen skriv 'y' för ja eller 'n' för nej.");
+                UI.PrintError("Felaktig inmatning, vänligen skriv 'y' för ja eller 'n' för nej.");
                 input = GetString().ToLower();
             }
             return input == "y";

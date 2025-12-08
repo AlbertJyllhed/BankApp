@@ -60,7 +60,7 @@ namespace BankApp
             {
                 if (newUser.Name == user.Name)
                 {
-                    UI.PrintError("Användare med samma namn finns redan.");
+                    UI.PrintError("Det finns redan en användare med samma namn.");
                     return;
                 }
             }
@@ -104,7 +104,7 @@ namespace BankApp
             // If it does, throw an exception
             if (existingAccount != null)
             {
-                throw new Exception("Bankkonto med samma ID finns redan.");
+                throw new Exception("Det finns redan ett bankkonto med samma ID.");
             }
 
             bankAccounts.Add(account);
@@ -188,7 +188,7 @@ namespace BankApp
             else
             {
                 // Throw an exception if the currency code is invalid
-                throw new Exception("Ogiltig valuta kod.");
+                throw new Exception("Ogiltig valutakod.");
             }
         }
 

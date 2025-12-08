@@ -17,7 +17,7 @@ namespace BankApp.Services
         {
             if (_customer == null)
             {
-                UI.PrintError("Ingen kund finns.");
+                UI.PrintError("Ingen kund hittades.");
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace BankApp.Services
             // Check if the requested loan amount is valid, stop method if not.
             if (maxLoan <= 0)
             {
-                UI.PrintError("Du har inga pengar att låna för och kan därför inte skapa lån.");
+                UI.PrintError("Du har inte tillräckligt med pengar för att låna.");
                 return;
             }
 
@@ -61,7 +61,7 @@ namespace BankApp.Services
             // Confirm loan creation, stop method if user inputs no.
             if (!InputUtilities.GetYesOrNo())
             {
-                UI.PrintColoredMessage("Lånet har blivit avbrutet.", ConsoleColor.Yellow);
+                UI.PrintColoredMessage("Lån avbrutet.", ConsoleColor.Yellow);
                 return;
             }
 
@@ -86,10 +86,10 @@ namespace BankApp.Services
             }
 
             Loan newLoan = new Loan(borrowedAmountSEK);
-            UI.PrintMessage($"Totala beloppet att betala tillbaka (inklusive ränta): {newLoan.GetTotalLoan()} SEK");
+            UI.PrintMessage($"Din totala skuld inklusive ränta: {newLoan.GetTotalLoan()} SEK");
 
             // Choose account to deposit loan into
-            UI.PrintMessage("Vilket konto vill du låna till? ");
+            UI.PrintMessage("Vilket konto vill du låna till?");
             UI.PrintList(_customer.GetBankAccounts(), true);
             var bankAccounts = _customer.GetBankAccounts();
             var chosenIndex = InputUtilities.GetIndex(bankAccounts.Count);
@@ -99,7 +99,9 @@ namespace BankApp.Services
             decimal depositedAmount = Data.FromSEK(borrowedAmountSEK, account.Currency);
 
             account.AddBalance(Math.Round(depositedAmount, 2));
-            UI.PrintMessage(account.GetLatestTransactionInfo());
+
+            var latestTransaction = account.GetLatestTransaction();
+            UI.PrintMessage(latestTransaction.ToString());
         }
 
         internal static void PayBackLoan()
@@ -113,7 +115,7 @@ namespace BankApp.Services
             // Check if there are any loans to pay back
             if (loans.Count == 0)
             {
-                UI.PrintError("Du har för nuvarande inga lån att betala tillbaka.");
+                UI.PrintError("Du har inga lån att betala tillbaka.");
                 return;
             }
 
@@ -126,11 +128,11 @@ namespace BankApp.Services
 
             // Get remaining loan debt
             Loan selectedLoan = loans[loanIndex];
-            decimal remainingLoanDept = selectedLoan.GetTotalLoan();
+            decimal remainingDebt = selectedLoan.GetTotalLoan();
             var bankAccounts = _customer.GetBankAccounts();
 
             // Choose amount to pay back
-            UI.PrintMessage($"Din återstående skuld: {Math.Round(remainingLoanDept, 2)} SEK\n" +
+            UI.PrintMessage($"Din återstående skuld: {Math.Round(remainingDebt, 2)} SEK\n" +
                 $"Hur mycket vill du betala tillbaka av lånet?");
 
             // Validate pay back amount
@@ -141,12 +143,11 @@ namespace BankApp.Services
             }
 
             // Adjust pay back amount if it exceeds remaining loan debt
-            if (payBackAmount > remainingLoanDept)
+            if (payBackAmount > remainingDebt)
             {
-                payBackAmount = remainingLoanDept;
-                UI.PrintColoredMessage($"Du försöker betala tillbaka mer än din nuvarande skuld på: ({remainingLoanDept} SEK).\n" +
-                    $"Belopp blir justerat till {remainingLoanDept} SEK ",
-                    ConsoleColor.Yellow);
+                payBackAmount = remainingDebt;
+                UI.PrintColoredMessage($"Du försöker betala tillbaka mer än din nuvarande skuld på: ({remainingDebt} SEK).\n" +
+                    $"Beloppet justeras till {remainingDebt} SEK ", ConsoleColor.Yellow);
             }
 
             // Choose account to pay from
@@ -157,7 +158,7 @@ namespace BankApp.Services
 
             if (accountBalanceInSEK < payBackAmount)
             {
-                UI.PrintError("Du har för lite pengar för att göra en återbetalning på lånet.");
+                UI.PrintError("Du har inte tillräckligt med pengar för att återbetala lånet.");
                 return;
             }
 
@@ -170,12 +171,11 @@ namespace BankApp.Services
             if (selectedLoan.GetLoanWithoutInterest() <= 0)
             {
                 loans.RemoveAt(loanIndex);
-                UI.PrintMessage($"Du har betalat tillbaka {withDrawAmount} SEK på ditt lån");
+                UI.PrintMessage($"Du har betalat tillbaka {withDrawAmount} SEK på lånet");
             }
-
             else
             {
-                UI.PrintMessage($"Din återstående skuld är nu: {selectedLoan.GetLoanWithoutInterest()} SEK");
+                UI.PrintMessage($"Din återstående skuld är: {selectedLoan.GetLoanWithoutInterest()} SEK");
             }
 
             UI.PrintMessage("Återbetalning genomförd!");
