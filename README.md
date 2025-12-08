@@ -2,23 +2,26 @@
 This is a C# bank system. Every customer can create a bank account and savings account with different currencies. requested and pay back loans and even insert money and withdraw in their bank accounts.
 Customer can handle different transactions. Admin can login, create new customer, change currency rate and unlock locked customer profiles.
 
+## Table of Contents
+- [Classes](#classes)
+  - [User](#user)
+  - [Admin](#admin)
+  - [Customer](#customer)
+  - [Bank](#bank)
+  - [Data](#data)
+  - [InputUtilities](#inpututilities)
+  - [Loan](#loan)
+  - [Menu](#menu)
+  - [Program](#program)
+  - [Transaction](#transaction)
+  - [UI](#ui)
+  - [BankAccount](#bankaccount)
+  - [SavingsAccount](#savingsaccount)
+  - [AccountService](#accountservice)
+  - [LoanService](#loanservice)
+  - [TransactionService](#transactionservice)
+
 ## Classes
- - [User](#user)
- - [Admin](#admin)
- - [Customer](#customer)
- - [Bank](#bank)
- - [Data](#data)
- - [InputUtilities](#inpututilities)
- - [Loan](#loan)
- - [Menu](#menu)
- - [Program](#program)
- - [Transaction](#transaction)
- - [UI](#ui)
- - [BankAccount](#bankaccount)
- - [SavingsAccount](#savingsaccount)
- - [AccountService](#accountservice)
- - [LoanService](#loanservice)
-- [TransactionService](#transactionservice)
 ### User
 Base class for Admin and Customer classes.
 ### Admin
