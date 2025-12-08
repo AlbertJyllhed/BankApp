@@ -35,3 +35,9 @@ This class is used for applying for a loan, creates the loan, adds the loan to t
 ### TransactionService 
 Handles the transaction process between different accounts.
 
+### Contributors
+[AlbertJyllhed](https://github.com/AlbertJyllhed)
+[CajsaMartensson](https://github.com/CajsaMartensson)
+[SaraPPAndersson](https://github.com/SaraPPAndersson)
+[VISORKILLEN](https://github.com/VISORKILLEN)
+
