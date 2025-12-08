@@ -8,12 +8,12 @@ namespace BankApp
         // Customer Menu
         internal bool PrintCustomerMenu(Customer customer)
         {
-            UI.PrintMessage("--- Kund Meny ---");
-            UI.PrintMessages(["1. Skapa ett bankkonto",
-                "2. Visa bankkonton ",
-                "3. Betala och överföra",
-                "4. Gå till lånemenyn",
-                "5. Logga ut"]);
+            UI.PrintMessage("--- Kund Meny ---\n" +
+                "1. Skapa bankkonto\n" +
+                "2. Mina bankkonton\n" +
+                "3. Betala och överför\n" +
+                "4. Lån\n" +
+                "0. Logga ut");
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -33,7 +33,7 @@ namespace BankApp
                 case 4:
                     PrintLoanMenu(customer);
                     break;
-                case 5:
+                case 0:
                     return false;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
@@ -45,13 +45,11 @@ namespace BankApp
         // Loan Menu
         internal void PrintLoanMenu(Customer customer)
         {
-            UI.PrintMessage("--- Lån Meny ---");
-            UI.PrintMessages([
-                "1. Ansök om lån",
-                "2. Visa nuvarande lån",
-                "3. Betala tillbaka lån",
-                "4. Gå tillbaka"
-            ]);
+            UI.PrintMessage("--- Lån Meny ---\n" +
+                "1. Ansök om lån\n" +
+                "2. Mina lån\n" +
+                "3. Betala tillbaka lån\n" +
+                "0. Gå tillbaka");
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -70,7 +68,7 @@ namespace BankApp
                 case 3:
                     LoanService.PayBackLoan();
                     break;
-                case 4:
+                case 0:
                     return;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
@@ -81,14 +79,12 @@ namespace BankApp
         // Transaction Menu
         internal void PrintTransactionMenu(Customer customer)
         {
-            UI.PrintMessage("--- Betala och överföra ---");
-            UI.PrintMessages([
-                "1. Sätt in pengar",
-                "2. Ta ut pengar",
-                "3. Överför pengar",
-                "4. Skriv ut transaktioner",
-                "5. Gå tillbaka"
-            ]);
+            UI.PrintMessage("--- Betala och överföra ---\n" +
+                "1. Sätt in pengar\n" +
+                "2. Ta ut pengar\n" +
+                "3. Överför pengar\n" +
+                "4. Mina transaktioner\n" +
+                "0. Gå tillbaka");
 
             int input = InputUtilities.GetInt();
             Console.Clear();
@@ -110,7 +106,7 @@ namespace BankApp
                 case 4:
                     customer.PrintTransactions();
                     break;
-                case 5:
+                case 0:
                     return;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
@@ -121,15 +117,14 @@ namespace BankApp
         // Admin Menu
         internal bool PrintAdminMenu(Admin admin)
         {
-            UI.PrintMessage("--- Admin Meny ---");
-            UI.PrintMessages(["1. Uppdatera valuta",
-                "2. Skapa användare",
-                "3. Lås upp låst kund profil",
-                "4. Logga ut"]);
+            UI.PrintMessage("--- Admin Meny ---\n" +
+                "1. Uppdatera valuta\n" +
+                "2. Skapa användare\n" +
+                "3. Lås upp kund\n" +
+                "0. Logga ut");
 
             int input = InputUtilities.GetInt();
             Console.Clear();
-
 
             // Handle admin menu options
             switch (input)
@@ -143,7 +138,7 @@ namespace BankApp
                 case 3:
                     admin.UnlockCustomerAccount();
                     break;
-                case 4:
+                case 0:
                     return false;
                 default:
                     UI.PrintError("Felaktigt val, försök igen.");
