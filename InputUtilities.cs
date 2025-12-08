@@ -46,7 +46,6 @@
                 UI.PrintError("Felaktigt värde, försök igen.");
             }
             return input;
-
         }
 
         //Method to get int input within a specific range

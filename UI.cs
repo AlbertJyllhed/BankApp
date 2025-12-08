@@ -32,16 +32,6 @@ namespace BankApp
             Console.Write(prompt);
         }
 
-        // Method to print a list of messages
-        internal static void PrintMessages(string[] messages)
-        {
-            foreach (var message in messages)
-            {
-                Console.WriteLine(message);
-            }
-            PrintEmptyLine();
-        }
-
         // Method to print a list of items with ToString method
         internal static void PrintList<T>(IEnumerable<T> items, bool withIndex = false)
         {

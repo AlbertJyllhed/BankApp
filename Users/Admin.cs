@@ -9,16 +9,8 @@
         // Override TryLogin method for Admin
         internal override bool TryLogin(string password)
         {
-            if (Password == password)
-            {
-                // Admin login always succeeds if the password matches
-                return true;
-            }
-            else
-            {
-                UI.PrintError("Fel användarnamn eller lösenord");
-                return false;
-            }
+            // Admin login always succeeds if the password matches
+            return Password == password;
         }
 
         // Method to update currency exchange rates
@@ -54,7 +46,6 @@
         // Method to unlock a customer's account
         internal void UnlockCustomerAccount()
         {
-
             UI.PrintMessage("Vilken kund profil vill du låsa upp?");
 
             // Get list of customers from Data

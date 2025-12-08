@@ -123,11 +123,6 @@ namespace BankApp
             return null;
         }
 
-        internal static List<BankAccount> GetBankAccounts()
-        {
-            return bankAccounts;
-        }
-
         // Checks every bank account and generates a unique ID
         internal static string GetUniqueID()
         {

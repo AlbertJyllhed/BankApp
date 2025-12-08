@@ -13,7 +13,6 @@ namespace BankApp.Services
         }
 
         // Loan creation method
-        //TODO: Refactor method to smaller methods
         internal static void LoanSetup()
         {
             if (_customer == null)
