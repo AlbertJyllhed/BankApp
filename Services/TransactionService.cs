@@ -38,7 +38,7 @@ namespace BankApp.Services
             BankAccount insertMoneyAccount = bankAccounts[index];
 
             // Choose amount to insert
-            UI.PrintMessage($"Hur mycket pengar vill du sätta in till {insertMoneyAccount.Name}?");
+            UI.PrintMessage($"Hur mycket pengar vill du sätta in till bankkonto {insertMoneyAccount.ID}?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             // Insert the money
@@ -72,7 +72,7 @@ namespace BankApp.Services
             BankAccount withdrawMoneyAccount = bankAccounts[index];
 
             // Choose amount to withdraw
-            UI.PrintMessage($"Hur mycket pengar vill du ta ut från {withdrawMoneyAccount.Name}?");
+            UI.PrintMessage($"Hur mycket pengar vill du ta ut från bankkonto {withdrawMoneyAccount.ID}?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             // Withdraw the money
