@@ -30,7 +30,7 @@ namespace BankApp.Services
             }
 
             // Choose which account to insert money into
-            UI.PrintMessage("Vilket konto vill du sätta in pengar på?");
+            UI.PrintMessage("Vilket konto vill du sätta in pengar på?", 1);
             var bankAccounts = _customer.GetBankAccounts();
 
             UI.PrintList(bankAccounts, true);
@@ -38,14 +38,14 @@ namespace BankApp.Services
             BankAccount insertMoneyAccount = bankAccounts[index];
 
             // Choose amount to insert
-            UI.PrintMessage($"Hur mycket pengar vill du sätta in till bankkonto {insertMoneyAccount.ID}?");
+            UI.PrintMessage($"\nHur mycket pengar vill du sätta in till bankkonto {insertMoneyAccount.ID}?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             // Insert the money
             insertMoneyAccount.AddBalance(amount);
 
             var latestTransaction = insertMoneyAccount.GetLatestTransaction();
-            UI.PrintMessage(latestTransaction.ToString());
+            UI.PrintColoredMessage($"\n{latestTransaction.ToString()}", ConsoleColor.Green, 1);
         }
 
         // Method to withdraw money from a bank account
@@ -66,7 +66,7 @@ namespace BankApp.Services
             }
 
             // Choose which account to withdraw money from
-            UI.PrintMessage("Vilket konto vill du ta ut pengar från?");
+            UI.PrintMessage("Vilket konto vill du ta ut pengar från?", 1);
             var bankAccounts = _customer.GetBankAccounts();
 
             UI.PrintList(bankAccounts, true);
@@ -74,14 +74,14 @@ namespace BankApp.Services
             BankAccount withdrawMoneyAccount = bankAccounts[index];
 
             // Choose amount to withdraw
-            UI.PrintMessage($"Hur mycket pengar vill du ta ut från bankkonto {withdrawMoneyAccount.ID}?");
+            UI.PrintMessage($"\nHur mycket pengar vill du ta ut från bankkonto {withdrawMoneyAccount.ID}?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             // Withdraw the money
             if (withdrawMoneyAccount.RemoveBalance(amount))
             {
                 var latestTransaction = withdrawMoneyAccount.GetLatestTransaction();
-                UI.PrintMessage(latestTransaction.ToString());
+                UI.PrintColoredMessage($"\n{latestTransaction.ToString()}", ConsoleColor.Red, 1);
             }
             else
             {
@@ -108,7 +108,7 @@ namespace BankApp.Services
             }
 
             // Choose from which account to transfer
-            UI.PrintMessage("Vilket konto vill du överföra pengar ifrån?");
+            UI.PrintMessage("Vilket konto vill du överföra pengar ifrån?", 1);
             UI.PrintList(_customer.GetBankAccounts(), true);
             BankAccount fromAccount = _customer.GetAccountByIndex();
 
@@ -117,12 +117,12 @@ namespace BankApp.Services
             // Choose to which account to transfer (using index or ID)
             if (ChooseTransferMethod())
             {
-                UI.PrintMessage("Vilket bankkonto vill du överföra pengarna till? Ange index.");
+                UI.PrintMessage("\nVilket bankkonto vill du överföra pengarna till? Ange index.");
                 toAccount = _customer.GetAccountByIndex();
             }
             else
             {
-                UI.PrintMessage("Vilket bankkonto vill du överföra pengarna till? Ange kontonummer");
+                UI.PrintMessage("\nVilket bankkonto vill du överföra pengarna till? Ange kontonummer");
                 toAccount = _customer.GetAccountByID();
             }
 
@@ -133,19 +133,18 @@ namespace BankApp.Services
             }
 
             // Choose amount to transfer
-            UI.PrintMessage("Hur mycket pengar vill du överföra?");
+            UI.PrintMessage("\nHur mycket pengar vill du överföra?");
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             // Check if there are sufficient funds and perform the transfer
             if (CanTransfer(fromAccount, amount))
             {
                 Transfer(amount, toAccount, fromAccount);
-                UI.PrintColoredMessage($"" +
-                    $"Överföring påbörjad: {amount} {fromAccount.Currency}\n" +
+                UI.PrintColoredMessage($"\nÖverföring påbörjad: {amount} {fromAccount.Currency}\n" +
                     $"Från: Konto [{fromAccount.ID}]\n" +
                     $"Till: [{toAccount.ID}]\n" +
                     $"Pengarna kommer fram klockan {DateTime.Now.AddMinutes(15):HH:mm}",
-                    ConsoleColor.DarkCyan);
+                    ConsoleColor.DarkCyan, 1);
             }
             else
             {
@@ -157,8 +156,8 @@ namespace BankApp.Services
         // Method to choose transfer method
         private static bool ChooseTransferMethod()
         {
-            UI.PrintMessage("Vill du flytta pengar mellan dina egna konton " +
-                "eller till någon annan användare?\n" +
+            UI.PrintMessage("\nVill du flytta pengar mellan dina egna konton " +
+                "eller till någon annan användare?\n\n" +
                 "1. Eget konto\n" +
                 "2. Annat konto");
             return InputUtilities.GetIndex(2) == 0;

@@ -8,11 +8,10 @@ namespace BankApp
         // Customer Menu
         internal bool PrintCustomerMenu(Customer customer)
         {
-            UI.PrintMessage("--- Kund Meny ---\n" +
-                "1. Skapa bankkonto\n" +
+            UI.PrintMessage("1. Skapa bankkonto\n" +
                 "2. Mina bankkonton\n" +
-                "3. Betala och överför\n" +
-                "4. Lån\n" +
+                "3. Betala och överföra\n" +
+                "4. Lån meny\n" +
                 "0. Logga ut");
 
             int input = InputUtilities.GetInt();
@@ -25,6 +24,7 @@ namespace BankApp
                     AccountService.SetupBankAccount(customer);
                     break;
                 case 2:
+                    UI.PrintMessage("--- Mina bankkonton ---", 1);
                     UI.PrintList(customer.GetBankAccounts(), true);
                     break;
                 case 3:
@@ -45,7 +45,7 @@ namespace BankApp
         // Loan Menu
         internal void PrintLoanMenu(Customer customer)
         {
-            UI.PrintMessage("--- Lån Meny ---\n" +
+            UI.PrintMessage("--- Lån meny ---\n\n" +
                 "1. Ansök om lån\n" +
                 "2. Mina lån\n" +
                 "3. Betala tillbaka lån\n" +
@@ -79,7 +79,7 @@ namespace BankApp
         // Transaction Menu
         internal void PrintTransactionMenu(Customer customer)
         {
-            UI.PrintMessage("--- Betala och överföra ---\n" +
+            UI.PrintMessage("--- Betala och överföra ---\n\n" +
                 "1. Sätt in pengar\n" +
                 "2. Ta ut pengar\n" +
                 "3. Överför pengar\n" +
@@ -117,8 +117,7 @@ namespace BankApp
         // Admin Menu
         internal bool PrintAdminMenu(Admin admin)
         {
-            UI.PrintMessage("--- Admin Meny ---\n" +
-                "1. Uppdatera valuta\n" +
+            UI.PrintMessage("1. Uppdatera valuta\n" +
                 "2. Skapa användare\n" +
                 "3. Lås upp kund\n" +
                 "0. Logga ut");

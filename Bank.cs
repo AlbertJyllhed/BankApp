@@ -25,6 +25,7 @@ namespace BankApp
             // Loop until a user is logged in
             while (_activeUser == null)
             {
+                UI.PrintMessage("--- Logga in ---");
                 UI.PrintInputPrompt("Vänligen ange användarnamn: ");
                 var username = InputUtilities.GetString();
                 UI.PrintInputPrompt("Vänligen ange lösenord: ");
@@ -38,7 +39,7 @@ namespace BankApp
                 }
                 else
                 {
-                    UI.PrintColoredMessage($"Fel användarnamn eller lösenord", ConsoleColor.Yellow, 1);
+                    UI.PrintWarning($"Fel användarnamn eller lösenord", 1);
                     _activeUser = null;
                 }
             }
@@ -49,13 +50,14 @@ namespace BankApp
         // Log out method
         internal void LogOut()
         {
-            UI.PrintColoredMessage("Du har blivit utloggad.", ConsoleColor.Yellow);
+            UI.PrintWarning("Du har blivit utloggad.", 1);
             _activeUser = null;
 
-            UI.PrintColoredMessage("Vill du stänga av applikationen y/n", ConsoleColor.Red);
+            UI.PrintError("Vill du stänga av applikationen y/n", 1);
             bool answer = InputUtilities.GetYesOrNo();
             if (!answer)
             {
+                Console.Clear();
                 LogIn();
             }
         }
@@ -67,7 +69,7 @@ namespace BankApp
 
             var menu = new Menu();
             UI.PrintLogo();
-            UI.PrintMessage($"--- Välkommen till Liskov Bank {_activeUser.Name} ---");
+            UI.PrintMessage($"--- Välkommen till Liskov Bank {_activeUser.Name} ---", 1);
 
             bool restart = false;
 

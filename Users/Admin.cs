@@ -17,7 +17,7 @@
         internal void UpdateCurrency()
         {
             // Prompt admin to choose a currency to update
-            UI.PrintMessage("Vilken valuta vill du uppdatera?");
+            UI.PrintMessage("Vilken valuta vill du uppdatera?", 1);
             string currency = Data.ChooseCurrency().Key;
 
             // Prompt for new exchange rate and update it in Data
@@ -40,21 +40,29 @@
             var customer = new Customer(name, password);
 
             // Add the new customer to Data
-            Data.AddUser(customer);
+            if (Data.AddUser(customer))
+            {
+                UI.PrintMessage($"\nAnvändare {name} skapad.", 1);
+            }
+            else
+            {
+                UI.PrintError("\nDet finns redan en användare med samma namn.", 1);
+            }
         }
 
         // Method to unlock a customer's account
         internal void UnlockCustomerAccount()
         {
-            UI.PrintMessage("Vilken kund vill du låsa upp?");
-
             // Get list of customers from Data
             var lockedCustomers = Data.GetLockedCustomers();
             if (lockedCustomers.Count == 0)
             {
-                UI.PrintColoredMessage("Det finns inga låsta kunder.", ConsoleColor.Yellow);
+                UI.PrintWarning("Det finns inga låsta kunder.");
                 return;
             }
+
+            UI.PrintMessage("Vilken kund vill du låsa upp?", 1);
+
             // Print list of customers with indices
             for (int i = 0; i < lockedCustomers.Count; i++)
             {
@@ -67,7 +75,7 @@
 
             // Unlock the selected customer's account
             customer.Locked = false;
-            UI.PrintMessage($"Användare: {customer.Name} upplåst.");
+            UI.PrintMessage($"\nAnvändare: {customer.Name} upplåst.", 1);
         }
     }
 }
