@@ -19,6 +19,7 @@ namespace BankApp.Services
             if (_customer == null)
             {
                 UI.PrintError("Ingen kund hittades.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -26,6 +27,7 @@ namespace BankApp.Services
             if (!_customer.HasBankAccounts())
             {
                 UI.PrintError("Inget bankkonto hittades.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -56,6 +58,7 @@ namespace BankApp.Services
             if (_customer == null)
             {
                 UI.PrintError("Ingen kund hittades.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -63,6 +66,7 @@ namespace BankApp.Services
             if (!_customer.HasBankAccounts())
             {
                 UI.PrintError("Inget bankkonto hittades.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -99,6 +103,7 @@ namespace BankApp.Services
             if (_customer == null)
             {
                 UI.PrintError("Ingen kund hittades.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -106,6 +111,7 @@ namespace BankApp.Services
             if (!_customer.HasBankAccounts())
             {
                 UI.PrintError("Inget bankkonto hittades.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -127,10 +133,17 @@ namespace BankApp.Services
                 UI.PrintMessage("\nVilket bankkonto vill du överföra pengarna till? Ange kontonummer");
                 toAccount = _customer.GetAccountByID();
             }
+            if(fromAccount == toAccount)
+            {
+                UI.PrintError("Du kan inte överföra pengar till samma konto.");
+                UI.PrintResetMessage();
+                return;
+            }
 
             if (toAccount == null)
             {
                 UI.PrintError("Inget konto hittades, försök igen.");
+                UI.PrintResetMessage();
                 return;
             }
 
