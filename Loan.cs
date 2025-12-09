@@ -16,11 +16,6 @@
                 $"Är du säker på att du vill låna pengar? y/n";
         }
 
-        internal decimal GetTotalLoan()
-        {
-            return Amount;
-        }
-
         internal decimal GetLoanWithoutInterest()
         {
             return Amount;
