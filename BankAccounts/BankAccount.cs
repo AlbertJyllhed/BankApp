@@ -50,23 +50,6 @@
             return _transactions.Last();
         }
 
-        // Print transfer details with to account IDs
-        internal string GetTransferDetails(decimal convertedAmount, BankAccount toAccount)
-        {
-            var lastTransaction = _transactions.Last();
-            decimal positiveAmount = Math.Abs(lastTransaction.Amount);
-            if (Currency == toAccount.Currency)
-            {
-                return $"{positiveAmount} {Currency} överfördes från konto" +
-                    $" {ID} till konto {toAccount.ID}.";
-            }
-            else
-            {
-                return $"{positiveAmount} {Currency} hämtades från konto {ID}, " +
-                    $"växlades till {Math.Round(convertedAmount, 2)} {toAccount.Currency} och överfördes till konto {toAccount.ID}.";
-            }
-        }
-
         // Method to remove balance from account
         internal bool RemoveBalance(decimal value, string fromAccountID = "", string toAccountID = "")
         {
