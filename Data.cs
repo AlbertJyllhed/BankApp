@@ -157,13 +157,19 @@ namespace BankApp
         }
 
         // Method to get a valid currency from user input
-        internal static KeyValuePair<string, decimal> ChooseCurrency()
+        internal static KeyValuePair<string, decimal> ChooseCurrency(bool excludeSEK = false)
         {
             // Ask user to choose currency code by typing in number. 
             UI.PrintMessage("Välj valuta: ");
             int count = 1;
             foreach (var item in currency)
             {
+                // Skip SEK if excludeSEK is true
+                if (excludeSEK && item.Key == "SEK")
+                {
+                    continue;
+                }
+
                 UI.PrintMessage($"{count}. {item.Key}");
                 count++;
             }
