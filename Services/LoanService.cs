@@ -102,6 +102,7 @@ namespace BankApp.Services
 
             var latestTransaction = account.GetLatestTransaction();
             UI.PrintSuccess($"\n{latestTransaction.ToString()}", 1);
+            UI.PrintResetMessage();
         }
 
         internal static void PayBackLoan()
@@ -120,7 +121,7 @@ namespace BankApp.Services
             }
 
             // Choose which loan to pay back to
-            UI.PrintMessage("--- Dina lån ---", 1);
+            UI.PrintMessage("--- Mina lån ---", 1);
             UI.PrintList(loans, true);
             UI.PrintMessage("Vilket lån vill du betala tillbaka?");
             int loanIndex = InputUtilities.GetIndex(loans.Count);
@@ -178,6 +179,7 @@ namespace BankApp.Services
             }
 
             UI.PrintSuccess("Återbetalning genomförd!", 1);
+            UI.PrintResetMessage();
         }
 
         private static BankAccount ChooseAccountToPayLoanFrom(List<BankAccount> bankAccounts)

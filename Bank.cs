@@ -15,7 +15,6 @@ namespace BankApp
             while (_activeUser != null)
             {
                 CreateMenu();
-                UI.PrintResetMessage();
             }
         }
 
