@@ -23,6 +23,8 @@
             // Prompt for new exchange rate and update it in Data
             UI.PrintInputPrompt($"Skriv in den nya växelkursen för {currency}: ");
             Data.SetCurrency(currency, InputUtilities.GetDecimal());
+
+            UI.PrintSuccess($"\nVäxelkursen för {currency} uppdaterad.", 1);
             UI.PrintResetMessage();
         }
 
@@ -43,7 +45,7 @@
             // Add the new customer to Data
             if (Data.AddUser(customer))
             {
-                UI.PrintMessage($"\nAnvändare {name} skapad.", 1);
+                UI.PrintSuccess($"\nAnvändare {name} skapad.", 1);
             }
             else
             {
@@ -59,7 +61,7 @@
             var lockedCustomers = Data.GetLockedCustomers();
             if (lockedCustomers.Count == 0)
             {
-                UI.PrintWarning("Det finns inga låsta kunder.");
+                UI.PrintWarning("Det finns inga låsta kunder.", 1);
                 UI.PrintResetMessage();
                 return;
             }
@@ -78,7 +80,7 @@
 
             // Unlock the selected customer's account
             customer.Locked = false;
-            UI.PrintMessage($"\nAnvändare: {customer.Name} upplåst.", 1);
+            UI.PrintSuccess($"\nAnvändare: {customer.Name} upplåst.", 1);
             UI.PrintResetMessage();
         }
     }

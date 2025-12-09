@@ -80,7 +80,6 @@
         // Method to print error messages in red color
         internal static void PrintError(string errorMessage, int padding = 0)
         {
-            PrintLine();
             Console.ForegroundColor = ConsoleColor.Red;
             PrintMessage(errorMessage, padding);
             Console.ResetColor();

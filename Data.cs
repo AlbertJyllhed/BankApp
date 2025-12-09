@@ -130,7 +130,7 @@ namespace BankApp
             List<Transaction> transactions = new List<Transaction>();
             foreach (var account in bankAccounts)
             {
-                transactions.AddRange(account.GetTransactions());
+                transactions.AddRange(account.GetPendingTransactions());
             }
             return transactions;
         }
@@ -174,7 +174,8 @@ namespace BankApp
         {
             // Ask user to choose currency code by typing in number. 
             UI.PrintMessage("Välj valuta: ");
-            int count = 1;
+            // Create a new dictionary to hold the choices
+            var choices = new Dictionary<string, decimal>();
             foreach (var item in currency)
             {
                 // Skip SEK if excludeSEK is true
@@ -182,17 +183,14 @@ namespace BankApp
                 {
                     continue;
                 }
-
-                UI.PrintMessage($"{count}. {item.Key}");
-                count++;
+                choices.Add(item.Key, item.Value);
             }
 
-            var index = InputUtilities.GetIndex(currency.Count);
+            UI.PrintList(choices, true);
+            var index = InputUtilities.GetIndex(choices.Count);
 
-            // Get the currency code from the dictionary based on the chosen index.
-            var currencyCode = currency.ElementAt(index);
-
-            return currencyCode;
+            // Return the currency code from the dictionary based on the chosen index.
+            return choices.ElementAt(index);
         }
 
         // Method to get the exchange rate for a given currency code
