@@ -1,7 +1,6 @@
 ﻿using BankApp.BankAccounts;
 using BankApp.Services;
 using BankApp.Users;
-using System.Xml.Linq;
 
 namespace BankApp
 {

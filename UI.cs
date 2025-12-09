@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace BankApp
+﻿namespace BankApp
 {
     internal static class UI
     {
