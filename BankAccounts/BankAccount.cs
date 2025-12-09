@@ -38,10 +38,18 @@
             Balance += value;
         }
 
-        // Method to get all transactions
-        internal List<Transaction> GetTransactions()
+        // Method to get all transactions which are not yet completed
+        internal List<Transaction> GetPendingTransactions()
         {
-            return _transactions;
+            var pendingTransactions = new List<Transaction>();
+            foreach (var transaction in _transactions)
+            {
+                if (!transaction.Completed)
+                {
+                    pendingTransactions.Add(transaction);
+                }
+            }
+            return pendingTransactions;
         }
 
         // Method to get the latest transaction
