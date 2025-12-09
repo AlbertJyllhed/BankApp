@@ -22,7 +22,7 @@ namespace BankApp.Users
             if (Locked)
             {
                 // Check if account is locked and block login if so
-                UI.PrintError("Överskridit antal försökt, ditt konto är låst!");
+                UI.PrintError("Överskridit antal försök, ditt konto är låst!");
                 return false;
             }
 
