@@ -87,7 +87,7 @@ namespace BankApp.Users
         // Method to print all transactions from all bank accounts
         internal void PrintTransactions()
         {
-            UI.PrintMessage("--- Dina överföringar ---\n");
+            UI.PrintMessage("--- Mina överföringar ---\n");
 
             foreach (var account in BankAccounts)
             {
@@ -116,7 +116,7 @@ namespace BankApp.Users
                 return;
             }
 
-            UI.PrintMessage("--- Dina lån ---", 1);
+            UI.PrintMessage("--- Mina lån ---", 1);
             UI.PrintList(Loans, true);
             UI.PrintColoredMessage($"Din totala skuld inklusive ränta:" +
                 $" {GetTotalLoanWithInterest()} SEK", ConsoleColor.Yellow, 1);
