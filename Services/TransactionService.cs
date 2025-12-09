@@ -1,5 +1,6 @@
 ﻿using BankApp.BankAccounts;
 using BankApp.Users;
+using System.Timers;
 
 namespace BankApp.Services
 {
@@ -7,9 +8,26 @@ namespace BankApp.Services
     {
         private static Customer? _customer;
 
+        // Simulate delay of 15 minutes (900,000 milliseconds)
+        private static System.Timers.Timer _transferTimer = new System.Timers.Timer(900000);
+
         internal static void SetCustomer(Customer customer)
         {
             _customer = customer;
+        }
+
+        // Method to set up the timer for transfers
+        internal static void SetupAutoTransfers()
+        {
+            _transferTimer.Elapsed += PerformTransfer;
+            _transferTimer.AutoReset = true;
+            _transferTimer.Enabled = true;
+        }
+
+        // Method to get remaining time for next transfer
+        internal static double GetRemainingTimeForNextTransfer()
+        {
+            return _transferTimer.Interval;
         }
 
         // Method to insert money into a bank account
@@ -137,13 +155,12 @@ namespace BankApp.Services
             decimal amount = InputUtilities.GetPositiveDecimal();
 
             // Check if there are sufficient funds and perform the transfer
-            if (CanTransfer(fromAccount, amount))
+            if (CanTransfer(fromAccount, toAccount, amount))
             {
-                Transfer(amount, toAccount, fromAccount);
                 UI.PrintColoredMessage($"\nÖverföring påbörjad: {amount} {fromAccount.Currency}\n" +
                     $"Från: Konto [{fromAccount.ID}]\n" +
                     $"Till: [{toAccount.ID}]\n" +
-                    $"Pengarna kommer fram klockan {DateTime.Now.AddMinutes(15):HH:mm}",
+                    $"Pengarna kommer fram klockan {GetRemainingTimeForNextTransfer():HH:mm}",
                     ConsoleColor.DarkCyan, 1);
             }
             else
@@ -164,29 +181,41 @@ namespace BankApp.Services
         }
 
         // Check if there are sufficient funds to transfer
-        private static bool CanTransfer(BankAccount fromAccount, decimal amount)
+        private static bool CanTransfer(BankAccount fromAccount, BankAccount toAccount, decimal amount)
         {
-            return fromAccount.Balance >= amount;
+            return fromAccount.RemoveBalance(amount, fromAccount.ID, toAccount.ID);
         }
 
-        // Method to handle transfer to another account
-        private static bool Transfer(decimal amount, BankAccount toAccount, BankAccount fromAccount)
+        // Method to perform transfer for timer event
+        private static void PerformTransfer(object? sender, ElapsedEventArgs e)
         {
-            // Check if the transfer is possible and return false if not
-            if (!fromAccount.RemoveBalance(amount, toAccount.Name))
-            {
-                return false;
-            }
+            var transactions = Data.GetTransactions();
 
-            // Simulate delay of 15 minutes (900,000 milliseconds)
-            Task.Delay(900000).ContinueWith(delay =>
+            foreach (var transaction in transactions)
             {
+                // Skip if transaction is already completed
+                if (transaction.Completed)
+                {
+                    continue;
+                }
+
+                // Get data from transaction
+                var fromAccount = Data.GetBankAccount(transaction.FromAccountID);
+                var toAccount = Data.GetBankAccount(transaction.ToAccountID);
+                decimal amount = Math.Abs(transaction.Amount);
+
+                // Skip if accounts are not found
+                if (fromAccount == null || toAccount == null)
+                {
+                    continue;
+                }
+
                 // Perform currency conversion and add balance to the target account
                 decimal convertedAmount = ConvertCurrency(fromAccount, toAccount, amount);
-                toAccount.AddBalance(convertedAmount, fromAccount.Name);
-                fromAccount.PrintTransferDetails(convertedAmount, toAccount);
-            });
-            return true;
+                toAccount.AddBalance(convertedAmount, fromAccount.ID);
+                UI.PrintMessage(fromAccount.GetTransferDetails(convertedAmount, toAccount));
+                transaction.SetCompleted();
+            }
         }
 
         // Convert amount to SEK and then to the target account's currency

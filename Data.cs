@@ -51,6 +51,9 @@ namespace BankApp
                     }
                 }
             }
+
+            // Setup auto transfers
+            TransactionService.SetupAutoTransfers();
         }
 
         // Adds a user to the list of all users if the name is unique
@@ -120,6 +123,17 @@ namespace BankApp
                 }
             }
             return null;
+        }
+
+        // Loops through all bank accounts and returns a list of all transactions
+        internal static List<Transaction> GetTransactions()
+        {
+            List<Transaction> transactions = new List<Transaction>();
+            foreach (var account in bankAccounts)
+            {
+                transactions.AddRange(account.GetTransactions());
+            }
+            return transactions;
         }
 
         // Checks every bank account and generates a unique ID
