@@ -36,7 +36,7 @@ namespace BankApp.Services
             // Check if customer is set
             if (_customer == null)
             {
-                UI.PrintError("Ingen kund hittades.");
+                UI.PrintError("Ingen kund hittades.", 1);
                 UI.PrintResetMessage();
                 return;
             }
@@ -44,7 +44,7 @@ namespace BankApp.Services
             // Check if there are any bank accounts to transfer from
             if (!_customer.HasBankAccounts())
             {
-                UI.PrintError("Inget bankkonto hittades.");
+                UI.PrintError("Inget bankkonto hittades.", 1);
                 UI.PrintResetMessage();
                 return;
             }
@@ -75,7 +75,7 @@ namespace BankApp.Services
             // Check if customer is set
             if (_customer == null)
             {
-                UI.PrintError("Ingen kund hittades.");
+                UI.PrintError("Ingen kund hittades.", 1);
                 UI.PrintResetMessage();
                 return;
             }
@@ -83,7 +83,7 @@ namespace BankApp.Services
             // Check if there are any bank accounts to transfer from
             if (!_customer.HasBankAccounts())
             {
-                UI.PrintError("Inget bankkonto hittades.");
+                UI.PrintError("Inget bankkonto hittades.", 1);
                 UI.PrintResetMessage();
                 return;
             }
@@ -108,8 +108,8 @@ namespace BankApp.Services
             }
             else
             {
-                UI.PrintError("Uttag misslyckades, " +
-                    "det finns inte tillräckligt med pengar på kontot.");
+                UI.PrintError("\nUttag misslyckades, " +
+                    "det finns inte tillräckligt med pengar på kontot.", 1);
             }
             UI.PrintResetMessage();
         }
@@ -120,7 +120,7 @@ namespace BankApp.Services
             // Check if customer is set
             if (_customer == null)
             {
-                UI.PrintError("Ingen kund hittades.");
+                UI.PrintError("Ingen kund hittades.", 1);
                 UI.PrintResetMessage();
                 return;
             }
@@ -128,7 +128,7 @@ namespace BankApp.Services
             // Check if there are any bank accounts to transfer from
             if (!_customer.HasBankAccounts())
             {
-                UI.PrintError("Inget bankkonto hittades.");
+                UI.PrintError("Inget bankkonto hittades.", 1);
                 UI.PrintResetMessage();
                 return;
             }
@@ -151,16 +151,17 @@ namespace BankApp.Services
                 UI.PrintMessage("\nVilket bankkonto vill du överföra pengarna till? Ange kontonummer");
                 toAccount = _customer.GetAccountByID();
             }
+
             if(fromAccount == toAccount)
             {
-                UI.PrintError("Du kan inte överföra pengar till samma konto.");
+                UI.PrintError("\nDu kan inte överföra pengar till samma konto.", 1);
                 UI.PrintResetMessage();
                 return;
             }
 
             if (toAccount == null)
             {
-                UI.PrintError("Inget konto hittades, försök igen.");
+                UI.PrintError("\nInget konto hittades, försök igen.", 1);
                 UI.PrintResetMessage();
                 return;
             }
@@ -180,8 +181,8 @@ namespace BankApp.Services
             }
             else
             {
-                UI.PrintError("Överföring misslyckades, " +
-                    "det finns inte tillräckligt med pengar på kontot.");
+                UI.PrintError("\nÖverföring misslyckades, " +
+                    "det finns inte tillräckligt med pengar på kontot.", 1);
             }
             UI.PrintResetMessage();
         }
