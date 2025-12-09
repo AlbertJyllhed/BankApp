@@ -26,6 +26,7 @@ namespace BankApp
                 case 2:
                     UI.PrintMessage("--- Mina bankkonton ---", 1);
                     UI.PrintList(customer.GetBankAccounts(), true);
+                    UI.PrintResetMessage();
                     break;
                 case 3:
                     PrintTransactionMenu(customer);
@@ -64,6 +65,7 @@ namespace BankApp
                     break;
                 case 2:
                     customer.PrintLoans();
+                    UI.PrintResetMessage();
                     break;
                 case 3:
                     LoanService.PayBackLoan();
@@ -105,6 +107,7 @@ namespace BankApp
                     break;
                 case 4:
                     customer.PrintTransactions();
+                    UI.PrintResetMessage();
                     break;
                 case 0:
                     return;

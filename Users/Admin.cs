@@ -23,6 +23,7 @@
             // Prompt for new exchange rate and update it in Data
             UI.PrintInputPrompt($"Skriv in den nya växelkursen för {currency}: ");
             Data.SetCurrency(currency, InputUtilities.GetDecimal());
+            UI.PrintResetMessage();
         }
 
         // Method to create a new customer
@@ -48,6 +49,7 @@
             {
                 UI.PrintError("\nDet finns redan en användare med samma namn.", 1);
             }
+            UI.PrintResetMessage();
         }
 
         // Method to unlock a customer's account
@@ -58,6 +60,7 @@
             if (lockedCustomers.Count == 0)
             {
                 UI.PrintWarning("Det finns inga låsta kunder.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -76,6 +79,7 @@
             // Unlock the selected customer's account
             customer.Locked = false;
             UI.PrintMessage($"\nAnvändare: {customer.Name} upplåst.", 1);
+            UI.PrintResetMessage();
         }
     }
 }

@@ -45,6 +45,7 @@ namespace BankApp.Services
 
             UI.PrintColoredMessage($"\nDitt nya {account.GetAccountType()} " +
                 $"({accountName}, {currency}) har skapats!", ConsoleColor.Green, 1);
+            UI.PrintResetMessage();
         }
 
         // Method to create a new bank account without user input

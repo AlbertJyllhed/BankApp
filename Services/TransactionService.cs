@@ -46,6 +46,7 @@ namespace BankApp.Services
 
             var latestTransaction = insertMoneyAccount.GetLatestTransaction();
             UI.PrintColoredMessage($"\n{latestTransaction.ToString()}", ConsoleColor.Green, 1);
+            UI.PrintResetMessage();
         }
 
         // Method to withdraw money from a bank account
@@ -88,6 +89,7 @@ namespace BankApp.Services
                 UI.PrintError("Uttag misslyckades, " +
                     "det finns inte tillräckligt med pengar på kontot.");
             }
+            UI.PrintResetMessage();
         }
 
         // Transfers balance from one account to another
@@ -151,6 +153,7 @@ namespace BankApp.Services
                 UI.PrintError("Överföring misslyckades, " +
                     "det finns inte tillräckligt med pengar på kontot.");
             }
+            UI.PrintResetMessage();
         }
 
         // Method to choose transfer method
