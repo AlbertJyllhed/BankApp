@@ -30,14 +30,11 @@ namespace BankApp.Services
             else
             {
                 // Ask user for initial deposit amount for savings account
-                UI.PrintMessage("Hur mycket vill du sätta in på sparkontot?", 1);
+                UI.PrintMessage("\nHur mycket vill du sätta in på sparkontot?");
                 var amount = InputUtilities.GetPositiveDecimal();
                 account = CreateSavingsAccount(accountName, amount, currency);
                 var savingsAccount = (SavingsAccount)account;
                 UI.PrintMessage(savingsAccount.GetInterestInfo(amount));
-
-                var latestTransaction = savingsAccount.GetLatestTransaction();
-                UI.PrintMessage(latestTransaction.ToString());
             }
 
             // Add the new bank account into the list.
