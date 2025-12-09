@@ -65,7 +65,6 @@ namespace BankApp
                     break;
                 case 2:
                     customer.PrintLoans();
-                    UI.PrintResetMessage();
                     break;
                 case 3:
                     LoanService.PayBackLoan();

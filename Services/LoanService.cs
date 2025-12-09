@@ -18,6 +18,7 @@ namespace BankApp.Services
             if (_customer == null)
             {
                 UI.PrintError("Ingen kund hittades.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -26,6 +27,7 @@ namespace BankApp.Services
             if (bankAccounts.Count == 0)
             {
                 UI.PrintError("Vänligen skapa ett konto innan du ansöker om ett lån.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -51,6 +53,7 @@ namespace BankApp.Services
             if (maxLoan <= 0)
             {
                 UI.PrintError("Du har inte tillräckligt med pengar för att låna.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -62,6 +65,7 @@ namespace BankApp.Services
             if (!InputUtilities.GetYesOrNo())
             {
                 UI.PrintWarning("Lån avbrutet.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -117,6 +121,7 @@ namespace BankApp.Services
             if (loans.Count == 0)
             {
                 UI.PrintError("Du har inga lån att betala tillbaka.");
+                UI.PrintResetMessage();
                 return;
             }
 
@@ -159,6 +164,7 @@ namespace BankApp.Services
             if (accountBalanceInSEK < payBackAmount)
             {
                 UI.PrintError("\nDu har inte tillräckligt med pengar för att återbetala lånet.");
+                UI.PrintResetMessage();
                 return;
             }
 

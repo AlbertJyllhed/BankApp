@@ -113,6 +113,7 @@ namespace BankApp.Users
             if (Loans.Count == 0)
             {
                 UI.PrintError("Du har inga lån.");
+                UI.PrintResetMessage();
                 return;
             }
 
