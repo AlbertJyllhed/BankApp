@@ -68,7 +68,7 @@ namespace BankApp.Services
             CreateLoan(maxLoan);
         }
 
-        internal static void CreateLoan(decimal maxLoan)
+        internal static void CreateLoan(decimal maxLoan, decimal interest = 1.0284m)
         {
             if (_customer == null)
             {
@@ -86,10 +86,12 @@ namespace BankApp.Services
             }
 
             Loan newLoan = new Loan(borrowedAmountSEK);
-            UI.PrintMessage($"Din totala skuld inklusive ränta: {newLoan.GetTotalLoan()} SEK");
+            UI.PrintMessage($"Din skuld idag blir då {borrowedAmountSEK}.\n" +
+                $"Räntan på lånet är {interest}%\n" +
+                $"Din totala skuld att betala efter ett år blir {borrowedAmountSEK * interest} SEK");
 
             // Choose account to deposit loan into
-            UI.PrintMessage("Vilket konto vill du låna till?");
+            UI.PrintMessage("\nVilket konto vill du låna till?");
             UI.PrintList(_customer.GetBankAccounts(), true);
             var bankAccounts = _customer.GetBankAccounts();
             var chosenIndex = InputUtilities.GetIndex(bankAccounts.Count);
@@ -128,7 +130,7 @@ namespace BankApp.Services
 
             // Get remaining loan debt
             Loan selectedLoan = loans[loanIndex];
-            decimal remainingDebt = selectedLoan.GetTotalLoan();
+            decimal remainingDebt = selectedLoan.GetLoanWithoutInterest();
             var bankAccounts = _customer.GetBankAccounts();
 
             // Choose amount to pay back
@@ -175,7 +177,7 @@ namespace BankApp.Services
             }
             else
             {
-                UI.PrintMessage($"Din återstående skuld är: {selectedLoan.GetLoanWithoutInterest()} SEK");
+                UI.PrintMessage($"Din återstående skuld är: {selectedLoan} SEK");
             }
 
             UI.PrintMessage("Återbetalning genomförd!");

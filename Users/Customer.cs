@@ -118,18 +118,7 @@ namespace BankApp.Users
 
             UI.PrintMessage("--- Dina lån ---", 1);
             UI.PrintList(Loans, true);
-            UI.PrintMessage($"Din totala skuld inklusive ränta: {GetTotalLoanWithInterest()} SEK");
-        }
-
-        // Calculate total loan amount including interest
-        internal decimal GetTotalLoanWithInterest()
-        {
-            decimal sum = 0;
-            foreach (var loan in Loans)
-            {
-                sum += loan.GetTotalLoan();
-            }
-            return sum;
+            UI.PrintMessage($"Din totala skuld: {GetTotalLoanWithoutInterest()} SEK");
         }
 
         // Calculate total loan amount without interest

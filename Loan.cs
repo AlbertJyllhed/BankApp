@@ -3,14 +3,10 @@
     internal class Loan
     {
         private decimal Amount { get; set; }
-        private decimal Interest { get; set; }
-        private decimal _interestGained;
 
-        internal Loan(decimal amount, decimal interest = 1.0284m)
+        internal Loan(decimal amount)
         {
             Amount = amount;
-            Interest = interest;
-            _interestGained = amount * (interest - 1);
         }
 
         internal static string GetLoanInfo(decimal total, decimal maxLoan)
@@ -22,7 +18,7 @@
 
         internal decimal GetTotalLoan()
         {
-            return Amount + _interestGained;
+            return Amount;
         }
 
         internal decimal GetLoanWithoutInterest()
@@ -32,7 +28,7 @@
 
         public override string ToString()
         {
-            return $"Lån: {Amount * Interest} SEK";
+            return $"Lån: {Amount} SEK";
         }
 
         internal void ReduceLoan(decimal payment)
@@ -40,20 +36,6 @@
             if (payment <= 0)
             {
                 return;
-            }
-
-            if(_interestGained > 0)
-            {
-                if(payment >= _interestGained)
-                {
-                    payment -= _interestGained;
-                    _interestGained = 0;
-                }
-                else
-                {
-                    _interestGained -= payment;
-                    return;
-                }
             }
 
             Amount -= payment;
