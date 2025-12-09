@@ -59,7 +59,9 @@ Handles the transaction process between different accounts.
 Also used to insert and withdraw money from accounts.
 
 ### Links
-[UML](https://lucid.app/lucidchart/98f874f3-6ae7-4bb4-afb5-21ae816f7f0e/edit?invitationId=inv_48f81e8b-98ad-43d5-88f6-b7304d3819ce&page=HWEp-vi-RSFO#)
+■ [UML](https://lucid.app/lucidchart/98f874f3-6ae7-4bb4-afb5-21ae816f7f0e/edit?invitationId=inv_48f81e8b-98ad-43d5-88f6-b7304d3819ce&page=HWEp-vi-RSFO#)  
+■ [Flowchart](https://lucid.app/lucidchart/06bf28da-5415-4084-8ea0-edba71b2f91c/edit?invitationId=inv_431fd8e5-fba5-402c-b3e5-844edafe00c8&page=0_0#)  
+■ [Board](https://trello.com/b/gbh861Gt/bankapp)  
 
 ### Contributors
 ■ [AlbertJyllhed](https://github.com/AlbertJyllhed)  
