@@ -8,7 +8,7 @@
             string? input = Console.ReadLine();
             while (string.IsNullOrWhiteSpace(input))
             {
-                UI.PrintError("Inmatningen kan inte vara tom, försök igen.");
+                UI.PrintWarning("Inmatningen kan inte vara tom, försök igen.");
                 input = Console.ReadLine();
             }
             return input;
@@ -20,7 +20,7 @@
             decimal input;
             while (!decimal.TryParse(Console.ReadLine(), out input))
             {
-                UI.PrintError("Felaktigt värde, försök igen.");
+                UI.PrintWarning("Felaktigt värde, försök igen.");
             }
             return Math.Round(input, 2);
         }
@@ -32,7 +32,7 @@
             while (input <= 0)
             {
                 input = GetDecimal();
-                UI.PrintError("Felaktigt värde, värdet måste vara positivt.");
+                UI.PrintWarning("Felaktigt värde, värdet måste vara positivt.");
             }
             return input;
         }
@@ -43,7 +43,7 @@
             int input;
             while (!int.TryParse(Console.ReadLine(), out input))
             {
-                UI.PrintError("Felaktigt värde, försök igen.");
+                UI.PrintWarning("Felaktigt värde, försök igen.");
             }
             return input;
         }
@@ -54,7 +54,7 @@
             int index = GetInt() - 1;
             while (index < 0 || index >= maxIndex)
             {
-                UI.PrintError("Felaktigt indexvärde, försök igen.");
+                UI.PrintWarning("Felaktigt indexvärde, försök igen.");
                 index = GetInt() - 1;
             }
             return index;
@@ -65,7 +65,7 @@
             string input = GetString().ToLower();
             while (input != "y" && input != "n")
             {
-                UI.PrintError("Felaktig inmatning, vänligen skriv 'y' för ja eller 'n' för nej.");
+                UI.PrintWarning("Felaktig inmatning, vänligen skriv 'y' för ja eller 'n' för nej.");
                 input = GetString().ToLower();
             }
             return input == "y";

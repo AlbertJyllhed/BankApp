@@ -54,18 +54,17 @@ namespace BankApp
         }
 
         // Adds a user to the list of all users if the name is unique
-        internal static void AddUser(User newUser)
+        internal static bool AddUser(User newUser)
         {
             foreach (var user in users)
             {
                 if (newUser.Name == user.Name)
                 {
-                    UI.PrintError("Det finns redan en användare med samma namn.");
-                    return;
+                    return false;
                 }
             }
             users.Add(newUser);
-            UI.PrintMessage($"Användare {newUser.Name} skapad.");
+            return true;
         }
 
         // Loops through all users and returns the user with the matching name
@@ -158,13 +157,19 @@ namespace BankApp
         }
 
         // Method to get a valid currency from user input
-        internal static KeyValuePair<string, decimal> ChooseCurrency()
+        internal static KeyValuePair<string, decimal> ChooseCurrency(bool excludeSEK = false)
         {
             // Ask user to choose currency code by typing in number. 
             UI.PrintMessage("Välj valuta: ");
             int count = 1;
             foreach (var item in currency)
             {
+                // Skip SEK if excludeSEK is true
+                if (excludeSEK && item.Key == "SEK")
+                {
+                    continue;
+                }
+
                 UI.PrintMessage($"{count}. {item.Key}");
                 count++;
             }

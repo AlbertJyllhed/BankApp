@@ -61,7 +61,7 @@ namespace BankApp.Services
             // Confirm loan creation, stop method if user inputs no.
             if (!InputUtilities.GetYesOrNo())
             {
-                UI.PrintColoredMessage("Lån avbrutet.", ConsoleColor.Yellow);
+                UI.PrintWarning("Lån avbrutet.");
                 return;
             }
 
@@ -75,7 +75,7 @@ namespace BankApp.Services
                 return;
             }
 
-            UI.PrintMessage("Hur mycket vill du låna?");
+            UI.PrintMessage("\nHur mycket vill du låna?");
             var borrowedAmountSEK = InputUtilities.GetPositiveDecimal();
 
             // Validate loan amount
@@ -92,6 +92,7 @@ namespace BankApp.Services
 
             // Choose account to deposit loan into
             UI.PrintMessage("\nVilket konto vill du låna till?");
+
             UI.PrintList(_customer.GetBankAccounts(), true);
             var bankAccounts = _customer.GetBankAccounts();
             var chosenIndex = InputUtilities.GetIndex(bankAccounts.Count);
@@ -103,7 +104,8 @@ namespace BankApp.Services
             account.AddBalance(Math.Round(depositedAmount, 2));
 
             var latestTransaction = account.GetLatestTransaction();
-            UI.PrintMessage(latestTransaction.ToString());
+            UI.PrintSuccess($"\n{latestTransaction.ToString()}", 1);
+            UI.PrintResetMessage();
         }
 
         internal static void PayBackLoan()
@@ -122,9 +124,8 @@ namespace BankApp.Services
             }
 
             // Choose which loan to pay back to
-            UI.PrintMessage("--- Dina lån ---");
+            UI.PrintMessage("--- Mina lån ---", 1);
             UI.PrintList(loans, true);
-            UI.PrintLine();
             UI.PrintMessage("Vilket lån vill du betala tillbaka?");
             int loanIndex = InputUtilities.GetIndex(loans.Count);
 
@@ -134,21 +135,21 @@ namespace BankApp.Services
             var bankAccounts = _customer.GetBankAccounts();
 
             // Choose amount to pay back
-            UI.PrintMessage($"Din återstående skuld: {Math.Round(remainingDebt, 2)} SEK\n" +
-                $"Hur mycket vill du betala tillbaka av lånet?");
+            UI.PrintColoredMessage($"\nDin återstående skuld: {Math.Round(remainingDebt, 2)} SEK", ConsoleColor.Yellow);
+            UI.PrintMessage("Hur mycket vill du betala tillbaka av lånet?");
 
             // Validate pay back amount
             decimal payBackAmount = InputUtilities.GetPositiveDecimal();
             if (payBackAmount <= 0)
             {
-                UI.PrintError("Felaktig summa, belopp måste vara större än 0.");
+                UI.PrintError("\nFelaktig summa, belopp måste vara större än 0.");
             }
 
             // Adjust pay back amount if it exceeds remaining loan debt
             if (payBackAmount > remainingDebt)
             {
                 payBackAmount = remainingDebt;
-                UI.PrintColoredMessage($"Du försöker betala tillbaka mer än din nuvarande skuld på: ({remainingDebt} SEK).\n" +
+                UI.PrintColoredMessage($"\nDu försöker betala tillbaka mer än din nuvarande skuld på: ({remainingDebt} SEK).\n" +
                     $"Beloppet justeras till {remainingDebt} SEK ", ConsoleColor.Yellow);
             }
 
@@ -160,7 +161,7 @@ namespace BankApp.Services
 
             if (accountBalanceInSEK < payBackAmount)
             {
-                UI.PrintError("Du har inte tillräckligt med pengar för att återbetala lånet.");
+                UI.PrintError("\nDu har inte tillräckligt med pengar för att återbetala lånet.");
                 return;
             }
 
@@ -173,20 +174,21 @@ namespace BankApp.Services
             if (selectedLoan.GetLoanWithoutInterest() <= 0)
             {
                 loans.RemoveAt(loanIndex);
-                UI.PrintMessage($"Du har betalat tillbaka {withDrawAmount} SEK på lånet");
+                UI.PrintMessage($"\nDu har betalat tillbaka {withDrawAmount} SEK på lånet");
             }
             else
             {
                 UI.PrintMessage($"Din återstående skuld är: {selectedLoan} SEK");
             }
 
-            UI.PrintMessage("Återbetalning genomförd!");
+            UI.PrintSuccess("Återbetalning genomförd!", 1);
+            UI.PrintResetMessage();
         }
 
         private static BankAccount ChooseAccountToPayLoanFrom(List<BankAccount> bankAccounts)
         {
             // Choose account to pay from
-            UI.PrintMessage("Vilket konto vill du använda för att betala lånet?");
+            UI.PrintMessage("\nVilket konto vill du använda för att betala lånet?");
             UI.PrintList(bankAccounts, true);
             int accountIndex = InputUtilities.GetIndex(bankAccounts.Count);
             return bankAccounts[accountIndex];
