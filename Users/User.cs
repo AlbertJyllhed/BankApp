@@ -1,6 +1,4 @@
-﻿using BankApp.BankAccounts;
-
-namespace BankApp.Users
+﻿namespace BankApp.Users
 {
     internal abstract class User
     {

@@ -1,7 +1,4 @@
-﻿using BankApp.Users;
-using System.Transactions;
-
-namespace BankApp.BankAccounts
+﻿namespace BankApp.BankAccounts
 {
     internal class SavingsAccount : BankAccount
     {
