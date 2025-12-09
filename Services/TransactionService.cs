@@ -9,7 +9,7 @@ namespace BankApp.Services
         private static Customer? _customer;
 
         // Simulate delay of 15 minutes (900,000 milliseconds)
-        private static System.Timers.Timer _transferTimer = new System.Timers.Timer(900000);
+        private static System.Timers.Timer _transferTimer = new System.Timers.Timer(30000);
 
         internal static void SetCustomer(Customer customer)
         {
@@ -229,7 +229,6 @@ namespace BankApp.Services
                 // Perform currency conversion and add balance to the target account
                 decimal convertedAmount = ConvertCurrency(fromAccount, toAccount, amount);
                 toAccount.AddBalance(convertedAmount, fromAccount.ID);
-                UI.PrintMessage(fromAccount.GetTransferDetails(convertedAmount, toAccount));
                 transaction.SetCompleted();
             }
         }
