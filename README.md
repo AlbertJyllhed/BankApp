@@ -12,7 +12,6 @@ Customer can handle different transactions. Admin can login, create new customer
   - [InputUtilities](#inpututilities)
   - [Loan](#loan)
   - [Menu](#menu)
-  - [Program](#program)
   - [Transaction](#transaction)
   - [UI](#ui)
   - [BankAccount](#bankaccount)
@@ -41,8 +40,6 @@ Receive different kind of input from user and see if it's a valid input or not.
 The loan class is a info container class for loans.
 ### Menu
 The menu class helps the user navigate through the bank application.
-### Program
-This class is where the application starts. It simply runs the bank app.
 ### Transaction
 Data container class for transaction information.
 ### UI
@@ -60,6 +57,9 @@ Also used for paying back customer loans.
 ### TransactionService 
 Handles the transaction process between different accounts.
 Also used to insert and withdraw money from accounts.
+
+### Links
+[UML](https://lucid.app/lucidchart/98f874f3-6ae7-4bb4-afb5-21ae816f7f0e/edit?invitationId=inv_48f81e8b-98ad-43d5-88f6-b7304d3819ce&page=HWEp-vi-RSFO#)
 
 ### Contributors
 ■ [AlbertJyllhed](https://github.com/AlbertJyllhed)  
