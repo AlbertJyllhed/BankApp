@@ -32,10 +32,16 @@
         }
 
         // Method to add balance to account
-        internal virtual void AddBalance(decimal value, string fromAccount = "")
+        internal virtual void AddBalance(decimal value, string account = "")
         {
-            CreateTransaction(value, fromAccount, "från");
+            CreateTransaction(value, string.Empty, account, "från");
             Balance += value;
+        }
+
+        // Method to get all transactions
+        internal List<Transaction> GetTransactions()
+        {
+            return _transactions;
         }
 
         // Method to get the latest transaction
@@ -45,28 +51,28 @@
         }
 
         // Print transfer details with to account IDs
-        internal void PrintTransferDetails(decimal convertedAmount, BankAccount toAccount)
+        internal string GetTransferDetails(decimal convertedAmount, BankAccount toAccount)
         {
             var lastTransaction = _transactions.Last();
             decimal positiveAmount = Math.Abs(lastTransaction.Amount);
             if (Currency == toAccount.Currency)
             {
-                UI.PrintMessage($"{positiveAmount} {Currency} överfördes från konto" +
-                    $" {ID} till konto {toAccount.ID}.");
+                return $"{positiveAmount} {Currency} överfördes från konto" +
+                    $" {ID} till konto {toAccount.ID}.";
             }
             else
             {
-                UI.PrintMessage($"{positiveAmount} {Currency} hämtades från konto {ID}, " +
-                    $"växlades till {Math.Round(convertedAmount, 2)} {toAccount.Currency} och överfördes till konto {toAccount.ID}.");
+                return $"{positiveAmount} {Currency} hämtades från konto {ID}, " +
+                    $"växlades till {Math.Round(convertedAmount, 2)} {toAccount.Currency} och överfördes till konto {toAccount.ID}.";
             }
         }
 
         // Method to remove balance from account
-        internal bool RemoveBalance(decimal value, string toAccount = "")
+        internal bool RemoveBalance(decimal value, string fromAccountID = "", string toAccountID = "")
         {
             if (Balance >= value)
             {
-                CreateTransaction(-value, toAccount, "till");
+                CreateTransaction(-value, fromAccountID, toAccountID, "till");
                 Balance -= value;
                 return true;
             }
@@ -79,13 +85,13 @@
         }
 
         // Method to create a transaction and add it to the transaction list
-        private void CreateTransaction(decimal value, string accountName, string transferType)
+        private void CreateTransaction(decimal value, string fromAccountID, string toAccountID, string transferType)
         {
             // If account name is provided, include it in the message
-            string message = (accountName != "") ? $"{transferType} {accountName}" : "";
+            string message = (toAccountID != "") ? $"{transferType} {toAccountID}" : "";
 
             // Create new transaction and add to list
-            var transaction = new Transaction(value, Currency, message);
+            var transaction = new Transaction(value, Currency, message, fromAccountID, toAccountID);
             _transactions.Add(transaction);
         }
 

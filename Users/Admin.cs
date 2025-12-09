@@ -18,7 +18,7 @@
         {
             // Prompt admin to choose a currency to update
             UI.PrintMessage("Vilken valuta vill du uppdatera?", 1);
-            string currency = Data.ChooseCurrency().Key;
+            string currency = Data.ChooseCurrency(excludeSEK: true).Key;
 
             // Prompt for new exchange rate and update it in Data
             UI.PrintInputPrompt($"Skriv in den nya växelkursen för {currency}: ");
