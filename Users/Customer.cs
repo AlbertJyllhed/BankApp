@@ -119,6 +119,7 @@ namespace BankApp.Users
             UI.PrintMessage("--- Mina lån ---", 1);
             UI.PrintList(Loans, true);
             UI.PrintMessage($"Din totala skuld: {GetTotalLoanWithoutInterest()} SEK");
+            UI.PrintResetMessage();
         }
 
         // Calculate total loan amount without interest
