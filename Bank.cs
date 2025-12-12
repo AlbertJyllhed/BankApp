@@ -9,12 +9,13 @@ namespace BankApp
         // Loops the application until user logs out
         internal void Run()
         {
-            Data.Setup();
+            Data.LoadData();
             LogIn();
 
             while (_activeUser != null)
             {
                 CreateMenu();
+                Data.SaveData();
             }
         }
 

@@ -2,7 +2,7 @@
 {
     internal class Loan
     {
-        private decimal Amount { get; set; }
+        public decimal Amount { get; private set; }
 
         internal Loan(decimal amount)
         {

@@ -1,4 +1,5 @@
-﻿using BankApp.BankAccounts;
+﻿using Newtonsoft.Json;
+using BankApp.BankAccounts;
 using BankApp.Services;
 using BankApp.Users;
 
@@ -6,6 +7,7 @@ namespace BankApp
 {
     internal static class Data
     {
+        private static string filePath = "..\\..\\..\\data.json";
         private static List<BankAccount> bankAccounts = [];
         private static List<User> users = [];
         private static Dictionary<string, decimal> currency = new Dictionary<string, decimal>()
@@ -233,6 +235,52 @@ namespace BankApp
         internal static decimal FromSEK(decimal value, string currency)
         {
             return value / GetCurrency(currency).Value;
+        }
+
+        // Method to save user data to a JSON file
+        internal static void SaveData()
+        {
+            var saveData = new SaveData(users, currency);
+
+            var json = JsonConvert.SerializeObject(saveData, Formatting.Indented);
+            File.WriteAllText(filePath, json);
+        }
+
+        // Method to load user data from a JSON file
+        internal static void LoadData()
+        {
+            try
+            {
+                string json = File.ReadAllText(filePath);
+                var saveData = JsonConvert.DeserializeObject<SaveData>(json);
+
+                if (saveData == null)
+                {
+                    throw new Exception("Failed to deserialize save data.");
+                }
+
+                users = saveData.Users;
+                // Rebuild bank account list from users
+                bankAccounts = new List<BankAccount>();
+                foreach (var user in users)
+                {
+                    if (user is Customer customer)
+                    {
+                        foreach (var account in customer.GetBankAccounts())
+                        {
+                            bankAccounts.Add(account);
+                        }
+                    }
+                }
+
+                currency = saveData.Currency;
+            }
+            catch
+            {
+                // If loading fails, setup default data
+                Setup();
+                SaveData();
+            }
         }
     }
 }
