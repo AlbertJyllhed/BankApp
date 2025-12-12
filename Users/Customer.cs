@@ -4,7 +4,7 @@ namespace BankApp.Users
 {
     internal class Customer : User
     {
-        private int _loginAttempts = 0;
+        public int _loginAttempts = 0;
         public List<BankAccount> BankAccounts { get; private set; }
         public List<Loan> Loans { get; private set; }
         public bool Locked { get; set; } = false;

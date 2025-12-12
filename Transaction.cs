@@ -35,10 +35,10 @@
 
             if (string.IsNullOrWhiteSpace(Description))
             {
-                return $"{Amount} {Currency}, {dateFormat}";
+                return $"{Math.Round(Amount, 2)} {Currency}, {dateFormat}";
             }
 
-            return $"{Amount} {Currency} {Description}, {dateFormat}";
+            return $"{Math.Round(Amount, 2)} {Currency} {Description}, {dateFormat}";
         }
     }
 }

@@ -89,9 +89,9 @@ namespace BankApp.Services
             }
 
             Loan newLoan = new Loan(borrowedAmountSEK);
-            UI.PrintMessage($"Din skuld idag blir då {borrowedAmountSEK}.\n" +
+            UI.PrintMessage($"Din skuld idag blir då {Math.Round(borrowedAmountSEK, 2)}.\n" +
                 $"Räntan på lånet är {interest}%\n" +
-                $"Din totala skuld att betala efter ett år blir {borrowedAmountSEK * interest} SEK", 1);
+                $"Din totala skuld att betala efter ett år blir {Math.Round(borrowedAmountSEK * interest, 2)} SEK", 1);
 
             // Choose account to deposit loan into
             UI.PrintMessage("Vilket konto vill du låna till?");
