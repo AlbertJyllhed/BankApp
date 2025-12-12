@@ -55,6 +55,7 @@
         }
 
         // Method to unlock a customer's account
+            
         internal void UnlockCustomerAccount()
         {
             // Get list of customers from Data
@@ -78,8 +79,10 @@
             int choice = InputUtilities.GetIndex(lockedCustomers.Count);
             var customer = lockedCustomers[choice];
 
+
             // Unlock the selected customer's account
             customer.Locked = false;
+            customer._loginAttempts = 0;
             UI.PrintSuccess($"\nAnvändare: {customer.Name} upplåst.", 1);
             UI.PrintResetMessage();
         }
