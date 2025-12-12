@@ -2,13 +2,13 @@
 {
     internal class Transaction
     {
-        internal decimal Amount { get; set; }
-        internal string Currency { get; }
-        internal string Description { get; set; }
-        internal DateTime TimeStamp { get; private set; }
-        internal string FromAccountID { get; set; }
-        internal string ToAccountID { get; set; }
-        internal bool Completed { get; private set; }
+        public decimal Amount { get; set; }
+        public string Currency { get; }
+        public string Description { get; set; }
+        public DateTime TimeStamp { get; private set; }
+        public string FromAccountID { get; set; }
+        public string ToAccountID { get; set; }
+        public bool Completed { get; private set; }
 
         internal Transaction(decimal amount, string currency, string description, string fromAccountID, string toAccountID)
         {

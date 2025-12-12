@@ -3,8 +3,8 @@
     internal class BankAccount
     {
         private string _id = "";
-        private List<Transaction> _transactions = [];
-        internal string ID
+        public List<Transaction> Transactions { get; } = [];
+        public string ID
         {
             get { return _id; }
             private set
@@ -19,9 +19,9 @@
                 }
             }
         }
-        internal string Name { get; }
-        internal string Currency { get; set; } = "SEK";
-        internal decimal Balance { get; private set; } = 0;
+        public string Name { get; }
+        public string Currency { get; set; } = "SEK";
+        public decimal Balance { get; private set; } = 0;
 
         // Constructor
         internal BankAccount(string name, string currency, string id = "")
@@ -42,7 +42,7 @@
         internal List<Transaction> GetPendingTransactions()
         {
             var pendingTransactions = new List<Transaction>();
-            foreach (var transaction in _transactions)
+            foreach (var transaction in Transactions)
             {
                 if (!transaction.Completed)
                 {
@@ -55,7 +55,7 @@
         // Method to get the latest transaction
         internal Transaction GetLatestTransaction()
         {
-            return _transactions.Last();
+            return Transactions.Last();
         }
 
         // Method to remove balance from account
@@ -83,14 +83,14 @@
 
             // Create new transaction and add to list
             var transaction = new Transaction(value, Currency, message, fromAccountID, toAccountID);
-            _transactions.Add(transaction);
+            Transactions.Add(transaction);
         }
 
         //Method to print all transactions
         internal void PrintTransactions()
         {
             UI.PrintMessage($"--- Transaktioner {Name} [{ID}] ---");
-            UI.PrintList(_transactions);
+            UI.PrintList(Transactions);
         }
 
         internal string GetAccountType()

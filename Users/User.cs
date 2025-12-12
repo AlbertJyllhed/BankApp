@@ -2,8 +2,8 @@
 {
     internal abstract class User
     {
-        internal string Name { get; }
-        internal string Password { get; }
+        public string Name { get; }
+        public string Password { get; }
 
         internal User(string name, string password)
         {

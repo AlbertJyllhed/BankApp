@@ -1,0 +1,100 @@
+{
+  "Users": [
+    {
+      "Name": "Admin",
+      "Password": "a1"
+    },
+    {
+      "BankAccounts": [
+        {
+          "Transactions": [
+            {
+              "Amount": 100.0,
+              "Currency": "SEK",
+              "Description": "",
+              "TimeStamp": "2025-12-12T12:11:30.3923116+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            }
+          ],
+          "ID": "00001",
+          "Name": "User1 Account 1",
+          "Currency": "SEK",
+          "Balance": 100.0
+        },
+        {
+          "Transactions": [
+            {
+              "Amount": 100.0,
+              "Currency": "SEK",
+              "Description": "",
+              "TimeStamp": "2025-12-12T12:11:30.3978147+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            }
+          ],
+          "ID": "00002",
+          "Name": "User1 Account 2",
+          "Currency": "SEK",
+          "Balance": 100.0
+        }
+      ],
+      "Loans": [],
+      "Locked": false,
+      "Name": "User1",
+      "Password": "u1"
+    },
+    {
+      "BankAccounts": [
+        {
+          "Transactions": [
+            {
+              "Amount": 100.0,
+              "Currency": "SEK",
+              "Description": "",
+              "TimeStamp": "2025-12-12T12:11:30.3978229+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            }
+          ],
+          "ID": "00003",
+          "Name": "User2 Account 1",
+          "Currency": "SEK",
+          "Balance": 100.0
+        },
+        {
+          "Transactions": [
+            {
+              "Amount": 100.0,
+              "Currency": "SEK",
+              "Description": "",
+              "TimeStamp": "2025-12-12T12:11:30.3978241+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            }
+          ],
+          "ID": "00004",
+          "Name": "User2 Account 2",
+          "Currency": "SEK",
+          "Balance": 100.0
+        }
+      ],
+      "Loans": [],
+      "Locked": false,
+      "Name": "User2",
+      "Password": "u2"
+    }
+  ],
+  "Currency": {
+    "SEK": 1.0,
+    "DKK": 1.54,
+    "NOK": 1.01,
+    "EUR": 11.5,
+    "GBP": 13.0,
+    "USD": 10.8
+  }
+}
