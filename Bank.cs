@@ -52,7 +52,7 @@ namespace BankApp
             UI.PrintWarning("Du har blivit utloggad.", 1);
             _activeUser = null;
 
-            UI.PrintError("Vill du stänga av applikationen y/n", 1);
+            UI.PrintError("Vill du stänga av applikationen y/n?", 1);
             bool answer = InputUtilities.GetYesOrNo();
             if (!answer)
             {
