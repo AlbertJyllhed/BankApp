@@ -9,7 +9,7 @@ namespace BankApp.Services
         private static Customer? _customer;
 
         // Simulate delay of 15 minutes (900,000 milliseconds)
-        private static System.Timers.Timer _transferTimer = new System.Timers.Timer(30000);
+        private static System.Timers.Timer _transferTimer = new System.Timers.Timer(120000);
 
         internal static void SetCustomer(Customer customer)
         {
