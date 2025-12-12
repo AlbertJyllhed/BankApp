@@ -48,7 +48,7 @@ namespace BankApp.Services
         // Method to create a new bank account without user input
         internal static BankAccount CreateBankAccount(string accountName, string currency, string id = "")
         {
-            var bankAccount = new BankAccount(accountName, currency, id);
+            var bankAccount = new BankAccount(accountName, 0, currency, id);
             Data.AddBankAccount(bankAccount);
             return bankAccount;
         }

@@ -1,4 +1,6 @@
-﻿namespace BankApp.BankAccounts
+﻿using Newtonsoft.Json;
+
+namespace BankApp.BankAccounts
 {
     internal class BankAccount
     {
@@ -24,9 +26,11 @@
         public decimal Balance { get; private set; } = 0;
 
         // Constructor
-        internal BankAccount(string name, string currency, string id = "")
+        [JsonConstructor]
+        internal BankAccount(string name, decimal balance, string currency, string id = "")
         {
             Name = name;
+            Balance = balance;
             Currency = currency;
             ID = id;
         }

@@ -1,13 +1,15 @@
-﻿namespace BankApp.BankAccounts
+﻿using Newtonsoft.Json;
+
+namespace BankApp.BankAccounts
 {
     internal class SavingsAccount : BankAccount
     {
         private decimal _interest = 1.0186m;
 
         // Constructors
-        internal SavingsAccount(string name, decimal amount, string currency, string id = "") : base(name, currency, id)
+        [JsonConstructor]
+        internal SavingsAccount(string name, decimal balance, string currency, string id = "") : base(name, balance, currency, id)
         {
-            AddBalance(amount);
         }
 
         // Print interest information for a given amount

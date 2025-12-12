@@ -1,14 +1,16 @@
 ﻿using BankApp.BankAccounts;
+using Newtonsoft.Json;
 
 namespace BankApp.Users
 {
     internal class Customer : User
     {
-        public int _loginAttempts = 0;
+        public int LoginAttempts = 0;
         public List<BankAccount> BankAccounts { get; private set; }
         public List<Loan> Loans { get; private set; }
         public bool Locked { get; set; } = false;
 
+        [JsonConstructor]
         internal Customer(string name, string password) : base(name, password)
         {
             BankAccounts = new List<BankAccount>();
@@ -28,20 +30,20 @@ namespace BankApp.Users
             if (Password == password)
             {
                 // Reset login attempts on successful login
-                _loginAttempts = 0;
+                LoginAttempts = 0;
                 return true;
             }
             else
             {
                 // Increment login attempts on failed login
-                _loginAttempts++;
+                LoginAttempts++;
 
                 // Lock account if maximum attempts reached
-                if (_loginAttempts >= 3)
+                if (LoginAttempts >= 3)
                 {
                     Locked = true;
                 }
-                UI.PrintColoredMessage($"Försök kvar: {3 - _loginAttempts}", ConsoleColor.Yellow);
+                UI.PrintColoredMessage($"Försök kvar: {3 - LoginAttempts}", ConsoleColor.Yellow);
 
                 return false;
             }
@@ -54,9 +56,9 @@ namespace BankApp.Users
         }
 
         // Method to get all bank accounts of the user
-        internal List<BankAccount> GetBankAccounts()
+        internal List<BankAccount> GetBankAccounts(bool printMessage = true)
         {
-            if (!HasBankAccounts())
+            if (!HasBankAccounts() && printMessage)
             {
                 UI.PrintError("Inget bankkonto hittades.");
             }

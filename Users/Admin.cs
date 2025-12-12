@@ -1,7 +1,10 @@
-﻿namespace BankApp.Users
+﻿using Newtonsoft.Json;
+
+namespace BankApp.Users
 {
     internal class Admin : User
     {
+        [JsonConstructor]
         internal Admin(string name, string password) : base(name, password)
         {
         }
@@ -82,7 +85,7 @@
 
             // Unlock the selected customer's account
             customer.Locked = false;
-            customer._loginAttempts = 0;
+            customer.LoginAttempts = 0;
             UI.PrintSuccess($"\nAnvändare: {customer.Name} upplåst.", 1);
             UI.PrintResetMessage();
         }

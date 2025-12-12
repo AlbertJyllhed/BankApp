@@ -240,9 +240,14 @@ namespace BankApp
         // Method to save user data to a JSON file
         internal static void SaveData()
         {
-            var saveData = new SaveData(users, currency);
+            var saveData = new SaveData();
+            saveData.Users = users;
+            saveData.Currency = currency;
 
-            var json = JsonConvert.SerializeObject(saveData, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(saveData, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            });
             File.WriteAllText(filePath, json);
         }
 
@@ -252,12 +257,12 @@ namespace BankApp
             try
             {
                 string json = File.ReadAllText(filePath);
-                var saveData = JsonConvert.DeserializeObject<SaveData>(json);
-
-                if (saveData == null)
+                var saveData = JsonConvert.DeserializeObject<SaveData>(json, new JsonSerializerSettings
                 {
-                    throw new Exception("Failed to deserialize save data.");
-                }
+                    TypeNameHandling = TypeNameHandling.Auto
+                });
+
+                if (saveData == null) return;
 
                 users = saveData.Users;
                 // Rebuild bank account list from users
@@ -266,13 +271,12 @@ namespace BankApp
                 {
                     if (user is Customer customer)
                     {
-                        foreach (var account in customer.GetBankAccounts())
+                        foreach (var account in customer.GetBankAccounts(printMessage: false))
                         {
-                            bankAccounts.Add(account);
+                            AddBankAccount(account);
                         }
                     }
                 }
-
                 currency = saveData.Currency;
             }
             catch

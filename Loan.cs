@@ -1,9 +1,12 @@
-﻿namespace BankApp
+﻿using Newtonsoft.Json;
+
+namespace BankApp
 {
     internal class Loan
     {
         public decimal Amount { get; private set; }
 
+        [JsonConstructor]
         internal Loan(decimal amount)
         {
             Amount = amount;

@@ -1,4 +1,6 @@
-﻿namespace BankApp
+﻿using Newtonsoft.Json;
+
+namespace BankApp
 {
     internal class Transaction
     {
@@ -10,6 +12,7 @@
         public string ToAccountID { get; set; }
         public bool Completed { get; private set; }
 
+        [JsonConstructor]
         internal Transaction(decimal amount, string currency, string description, string fromAccountID, string toAccountID)
         {
             Amount = amount;
