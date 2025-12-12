@@ -176,7 +176,7 @@ namespace BankApp.Services
                 UI.PrintColoredMessage($"\nÖverföring påbörjad: {amount} {fromAccount.Currency}\n" +
                     $"Från: Konto [{fromAccount.ID}]\n" +
                     $"Till: [{toAccount.ID}]\n" +
-                    $"Pengarna kommer fram klockan {GetRemainingTimeForNextTransfer():HH:mm}",
+                    $"Pengarna kommer vara överförda om max 15 minuter.}",
                     ConsoleColor.DarkCyan, 1);
             }
             else
