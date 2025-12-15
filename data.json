@@ -1,0 +1,218 @@
+{
+  "Users": [
+    {
+      "$type": "BankApp.Users.Admin, BankApp",
+      "Name": "Admin",
+      "Password": "a1"
+    },
+    {
+      "$type": "BankApp.Users.Customer, BankApp",
+      "LoginAttempts": 0,
+      "BankAccounts": [
+        {
+          "Transactions": [
+            {
+              "Amount": 100.0,
+              "Currency": "SEK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:03:39.3136687+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            }
+          ],
+          "ID": "00001",
+          "Name": "User1 Account 1",
+          "Currency": "SEK",
+          "Balance": 100.0
+        },
+        {
+          "Transactions": [
+            {
+              "Amount": 100.0,
+              "Currency": "SEK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:03:39.3148257+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            }
+          ],
+          "ID": "00002",
+          "Name": "User1 Account 2",
+          "Currency": "SEK",
+          "Balance": 100.0
+        }
+      ],
+      "Loans": [],
+      "Locked": false,
+      "Name": "User1",
+      "Password": "u1"
+    },
+    {
+      "$type": "BankApp.Users.Customer, BankApp",
+      "LoginAttempts": 0,
+      "BankAccounts": [
+        {
+          "Transactions": [
+            {
+              "Amount": 100.0,
+              "Currency": "SEK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:03:39.3184844+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            }
+          ],
+          "ID": "00003",
+          "Name": "User2 Account 1",
+          "Currency": "SEK",
+          "Balance": 100.0
+        },
+        {
+          "Transactions": [
+            {
+              "Amount": 100.0,
+              "Currency": "SEK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:03:39.3185372+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            }
+          ],
+          "ID": "00004",
+          "Name": "User2 Account 2",
+          "Currency": "SEK",
+          "Balance": 100.0
+        }
+      ],
+      "Loans": [],
+      "Locked": false,
+      "Name": "User2",
+      "Password": "u2"
+    },
+    {
+      "$type": "BankApp.Users.Customer, BankApp",
+      "LoginAttempts": 0,
+      "BankAccounts": [
+        {
+          "$type": "BankApp.BankAccounts.SavingsAccount, BankApp",
+          "Transactions": [
+            {
+              "Amount": -500.0,
+              "Currency": "NOK",
+              "Description": "till 78169",
+              "TimeStamp": "2025-12-15T14:03:39.3192913+01:00",
+              "FromAccountID": "93218",
+              "ToAccountID": "78169",
+              "Completed": false
+            },
+            {
+              "Amount": 659.41,
+              "Currency": "NOK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:03:39.3193331+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            },
+            {
+              "Amount": -594.05940594059405940594059406,
+              "Currency": "NOK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:03:39.319531+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            },
+            {
+              "Amount": -49.504950495049504950495049505,
+              "Currency": "NOK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:03:39.3195494+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            },
+            {
+              "Amount": -22.213508479560827369865699441,
+              "Currency": "NOK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:03:39.3195643+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            },
+            {
+              "Amount": 659.41,
+              "Currency": "NOK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:04:11.7258985+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            },
+            {
+              "Amount": -594.05940594059405940594059406,
+              "Currency": "NOK",
+              "Description": "",
+              "TimeStamp": "2025-12-15T14:04:33.9562275+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "",
+              "Completed": false
+            }
+          ],
+          "ID": "93218",
+          "Name": "Cajsa",
+          "Currency": "NOK",
+          "Balance": 558.98272914420154886775806294
+        },
+        {
+          "Transactions": [
+            {
+              "Amount": 38.846153846153846153846153846,
+              "Currency": "GBP",
+              "Description": "från 93218",
+              "TimeStamp": "2025-12-15T14:03:39.3202302+01:00",
+              "FromAccountID": "",
+              "ToAccountID": "93218",
+              "Completed": false
+            }
+          ],
+          "ID": "78169",
+          "Name": "Viktor",
+          "Currency": "GBP",
+          "Balance": 38.846153846153846153846153846
+        },
+        {
+          "Transactions": [],
+          "ID": "08434",
+          "Name": "124",
+          "Currency": "SEK",
+          "Balance": 0.0
+        }
+      ],
+      "Loans": [
+        {
+          "Amount": 0.222135084795608273698656994
+        },
+        {
+          "Amount": 71.94059405940594059405940594
+        }
+      ],
+      "Locked": false,
+      "Name": "Cajsa",
+      "Password": "sara"
+    }
+  ],
+  "Currency": {
+    "SEK": 1.0,
+    "DKK": 1.54,
+    "NOK": 1.01,
+    "EUR": 11.5,
+    "GBP": 13.0,
+    "USD": 10.8
+  }
+}
