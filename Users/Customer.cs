@@ -120,7 +120,7 @@ namespace BankApp.Users
 
             UI.PrintMessage("--- Mina lån ---", 1);
             UI.PrintList(Loans, true);
-            UI.PrintMessage($"Din totala skuld: {GetTotalLoanWithoutInterest()} SEK");
+            UI.PrintMessage($"Din totala skuld: {Math.Round(GetTotalLoanWithoutInterest(),2)} SEK");
             UI.PrintResetMessage();
         }
 
